@@ -4,7 +4,7 @@
  */
 
 var express = require('express'),
-    routes = require('./backend/_index.js'),
+    routes = require('./backend'),
     http = require('http');
 
 var app = express();
@@ -30,7 +30,8 @@ app.configure('development', function(){
 });
 
 app.locals(gConfig.globals);
-routes.watch(app);
+
+routes.initWith(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("FED server listening on port " + app.get('port'));
