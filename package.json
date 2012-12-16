@@ -1,0 +1,16 @@
+{
+  "name": "FED",
+  "version": "0.0.1",
+  "description": "Front End Development Environment",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "3.0.0beta7",
+    "iconv-lite": "*",
+  },
+  "repository": "",
+  "author": "ijse",
+  "license": "BSD"
+}
