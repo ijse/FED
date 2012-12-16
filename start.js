@@ -1,8 +1,7 @@
 
 /**
- * Module dependencies.
+ * @author : ijse
  */
-
 var express = require('express'),
     routes = require('./backend'),
     http = require('http');
