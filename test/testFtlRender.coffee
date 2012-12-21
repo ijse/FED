@@ -28,6 +28,7 @@ describe "ftl.jar 模板处理功能测试：", ->
 				email: "oka@test.com"
 			}
 		ftlRender "variables", dataModel, (err, data) ->
+			if err then done err
 			assert.notEqual(
 				data.indexOf("<title>Test Suit1: 简单变量处理</title>"), -1)
 			assert.notEqual(
@@ -41,6 +42,7 @@ describe "ftl.jar 模板处理功能测试：", ->
 			title: "Test Suit2: 含有宏定义的页面"
 			message: "Hello world!"
 		ftlRender "withInMacros", dataModel, (err, data) ->
+			if err then done err
 			assert.notEqual(data.indexOf("<b>Message: Hello world!</b>"), -1)
 			done()
 
@@ -49,6 +51,7 @@ describe "ftl.jar 模板处理功能测试：", ->
 			title: "Test Suit3: 宏定义在另一个文件中"
 			message: "Hello world!"
 		ftlRender "includeMacros", dataModel, (err, data) ->
+			if err then done err
 			assert.notEqual(data.indexOf("<b>Message: Hello world!</b>"), -1)
 			done()
 
@@ -56,6 +59,22 @@ describe "ftl.jar 模板处理功能测试：", ->
 		dataModel =
 			title: "Test Suit4: 包含另一个目录下的文件内容"
 		ftlRender "includeFile", dataModel, (err, data) ->
+			if err then done err
 			assert.notEqual(data.indexOf("I'm included file"), -1)
 			done()
+
+	it "处理Sequence类型数据", (done) ->
+		dataModel =
+			title: "Test Suit5: 这页有一个列表"
+			shopList: [
+				"牛肉", "水", "方便面", "鸡蛋"
+			]
+		ftlRender "shopList", dataModel, (err, data) ->
+			if err then done err
+			assert.notEqual(data.indexOf("<li>牛肉</li>"), -1)
+			assert.notEqual(data.indexOf("<li>水</li>"), -1)
+			assert.notEqual(data.indexOf("<li>方便面</li>"), -1)
+			done()
+
+
 
