@@ -34,8 +34,6 @@ describe "ftl.jar 模板处理功能测试：", ->
 			assert.notEqual(
 				data.indexOf("<td>Oka John</td>"), -1)
 			done()
-			# done() if data.indexOf("<title>Test Suit1: 简单变量处理</title>") != -1 and
-			# 	data.indexOf("<td>Oka John</td>") != -1
 
 	it "处理含有宏文件的模板，成功执行宏定义", (done) ->
 		dataModel =
