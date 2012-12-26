@@ -1,18 +1,28 @@
-FED - fed front end
-===================
+FED - feed front end
+====================
 
 ## Feathers
 
-* freemarker template support
-* proxy reverse server
-* auto generate doc
-* deploy to server by ftp/sftp
-* html export
-* some more utils
+* Support freemarker template
+* Reverse proxy server
+* Auto reload when update codes
+* Auto generate doc
+* Deploy to server by ftp/sftp
+* Html export
+* Some more utils: jsCompressor, file utils...
 
 ## Start
 
+* Start "localServer" only
 
+* Start with "proxyServer"
+
+## About Proxy
+
+1. Set HOSTS, add url to localhost
+2. Modify `globalConfig.js` to fit your needs
+3. Start proxyServer
+4. Start localServer
 
 ## Test
 
