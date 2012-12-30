@@ -7,7 +7,6 @@
  */
 var gConfig = require("./globalConfig.js");
 var httpProxy = require('http-proxy');
-
 var pSetting = gConfig.proxySetting;
 
 

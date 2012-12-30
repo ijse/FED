@@ -1,6 +1,13 @@
 
 exports.watch = function(app, ftlRender, jsonRender) {
-	//
+
+	// List Articals
+	// ===============
+	// some description here ...
+	// @author ijse
+	// @param page load the pageNumber
+	// @param type the artical type
+	// @return title, message, list=[]
 	app.get("/artical/list", function(req, res, next) {
 		ftlRender("index",{
 			"title": "hello",
