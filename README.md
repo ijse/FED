@@ -13,9 +13,7 @@ FED - feed front end
 
 ## Start
 
-* Start "localServer" only
-
-* Start with "proxyServer"
+	$> node-dev launcher.js
 
 ## About Proxy
 

@@ -3,8 +3,8 @@
  * ========
  * 1. load configurations and modules
  * 2. configure app
- * 3. import backend logic
- * 4. Set up proxy if useProxy
+ * 3. Set up proxy if useProxy
+ * 4. import backend logic
  * 5. start service
  *
  * @author : ijse
@@ -106,7 +106,6 @@ function importLogic(root, app) {
 // @param _app app instance
 // @return function(cmd, fn)
 function fed(_app) {
-
     var foo = function(fn, req, res, next) {
         fn.call({
             app: _app, req: req, res: res, next: next,
@@ -142,7 +141,6 @@ function fed(_app) {
 // ======================================
 // Parse request body to support POST request params so that
 // we can use `req.param()` and `req.body`
-// __MethodOverride make `?_method=` possible__
 function doBodyParser(_app, req, res, next, cb) {
     express.bodyParser().call(_app, req, res, function(err) {
         if(err) return next(err);
