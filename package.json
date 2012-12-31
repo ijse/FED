@@ -1,7 +1,7 @@
 {
   "name": "FED",
   "version": "0.0.3",
-  "description": "FED - fed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
+  "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "start.js",
   "directories": {
     "test": "test"

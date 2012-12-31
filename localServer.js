@@ -60,7 +60,6 @@ app.locals(gConfig.globals);
 // load routes
 importLogic(gConfig.path.backend, app);
 
-
 // Import backend logic
 // ====================
 // @param root  - backend base path
