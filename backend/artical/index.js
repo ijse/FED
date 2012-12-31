@@ -1,5 +1,8 @@
+exports.watch = function(fed) {
 
-exports.watch = function(app, ftlRender, jsonRender) {
+	fed("get /bbs", function() {
+		this.render.text("Hello World!!```");
+	});
 
 	// List Articals
 	// ===============
@@ -8,22 +11,18 @@ exports.watch = function(app, ftlRender, jsonRender) {
 	// @param page load the pageNumber
 	// @param type the artical type
 	// @return title, message, list=[]
-	app.get("/artical/list", function(req, res, next) {
-		ftlRender("index",{
+	fed("get /artical/list", function() {
+		this.render.ftl("index", {
 			"title": "hello",
 			"message": "index page",
-			"mylist": [
-				"1", "2", "3"
-			]
-		}, res);
-		// jsonRender(data, res);
+			"mylist": ["1", "2", "3"]
+		});
 	});
 
-	app.get("/artical/aa", function(req, res, next) {
-		ftlRender("variables", {
+	fed("get /artical/aa", function() {
+		this.render.ftl("variables", {
 			title: "Test Suit1"
 		}, res);
-		// jsonRender({"hello": "134"}, res);
 	});
 
 };
