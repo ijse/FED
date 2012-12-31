@@ -31,6 +31,8 @@ app.configure(function () {
 
     // Will print every request log
     app.use(express.logger('dev'));
+	// bodyParser() will cause http-proxy 
+	// dealing POST request wrongly 
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
@@ -48,8 +50,8 @@ app.configure(function () {
     // continue with proxy request
     if(gConfig.useProxy) {
         app.enable('trust proxy');
-        // app.all("/*", proxyServerMidleware);
-        app.use(proxyServerMidleware);
+        app.all("*", proxyServerMidleware);
+        // app.use(proxyServerMidleware);
     }
 
 });
@@ -126,3 +128,6 @@ function proxyServerMidleware(req, res, next) {
 http.createServer(app).listen(app.get('port'), function () {
     console.log("FED server listening on port " + app.get('port'));
 });
+
+// Export app, for other usages
+module.exports = app;
