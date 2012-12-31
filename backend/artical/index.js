@@ -1,7 +1,8 @@
 exports.watch = function(fed) {
 
-	fed("get /bbs", function() {
-		this.render.text("Hello World!!```");
+	fed("put /testPost", function(req, res) {
+		var p = req.param("name");
+		this.render.text(p + ", Hello World!!");
 	});
 
 	// List Articals

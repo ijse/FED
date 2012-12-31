@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	// Enable proxy support
-	"useProxy": false,
+	"useProxy": true,
 	"proxySetting": {
 		"port": 80,
 		"router": { // support path
