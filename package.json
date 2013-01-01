@@ -12,7 +12,10 @@
     "iconv-lite": "~0.2.7",
     "http-proxy": "~0.8.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "supertest": "~0.5.1",
+    "should": "~1.2.1"
+  },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script --reporter spec ./test/test.coffee"
   },

@@ -6,4 +6,5 @@
 # 测试模板引擎 jar包功能
 require("./testFtlRender.coffee")
 
-# 测试...
+# 测试本地服务
+require("./testLocalService.coffee")

@@ -1,10 +1,18 @@
+###
+	测试FTL模板引擎功能
 
+	说明：
+		1. 为避免字符编码问题，对返回的断言内容不包含中文字符
+		2. FTL渲染由于是调用JAR包执行，因此效率稍低些
+		
+	@author: ijse
+###
 
 ftlEngine = require "ftl"
 assert = require "assert"
 
 # Test views folder
-thisPath = __dirname
+thisPath = __dirname + "/res"
 viewPath = "#{thisPath}/views"
 
 spawn = require('child_process').spawn;
@@ -16,7 +24,7 @@ describe "ftl.jar 模板处理功能测试：", ->
 			views: viewPath
 			fileEncoding: "utf-8"
 		}
-		ftlEngine.renderFile "#{thisPath}\\views\\#{tpl}.ftl", data, fn
+		ftlEngine.renderFile "#{thisPath}/views/#{tpl}.ftl", data, fn
 
 	# Test Suits
 	it "处理简单模板（只有变量）,成功注入变量到页面", (done) ->
@@ -30,7 +38,7 @@ describe "ftl.jar 模板处理功能测试：", ->
 		ftlRender "variables", dataModel, (err, data) ->
 			if err then done err
 			assert.notEqual(
-				data.indexOf("<title>Test Suit1: 简单变量处理</title>"), -1)
+				data.indexOf("<title>Test Suit1:"), -1)
 			assert.notEqual(
 				data.indexOf("<td>Oka John</td>"), -1)
 			done()
@@ -65,13 +73,13 @@ describe "ftl.jar 模板处理功能测试：", ->
 		dataModel =
 			title: "Test Suit5: 这页有一个列表"
 			shopList: [
-				"牛肉", "水", "方便面", "鸡蛋"
+				"beef", "water", "noodles", "egg"
 			]
 		ftlRender "shopList", dataModel, (err, data) ->
 			if err then done err
-			assert.notEqual(data.indexOf("<li>牛肉</li>"), -1)
-			assert.notEqual(data.indexOf("<li>水</li>"), -1)
-			assert.notEqual(data.indexOf("<li>方便面</li>"), -1)
+			assert.notEqual(data.indexOf("<li>beef</li>"), -1)
+			assert.notEqual(data.indexOf("<li>water</li>"), -1)
+			assert.notEqual(data.indexOf("<li>egg</li>"), -1)
 			done()
 
 

@@ -20,9 +20,8 @@ var app           = express();
 // For proxying request to remote server
 var ProxyInstance = null;
 
-exports.run = function(gConfig) {
-    // config > environment > default(3000)
-    app.set('port', gConfig.port || process.env.PORT || 3000);
+exports.app = app;
+exports.create = function(gConfig) {
     app.set('proxy support', gConfig.useProxy);
     app.set('proxy setting', gConfig.proxySetting);
     app.set('static resource', gConfig.path["public"]);
@@ -66,9 +65,7 @@ exports.run = function(gConfig) {
     importLogic(gConfig.path.backend, app);
 
     // Start local-service host, notify address
-    var httpServer = http.createServer(app).listen(app.get('port'), function () {
-        console.log("FED server listening on port " + app.get('port'));
-    });
+    var httpServer = http.createServer(app);
 
     return httpServer;
 };
