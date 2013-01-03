@@ -20,6 +20,14 @@ exports.watch = function(fed) {
 		});
 	});
 
+	/**
+	 * Artical Test
+	 * ============
+	 *	some description here
+	 *
+	 * @param test
+	 * @return title
+	 */
 	fed("get /artical/aa", function() {
 		this.render.ftl("variables", {
 			title: "Test Suit1"

@@ -7,7 +7,7 @@
  */
 var httpProxy = require('http-proxy');
 
-exports.run = function(pSetting) {
+exports.create = function(pSetting) {
 	// Create proxy server and start listenning port
 	var proxyServer = httpProxy.createServer({
 		router: pSetting.router

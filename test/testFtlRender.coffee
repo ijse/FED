@@ -8,7 +8,7 @@
 	@author: ijse
 ###
 
-ftlEngine = require "ftl"
+ftlEngine = require "fed_ftl"
 assert = require "assert"
 
 # Test views folder

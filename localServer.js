@@ -26,7 +26,8 @@ exports.create = function(gConfig) {
     app.set('proxy setting', gConfig.proxySetting);
     app.set('static resource', gConfig.path["public"]);
     app.set('views', gConfig.path.views);
-    app.set('view engine', 'ftl');
+	app.set('view engine', 'fed_ftl');
+	app.engine("ftl", require("fed_ftl").__express);
     app.use(express.favicon());
 
     // Will print every request log
@@ -186,7 +187,7 @@ function textRender(res) {
 function ftlRender(res) {
     return function(tpl, data) {
         res.set("Content-Type", "text/html");
-        res.render(tpl, data);
+        res.render(tpl + ".ftl", data);
     };
 }
 
