@@ -12,3 +12,13 @@ exports.watch = function(fed) {
 		this.render.text("hello, " + req.param("name"));
 	});
 };
+
+module.exports = {
+	"get /test": function() {
+		/**
+		 * dfsdfsd
+		 * adfadfadf
+		 */
+		this.render.text("hello fed");
+	}
+};

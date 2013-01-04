@@ -91,15 +91,40 @@ function importLogic(root, app) {
             }
             obj = require(file);
             // Call .watch() if exist, with app and renders
-            if (obj.watch) {
-                //
-                obj.watch(fed(app));
+            // >>with fed();
+            // if (obj.watch) {
+            //     //
+            //     obj.watch(fed(app));
+            // }
+            for(var cmd in obj) {
+                if(obj.hasOwnProperty(cmd)) {
+                    applyRoutes(cmd, obj[cmd], app);
+                }
             }
         }
     }
 }
 
-// Route Entry
+// Apply Routes
+// ============
+// @param _app app instance
+function applyRoutes(cmd, route, _app) {
+    cmd = cmd.split(" ");
+    var url = cmd[1] || cmd[0];
+    var method = cmd.length < 2 ? "get" : cmd[0];
+    _app[method](url, function(req, res, next) {
+        route.call({
+            app: _app, req: req, res: res, next: next,
+            render: {
+                ftl: ftlRender(res),
+                json: jsonRender(res),
+                text: textRender(res)
+            }
+        }, req, res, next);
+    });
+}
+
+// Route Entry(deprecated)
 // ===========
 // @param _app app instance
 // @return function(cmd, fn)
@@ -119,7 +144,6 @@ function fed(_app) {
         cmd = cmd.split(" ");
         var url = cmd[1] || cmd[0];
         var method = cmd.length < 2 ? "get" : cmd[0];
-        console.log(">>", method, url);
         _app[method](url, function(req, res, next) {
             //Test:
             //  $>curl -d "name=ijse&_method=put" http://localhost:3000/testput
