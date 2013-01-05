@@ -15,8 +15,8 @@ module.exports = {
 	},
 
 	// Enable proxy support
-	"useProxy": false,
-	"proxySetting": {
+	"proxy": {
+		"enable": false,
 		"port": 80,
 		"router": { // support path
 			'cy4749.cyou-inc.com': 'localhost:81',

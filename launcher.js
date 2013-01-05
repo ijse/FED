@@ -11,7 +11,7 @@ var localServer = require("./localServer");
 //TODO: Commander...
 
 // Create and run proxy server
-if(gConfig.useProxy) {
+if(gConfig.proxy.enable) {
 	var pSetting = gConfig.proxySetting;
 	proxyServer.create(pSetting).listen(pSetting.port, function() {
 		console.log("Proxy Server listening on " + pSetting.port);

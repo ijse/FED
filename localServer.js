@@ -23,8 +23,8 @@ var ProxyInstance = null;
 
 exports.app = app;
 exports.create = function(gConfig) {
-    app.set('proxy support', gConfig.useProxy);
-    app.set('proxy setting', gConfig.proxySetting);
+    app.set('proxy support', gConfig.proxy.enable);
+    app.set('proxy setting', gConfig.proxy);
     app.set('static resource', gConfig.path["public"]);
     app.set('views', gConfig.path.views);
 	// app.set('view engine', 'fed_ftl');
@@ -35,7 +35,7 @@ exports.create = function(gConfig) {
     app.use(express.logger('dev'));
 
     // `methodOverride()` will only be available when there is no proxy
-    if(!gConfig.useProxy) {
+    if(!gConfig.proxy.enable) {
         app.use(express.bodyParser());
         app.use(express.methodOverride());
     }
@@ -48,7 +48,7 @@ exports.create = function(gConfig) {
     app.use(app.router);
 
     // Continue with proxy request
-    if(gConfig.useProxy) {
+    if(gConfig.proxy.enable) {
         ProxyInstance = new httpProxy.RoutingProxy();
         app.enable('trust proxy');
         app.use(proxyServerMidleware);
