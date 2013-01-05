@@ -5,9 +5,9 @@
  * 2. configure app
  * 3. Set up proxy if useProxy
  * 4. import backend logic
- * 5. start service
+ * 5. create server
  *
- * @author : ijse
+ * @author ijse
  */
 var express       = require('express');
 var http          = require('http');
@@ -15,6 +15,7 @@ var path          = require("path");
 var fs            = require("fs");
 var util          = require("util");
 var httpProxy     = require('http-proxy');
+var plugin        = require("./plugins");
 var app           = express();
 
 // For proxying request to remote server
@@ -26,8 +27,8 @@ exports.create = function(gConfig) {
     app.set('proxy setting', gConfig.proxySetting);
     app.set('static resource', gConfig.path["public"]);
     app.set('views', gConfig.path.views);
-	app.set('view engine', 'fed_ftl');
-	app.engine("ftl", require("fed_ftl").__express);
+	// app.set('view engine', 'fed_ftl');
+	app.engine("ftl", plugin.load("fed_ftl").__express);
     app.use(express.favicon());
 
     // Will print every request log

@@ -1,0 +1,13 @@
+{
+  "name": "fed_doc",
+  "version": "0.0.1",
+  "description": "make doc for fed backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "ijse",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}

@@ -1,7 +1,7 @@
 /**
  * FED Launcher
  *
- * @author : ijse
+ * @author ijse
  */
 
 var gConfig = require("./globalConfig");
