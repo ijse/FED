@@ -15,13 +15,38 @@
 
 var VERSION = "0.0.3";
 var commander = require("commander");
+var path = require("path");
+
 var proxyServer = require("./proxyServer");
 var localServer = require("./localServer");
 
 var gConfig = require("./globalConfig");
 
 //TODO: Add commander support
+commander
+	.version(VERSION)
+	.option('-P, --port <n>', 'Local server listen port')
+	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./config.json" as default', "./config.json")
+	.option('--useProxy', 'Use reverse proxy server');
 
+// Help command
+commander
+	.command('help')
+	.option("-c", "the help")
+	.description("Show help")
+	.action(function() {
+		commander.help();
+	});
+
+commander.parse(process.argv);
+
+var gConfig = require(commander.configFile);
+gConfig.port = commander.port || gConfig.port;
+gConfig.proxy.enable = typeof commander.useProxy === "undefined" ? gConfig.proxy.enable : !!commander.useProxy;
+
+
+// Convert path
+gConfig.path = convPath(gConfig.path);
 
 //TODO: Regist plugins, apply configuration, add hooks
 
@@ -39,3 +64,17 @@ var localServicePort = gConfig.port || process.env.PORT || 3000;
 localServer.create(gConfig).listen(localServicePort, function () {
     console.log("FED server listening on port " + gConfig.port);
 });
+
+// Convert Path Object
+// ===================
+// convert path to normal style.
+// @param pathObj ={ item: path, ...}
+// @return pathObj
+function convPath(pathObj) {
+	for(var i in pathObj) {
+		var p = pathObj[i];
+		p = p[0] == "." ? path.join(__dirname, p) : path.normalize(p);
+		pathObj[i] = p;
+	}
+	return pathObj;
+}
