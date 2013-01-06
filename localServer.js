@@ -196,6 +196,8 @@ function proxyServerMidleware(req, res, next) {
     });
 }
 
+//TODO: Move render to plugin
+
 // Plain Text Render
 // =================
 // @param data  - text data

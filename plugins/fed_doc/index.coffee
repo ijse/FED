@@ -18,4 +18,9 @@ exports.makeDoc = (bpath, toFile)->
 	writeToFile objList, toFile, tpl
 	return
 
-writeToFile = (objList, filename, template)->
+
+#TODO: Render template with datas
+makeHtml = (objList, filename, template)->
+
+#TODO: Write to file
+writeToFile = (filename, html)->

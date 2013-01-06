@@ -10,6 +10,7 @@
     "express": "~3.0.0beta7",
     "iconv-lite": "~0.2.7",
     "http-proxy": "~0.8.5",
+    "commander": "1.1.1",
     "ejs": "~0.8.3"
   },
   "devDependencies": {

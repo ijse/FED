@@ -6,6 +6,7 @@
 var path_normalize = require("path").normalize;
 var ftlEngine = require("./TemplateRun.js");
 
+//TODO: Add hook when local server initialize
 exports.__express = exports.renderFile = function (path, options, fn) {
 	var templateName = "";
 	var viewsDir = path_normalize(options.settings.views);

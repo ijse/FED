@@ -1,0 +1,21 @@
++ ---------------------------------------------------------------------------- +
+| TODOS @ Sunday 06 January 2013 11:07                                         |
+| 57 files scanned                                                             |
++ ---------------------------------------------------------------------------- +
+
+## TODO (15)
+1. launcher.js:6  Auto reload when update codes
+2. launcher.js:7  Auto generate doc
+3. launcher.js:8  Deploy to server by ftp/sftp
+4. launcher.js:9  Html export
+5. launcher.js:10  Some more utils: jsCompressor, file utils...
+6. launcher.js:11  Plugins support
+7. launcher.js:12  Test suits
+8. launcher.js:14  Use ./config.json as config file
+9. launcher.js:20  Add commander support
+10. launcher.js:22  Regist plugins, apply configuration, add hooks
+11. localServer.js:143  Support midleware
+12. localServer.js:199  Move render to plugin
+13. index.coffee:22  Render template with datas
+14. index.coffee:25  Write to file
+15. index.js:9  Add hook when local server initialize

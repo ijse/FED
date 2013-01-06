@@ -8,8 +8,9 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 
 ## 特性
 
-* 支持完全的FreeMaker模板渲染
+* 支持FreeMarker模板渲染
 * 支持配置模板全局变量
+* 支持FreeMarker模板继承语法
 * 支持各种格式的返回数据
 * 支持GET、POST等所有HTTP请求，可修改HTTP头
 * 支持AJAX、JSONP请求
