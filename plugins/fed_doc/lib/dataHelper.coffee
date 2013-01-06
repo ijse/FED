@@ -8,6 +8,17 @@ fs = require "fs"
 path = require "path"
 parser = require "./parserHelper"
 
+
+getDataList = (tpath, basePath)->
+	result = []
+	if not basePath
+		packageName = path.basename basePath
+	else
+		packageName = tpath.replace basePath, ""
+	list = fs.readdirSync tpath
+	for f in list
+		file = path.join tpath, f
+
 # Get list of all files under `basePath`
 # all item is absoulte path
 getDataObj = (tpath)->
