@@ -27,8 +27,8 @@ exports.create = function(gConfig) {
     app.set('proxy setting', gConfig.proxy);
     app.set('static resource', gConfig.path["public"]);
     app.set('views', gConfig.path.views);
-	// app.set('view engine', 'fed_ftl');
-	app.engine("ftl", plugin.load("fed_ftl").__express);
+	app.set('view engine', 'ejs');
+    app.engine("ftl", plugin.load("fed_ftl").__express);
     app.use(express.favicon());
 
     // Will print every request log

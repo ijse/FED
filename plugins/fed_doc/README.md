@@ -21,14 +21,16 @@ Make doc for fed backend
 
 	[
 		{
-			package: "/artical",
+			folder: "/artical",
+			leaf: false,
 			items: [
 				{
-					package: "/artical",
+					folder: "/artical",
+					leaf: true,
 					class: "filename",
 					title: "",
 					desc: "",
-					authro: "",
+					author: "",
 					method: "get",
 					async: true,
 					URI: "/artical/list",
@@ -37,6 +39,16 @@ Make doc for fed backend
 						{ arg: "del", intro: ""}
 					],
 					return: ""
+				}, {
+					folder: "/artical/list",
+					leaf: false,
+					items: [
+						{
+							folder: "/artical/list",
+							leaf: false,
+							class: "filename"
+						}
+					]
 				}
 			]
 		}

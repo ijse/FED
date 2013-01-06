@@ -15,6 +15,7 @@ getDataList = (tpath, basePath)->
 		packageName = path.basename basePath
 	else
 		packageName = tpath.replace basePath, ""
+
 	list = fs.readdirSync tpath
 	for f in list
 		file = path.join tpath, f
@@ -22,7 +23,10 @@ getDataList = (tpath, basePath)->
 			result.push {
 				"package": packageName
 			}
+	return
 
+# TODO: NEED TO REDESIGN DATA CONSTRUCTOR!!!
+#
 # Get list of all files under `basePath`
 # all item is absoulte path
 getDataObj = (tpath)->

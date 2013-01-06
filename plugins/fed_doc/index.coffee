@@ -15,12 +15,18 @@ exports.makeDoc = (bpath, toFile)->
 	# Get data tree
 	objList = dataHelper.getDataObj bpath
 
-	writeToFile objList, toFile, tpl
+	html = makeHtml objList, tpl
+
+	writeToFile toFile, html
+
 	return
 
 
 #TODO: Render template with datas
-makeHtml = (objList, filename, template)->
+makeHtml = (objList, template)->
+	tpl = ejs.compile template
+	return tpl objList
 
 #TODO: Write to file
 writeToFile = (filename, html)->
+	fs.writeFileSync(filename, html)
