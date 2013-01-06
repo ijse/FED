@@ -83,5 +83,10 @@ describe "ftl.jar 模板处理功能测试：", ->
 			assert.notEqual(data.indexOf("<li>egg</li>"), -1)
 			done()
 
-
+	it "处理含有继承的模板", (done)->
+		ftlRender "child", {}, (err, data) ->
+			if err then done err
+			assert.notEqual(data.indexOf("<title>newTitle"), -1)
+			assert.notEqual(data.indexOf("<h3>newBody"), -1)
+			done()
 

@@ -19,7 +19,9 @@ request = Request(localServer.create {
 		public: __dirname + "/res/public",
 		backend: __dirname + "/res/backend",
 	},
-	useProxy: false
+	proxy: {
+		enable: false
+	}
 })
 
 describe "基本功能测试", ->

@@ -18,6 +18,10 @@ getDataList = (tpath, basePath)->
 	list = fs.readdirSync tpath
 	for f in list
 		file = path.join tpath, f
+		if fs.lstatSync(file).isDirectory()
+			result.push {
+				"package": packageName
+			}
 
 # Get list of all files under `basePath`
 # all item is absoulte path

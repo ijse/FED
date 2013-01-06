@@ -11,5 +11,9 @@ module.exports = {
 	},
 	"post /post-with-param": function(req, res, next) {
 		this.render.text("hello, " + req.param("name"));
+	},
+
+	"get /testOverride": function() {
+		this.render.ftl("child", {});
 	}
 };

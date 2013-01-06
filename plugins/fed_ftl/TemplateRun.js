@@ -5,7 +5,9 @@
  */
 var spawn = require('child_process').spawn;
 var iconv = require("iconv-lite");
+var path = require("path");
 
+var jarFile = path.join(__dirname, "/FMtoll-0.5.jar");
 //
 // args:
 //	data - data model
@@ -15,7 +17,7 @@ exports.processTemplate = function(args) {
 	var dataModel = JSON.stringify(args.data);
 	var settings = JSON.stringify(args.settings);
 
-	var cmd = spawn('java', ["-jar", __dirname + "/FMtoll.jar",
+	var cmd = spawn('java', ["-jar", jarFile,
 			settings,
 			args.fileName,
 			dataModel ]);
