@@ -18,5 +18,8 @@ module.exports = {
 				}]
 			}]
 		});
+	},
+	"get /t": function(req, res) {
+		this.render.ftl("folder/aa", {});
 	}
 };

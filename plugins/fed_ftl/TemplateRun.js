@@ -16,6 +16,7 @@ var jarFile = path.join(__dirname, "/FMtoll-0.5.jar");
 exports.processTemplate = function(args) {
 	var dataModel = JSON.stringify(args.data);
 	var settings = JSON.stringify(args.settings);
+	var resultData;
 
 	var cmd = spawn('java', ["-jar", jarFile,
 			settings,
@@ -25,10 +26,14 @@ exports.processTemplate = function(args) {
 
 	if(args.callback) {
 		cmd.stdout.on("data", function(data) {
-			args.callback(null, iconv.decode(data, 'gbk'));
+			// args.callback(null, iconv.decode(data, 'gbk'));
+			resultData += iconv.decode(data, 'gbk');
 		});
 		cmd.stderr.on("data", function(data) {
 			args.callback(iconv.decode(data, 'gbk'));
+		});
+		cmd.stdout.on("end", function() {
+			args.callback(null, resultData);
 		});
 	}
 };
