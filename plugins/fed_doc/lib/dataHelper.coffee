@@ -37,24 +37,25 @@ getDataObj = (tpath)->
 		file = path.join(tpath, f)
 		if fs.lstatSync(file).isDirectory()
 			result.push {
-				"package": tpackage
-				"files": getDataObj file
+				"name": tpackage
 				"leaf": false
+				"children": getDataObj file
 			}
 		else
-			routeList = processFile(file);
-			result.push {
-				package: tpackage
-				class: f
-				file: file
-				leaf: true
-				routeList: routeList
-			}
+			routeList = processFile(file, tpackage, f);
+			if routeList.length > 0
+				result.push {
+					"name": tpackage
+					"leaf": false
+					"class": f
+					"file": file
+					"children": routeList
+				}
 
 	return result
 
 # Process the routes in file
-processFile = (file)->
+processFile = (file, tpackage, f)->
 	result = []
 	# Include route file, get all definitions
 	routes = require file
@@ -65,6 +66,7 @@ processFile = (file)->
 		fnDef = routeFn.toString()
 		# comment info obj
 		tobj = parser.parse(fnDef, route)
+		tobj.class = "#{tpackage}/#{f}"
 		result.push tobj
 
 	return result

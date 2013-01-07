@@ -22,7 +22,7 @@ var localServer = require("./localServer");
 
 var gConfig = require("./globalConfig");
 
-//TODO: Add commander support
+// Add commander support
 commander
 	.version(VERSION)
 	.option('-P, --port <n>', 'Local server listen port')
@@ -40,6 +40,7 @@ commander
 
 commander.parse(process.argv);
 
+// Inherit config
 var gConfig = require(commander.configFile);
 gConfig.port = commander.port || gConfig.port;
 gConfig.proxy.enable = typeof commander.useProxy === "undefined" ? gConfig.proxy.enable : !!commander.useProxy;

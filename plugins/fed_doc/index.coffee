@@ -11,11 +11,14 @@ dataHelper = require("./lib/dataHelper")
 ejs = require("ejs")
 
 exports.makeDoc = (bpath, toFile)->
-	tpl = "/template/backbone-style.ejs"
+	tpl = "#{__dirname}/template/backbone-style.ejs"
+	tplCnt = fs.readFileSync(tpl);
+
 	# Get data tree
 	objList = dataHelper.getDataObj bpath
+	console.log objList
 
-	html = makeHtml objList, tpl
+	html = makeHtml { data: objList }, "" + tplCnt
 
 	writeToFile toFile, html
 
@@ -24,7 +27,7 @@ exports.makeDoc = (bpath, toFile)->
 
 #TODO: Render template with datas
 makeHtml = (objList, template)->
-	tpl = ejs.compile template
+	tpl = ejs.compile template, {compileDebug: true}
 	return tpl objList
 
 #TODO: Write to file

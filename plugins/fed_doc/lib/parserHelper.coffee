@@ -10,8 +10,8 @@ exports.parse = (fnDef, cmd)->
 	# return {} if not cmtStr
 	return {
 		# parse from comment content
-		leaf: false
-		title: parser.getTitle cmtStr
+		name: parser.getTitle cmtStr
+		leaf: true
 		author: parser.getAuthor cmtStr
 		desc: parser.getDesc cmtStr
 		params: parser.getParams cmtStr
@@ -28,7 +28,7 @@ exports.parse = (fnDef, cmd)->
 
 parser = {
 	getTitle: (str)->
-		reg = /(.*)[\r\n]/g
+		reg = /([^\r\n]*)[\r\n]/g
 		reg.exec(str)?[1]?.trim()
 
 	getAuthor: (str)->
@@ -58,10 +58,10 @@ parser = {
 		reg.test(str)
 
 	getURI: (str)->
-		str.split(" ")?[1]?
+		str.split(" ")?[1]
 
 	getMethod: (str)->
-		str.split(" ")?[0]?
+		str.split(" ")?[0]
 
 }
 

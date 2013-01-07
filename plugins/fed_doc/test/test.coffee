@@ -8,4 +8,4 @@ fedDoc = require "../index.coffee"
 
 describe "FED_DOC", ->
 	it "Should get object list", ->
-		objList = fedDoc.makeDoc("#{__dirname}/res")
+		objList = fedDoc.makeDoc("#{__dirname}/res", "#{__dirname}/testOut.html")
