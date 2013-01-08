@@ -13,7 +13,7 @@
 <% function outputBrunch(obj) { %>
   <li>
     <% if(obj.class) { %>
-      <label for="folder-<%=obj.name %>"><%=obj.name %></label>
+      <label for="folder-<%=obj.name %>"><%=obj.class %></label>
       <input type="checkbox" id="folder-<%=obj.name %>">
     <% } else { %>
       <label for="file-<%=obj.name %>"><%=obj.name %></label>
@@ -47,15 +47,54 @@
     %>
     <!-- /The file -->
 <% } %>
-<% function printRoute(obj) { %>
+<% function printRoute(obj, i, o, p, q) { %>
     <!-- Route -->
     <p id="<%=(obj.method + obj.URI) %>">
       <b><%=obj.name %></b> <code><tt><%=obj.method %></tt> <%=obj.URI %></code> <br/>
       <%-obj.desc %>
       <ul>
+        <% if(obj.params && obj.params.length > 0) { %>
+        <!-- Params -->
+          <li>
+            <tt>@params：</tt>
+            <ol>
+              <% for(i=0; o=obj.params[i], i<obj.params.length; i++) { %> 
+                <li>
+                  <b><%=o.arg %></b> <%=o.desc %>
+                </li>
+              <% } %>
+            </ol>
+          </li>
+        <% } %>
+
+        <% if(obj.meta) { %>
+        <!-- Meta info -->
+          <% for(o in obj.meta) { %>
+            <% if(obj.meta[o] instanceof Array) { %>
+              <li>
+                <tt>@<%=o %>：</tt>
+                <ol>
+                  <% for(p=0; q=obj.meta[o][p], p<obj.meta[o].length; p++) { %>
+                    <li>
+                      <%=q %>
+                    </li>
+                  <% } %>
+                </ol>
+              </li>
+            <% } else { %>
+              <li>
+                <tt>@<%=o %>：</tt> <%=obj.meta[o] %>
+              </li>
+            <% } %>
+          <% } %>
+        <% } %>
+
+        <% if(obj.return) { %>
+        <!-- Return -->
         <li>
-          <tt>@author:</tt> <%=obj.author %>
+          <tt>@return：</tt> <%=obj.return %>
         </li>
+        <% } %>
       </ul>
     </p>
 <pre>

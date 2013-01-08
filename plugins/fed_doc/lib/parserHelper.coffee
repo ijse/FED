@@ -8,14 +8,16 @@ fs = require "fs"
 exports.parse = (fnDef, cmd)->
 	cmtStr = getCommentStr fnDef
 	# return {} if not cmtStr
-	return {
+	result = {
 		# parse from comment content
 		name: parser.getTitle cmtStr
 		leaf: true
-		author: parser.getAuthor cmtStr
-		desc: parser.getDesc cmtStr
+
+		# author: parser.getAuthor cmtStr
+		# desc: parser.getDesc cmtStr
 		params: parser.getParams cmtStr
 		return: parser.getReturn cmtStr
+		meta: parser.getMeta cmtStr
 
 		# parse from define body
 		fnCmt: cmtStr
@@ -25,18 +27,28 @@ exports.parse = (fnDef, cmd)->
 		method: parser.getMethod cmd
 	}
 
+	return result
+
 
 parser = {
 	getTitle: (str)->
 		reg = /([^\r\n]*)[\r\n]/g
 		reg.exec(str)?[1]?.trim()
 
-	getAuthor: (str)->
-		reg = /@author\s(.*)/mgi
-		reg.exec(str)?[1]?.trim()
-
 	getDesc: (str)->
 		reg = /[\r\n]([\s\S]*?)@/mgi
+		reg.exec(str)?[1]?.trim()
+
+	getURI: (str)->
+		str.split(" ")?[1]
+
+	getMethod: (str)->
+		str.split(" ")?[0]
+
+
+
+	getAuthor: (str)->
+		reg = /@author\s(.*)/mgi
 		reg.exec(str)?[1]?.trim()
 
 	getParams: (str)->
@@ -57,11 +69,27 @@ parser = {
 		reg = /@async(?!\s*false)/mi
 		reg.test(str)
 
-	getURI: (str)->
-		str.split(" ")?[1]
 
-	getMethod: (str)->
-		str.split(" ")?[0]
+
+	getMeta: (str)->
+		result = {}
+		reg = /@([^\s]*)\s(.*)\s([^@]*)(?=@|\*\/)/mgi
+		loop
+			res = reg.exec(str)
+			if res
+				keyName = res[1]
+				if keyName in ["param", "return"] then continue
+				if result[keyName] && result[keyName] instanceof Array
+					result[keyName].push res[2]
+				else if not result[keyName]
+					result[keyName] = res[2]
+				else
+					result[keyName] = [ result[keyName] ]
+					result[keyName].push res[2]
+				console.log res
+				console.log "result:>>>>", result
+			break if not res
+		return result
 
 }
 

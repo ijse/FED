@@ -27,7 +27,7 @@
    
   <li> 
      
-      <label for="folder-res">res</label> 
+      <label for="folder-res">a.js</label> 
       <input type="checkbox" id="folder-res"> 
      
        
@@ -55,6 +55,34 @@
  
   <li> 
      
+      <label for="folder-res">b.js</label> 
+      <input type="checkbox" id="folder-res"> 
+     
+       
+  <ol class="tree"> 
+   
+  <li class="file"> 
+     
+     
+    <a href="#get/testssssss" 
+        title="get /testssssss" >Test Title</a> 
+     
+  </li> 
+ 
+  <li class="file"> 
+     
+     
+    <a href="#get/artical/listfffffff" 
+        title="get /artical/listfffffff" >Test Title2</a> 
+     
+  </li> 
+ 
+  </ol> 
+ 
+  </li> 
+ 
+  <li> 
+     
       <label for="file-res">res</label> 
       <input type="checkbox" id="file-res"> 
      
@@ -63,7 +91,7 @@
    
   <li> 
      
-      <label for="folder-fo">fo</label> 
+      <label for="folder-fo">c.js</label> 
       <input type="checkbox" id="folder-fo"> 
      
        
@@ -101,11 +129,50 @@
     <!-- Route --> 
     <p id="get/test"> 
       <b>Test Title</b> <code><tt>get</tt> /test</code> <br/> 
-      some description 
+       
       <ul> 
-        <li> 
-          <tt>@author:</tt> ijse 
-        </li> 
+         
+        <!-- Params --> 
+          <li> 
+            <tt>@params：</tt> 
+            <ol> 
+                
+                <li> 
+                  <b>name</b> username 
+                </li> 
+                
+                <li> 
+                  <b>pass</b> password 
+                </li> 
+               
+            </ol> 
+          </li> 
+         
+ 
+         
+        <!-- Meta info --> 
+           
+             
+              <li> 
+                <tt>@author：</tt> ijse 
+              </li> 
+             
+           
+             
+              <li> 
+                <tt>@async：</tt> true 
+              </li> 
+             
+           
+             
+              <li> 
+                <tt>@abcdfeg：</tt> adkjf aeirjwi woef ofasdkf jhkasldjf klasjdkfl ask 
+              </li> 
+             
+           
+         
+ 
+         
       </ul> 
     </p> 
 <pre> 
@@ -116,6 +183,7 @@ function () {
 		 *
 		 * @author ijse
 		 * @async true
+		 * @abcdfeg adkjf aeirjwi woef ofasdkf jhkasldjf klasjdkfl ask
 		 * @param name username
 		 * @param pass password
 		 * @return success|fail
@@ -128,11 +196,136 @@ function () {
     <!-- Route --> 
     <p id="get/artical/list"> 
       <b>Test Title2</b> <code><tt>get</tt> /artical/list</code> <br/> 
-      some description 
+       
       <ul> 
-        <li> 
-          <tt>@author:</tt> ijse 
-        </li> 
+         
+ 
+         
+        <!-- Meta info --> 
+           
+             
+              <li> 
+                <tt>@author：</tt>  ijse 
+              </li> 
+             
+           
+         
+ 
+         
+      </ul> 
+    </p> 
+<pre> 
+function () {
+		/**
+		 * Test Title2
+		 * some description
+		 * @author  ijse
+		 * @async false
+		 */
+		this.render.ftl(&quot;index&quot;, {
+			&quot;title&quot;: &quot;hello&quot;,
+			&quot;message&quot;: &quot;index page&quot;,
+			&quot;mylist&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
+		});
+	} 
+</pre> 
+    <!--/Route --> 
+ 
+ 
+    <!-- /The file --> 
+ 
+    <!-- The file --> 
+     
+    <h2 id="res/b.js" 
+      title="D:\Workspace\FED\plugins\fed_doc\test\res\b.js">res/b.js</h2> 
+     
+   
+    <!-- Route --> 
+    <p id="get/testssssss"> 
+      <b>Test Title</b> <code><tt>get</tt> /testssssss</code> <br/> 
+       
+      <ul> 
+         
+        <!-- Params --> 
+          <li> 
+            <tt>@params：</tt> 
+            <ol> 
+                
+                <li> 
+                  <b>name</b> username 
+                </li> 
+                
+                <li> 
+                  <b>pass</b> password 
+                </li> 
+               
+            </ol> 
+          </li> 
+         
+ 
+         
+        <!-- Meta info --> 
+           
+             
+              <li> 
+                <tt>@author：</tt> ijse 
+              </li> 
+             
+           
+             
+              <li> 
+                <tt>@async：</tt> true 
+              </li> 
+             
+           
+             
+              <li> 
+                <tt>@abcdfeg：</tt> adkjf aeirjwi woef ofasdkf jhkasldjf klasjdkfl ask 
+              </li> 
+             
+           
+         
+ 
+         
+      </ul> 
+    </p> 
+<pre> 
+function () {
+		/**
+		 * Test Title
+		 *  some description
+		 *
+		 * @author ijse
+		 * @async true
+		 * @abcdfeg adkjf aeirjwi woef ofasdkf jhkasldjf klasjdkfl ask
+		 * @param name username
+		 * @param pass password
+		 * @return success|fail
+		 */
+		this.render.text(&quot;hello fed&quot;);
+	} 
+</pre> 
+    <!--/Route --> 
+ 
+    <!-- Route --> 
+    <p id="get/artical/listfffffff"> 
+      <b>Test Title2</b> <code><tt>get</tt> /artical/listfffffff</code> <br/> 
+       
+      <ul> 
+         
+ 
+         
+        <!-- Meta info --> 
+           
+             
+              <li> 
+                <tt>@author：</tt>  ijse 
+              </li> 
+             
+           
+         
+ 
+         
       </ul> 
     </p> 
 <pre> 
@@ -167,11 +360,22 @@ function () {
     <!-- Route --> 
     <p id="get/test"> 
       <b>Test Title22222</b> <code><tt>get</tt> /test</code> <br/> 
-      some description 
+       
       <ul> 
-        <li> 
-          <tt>@author:</tt> ijse 
-        </li> 
+         
+ 
+         
+        <!-- Meta info --> 
+           
+             
+              <li> 
+                <tt>@author：</tt>  ijse 
+              </li> 
+             
+           
+         
+ 
+         
       </ul> 
     </p> 
 <pre> 

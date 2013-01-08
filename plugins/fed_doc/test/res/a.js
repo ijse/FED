@@ -6,6 +6,7 @@ module.exports = {
 		 *
 		 * @author ijse
 		 * @async true
+		 * @abcdfeg adkjf aeirjwi woef ofasdkf jhkasldjf klasjdkfl ask
 		 * @param name username
 		 * @param pass password
 		 * @return success|fail
