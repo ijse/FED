@@ -98,6 +98,10 @@ function importLogic(root, app) {
             //     obj.watch(fed(app));
             // }
             for(var cmd in obj) {
+                // Discard cmd start with ~
+                if(/^~/.test(cmd)) {
+                    continue;
+                }
                 if(obj.hasOwnProperty(cmd)) {
                     applyRoutes(cmd, obj[cmd], app);
                 }
