@@ -28,7 +28,7 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 
 	$> git clone https://github.com/ijse/FED
 
-3. 修改配置文件"fedProj/FED/configs/index.json"
+3. 修改配置文件 "fedProj/FED/configs/index.json"
 
 4. 安装依赖:
 
@@ -52,9 +52,9 @@ backend是模拟后台数据代码，可使用JS以简单的JSON格式描述后�
 
 backend的主要作用是描述：
 
-	1. HTTP请求方法和URL
-	2. 请求接收参数
-	3. 请求返回数据
+1. HTTP请求方法和URL
+2. 请求接收参数
+3. 请求返回数据
 
 前端页面（页面模板、JS）与以上三点是直接相关的，而作为前端，撰写backend也只需要写好以上三点即可，无需关心具体的业务实现逻辑及数据存取。（当然，也可以写简单的业务逻辑和数据存取，只是这些与前端页面展现无关）我们需要的仅仅是一个后端接口，关心的是请求方法和数据，测试中这样的东西叫“桩”。
 
@@ -69,10 +69,11 @@ backend的主要作用是描述：
 	};
 
 说明：
-	1. 每个backend文件都只是个js文件
-	2. 需要具有`module.exports = {}`, 且只能暴露这种格式接口
-	3. `"get /test"`表示HTTP get请求，请求路径是/test
-	4. `function(){...}`中定义了数据及返回方式，`this.render`对象中封装了一些常用的数据返回打包工具。
+
+1. 每个backend文件都只是个js文件
+2. 需要具有`module.exports = {}`, 且只能暴露这种格式接口
+3. `"get /test"`表示HTTP get请求，请求路径是/test
+4. `function(){...}`中定义了数据及返回方式，`this.render`对象中封装了一些常用的数据返回打包工具。
 
 在backend中我们也可以获得标准的request和response对象，于是便可以做更多的操作：
 
