@@ -1,10 +1,13 @@
 {
   "name": "FED",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "start.js",
   "directories": {
     "test": "test"
+  },
+  "bin": {
+    "fed": "./launcher.js"
   },
   "dependencies": {
     "express": "~3.0.0beta7",
