@@ -60,13 +60,15 @@ backend的主要作用是描述：
 
 以下是一个最简单的例子， 浏览器中访问/test, 将会调用folder/test.ftl模板，并向内添加变量"articalName",其值是"Hello~!":
 
-	module.exports = {
-		"get /test": function() {
-			this.render.ftl("folder/test", {
-				"articalName": "Hello~!"
-				});
-		}
-	};
+```javascript
+module.exports = {
+	"get /test": function() {
+		this.render.ftl("folder/test", {
+			"articalName": "Hello~!"
+			});
+	}
+};
+```
 
 说明：
 
@@ -77,40 +79,46 @@ backend的主要作用是描述：
 
 在backend中我们也可以获得标准的request和response对象，于是便可以做更多的操作：
 
-	"post /regist": function(req, res) {
-		var name = req.param("username");
-		var pass = req.param("password");
+```javascript
+"post /regist": function(req, res) {
+	var name = req.param("username");
+	var pass = req.param("password");
 
-		if(username == "ijse") {
-			this.render.ftl("succ.ftl", {
-				success: true,
-				user: {
-					name: "ijse",
-				}
-			});
-		} else {
-			this.render.ftl("fail.ftl", {
-				success: false,
-				error: "Username wrong!!"
-			});
-		}
+	if(username == "ijse") {
+		this.render.ftl("succ.ftl", {
+			success: true,
+			user: {
+				name: "ijse",
+			}
+		});
+	} else {
+		this.render.ftl("fail.ftl", {
+			success: false,
+			error: "Username wrong!!"
+		});
 	}
+}
+```
 
 上面例子中，我们使用`req`来获得表单POST提交的参数，并作了简单的逻辑判断，然后根据判断结果分别返回了不同的视图和数据。
 
 因为FED是基于express做的，站在巨人的肩膀上，因此所能做的其实更多，同样也可以支持RESTful格式的URL：
 
-	"post /show/:id": function(req, res) {
-		var id = req.param("id");
-		...
-	}
+```javascript
+"post /show/:id": function(req, res) {
+	var id = req.param("id");
+	...
+}
+```
 
 另外，返回的数据还可以是文件：
 
-	"post /download/:id": function(req, res) {
-		var id = req.param("id");
-		res.sendfile("path/to/file");
-	}
+```javascript
+"post /download/:id": function(req, res) {
+	var id = req.param("id");
+	res.sendfile("path/to/file");
+}
+```
 
 或者其它更多, 完全可以满足我们需求，可以完全模拟一个后端实现。
 
@@ -118,18 +126,20 @@ backend的主要作用是描述：
 
 一直认为注释不应该有太严格的格式，不应该写起来太繁琐。本着简单和实用的原则，在FED中写backend接口注释很简单, 以上面下载文件的例子：
 
-	"post /download/:id": function(req, res) {
-		/**
-		 * 根据ID下载文件
-		 *	直接返回文件实体，浏览器打开保存文件对话框
-		 *
-		 * @author ijse
-		 * @param id 要下载的文件ID
-		 * @return 对应文件
-		 */
-		var id = req.param("id");
-		res.sendfile("path/to/file");
-	}
+```javascript
+"post /download/:id": function(req, res) {
+	/**
+	 * 根据ID下载文件
+	 *	直接返回文件实体，浏览器打开保存文件对话框
+	 *
+	 * @author ijse
+	 * @param id 要下载的文件ID
+	 * @return 对应文件
+	 */
+	var id = req.param("id");
+	res.sendfile("path/to/file");
+}
+```
 
 注释不是强制的，但最后在注释中写明接口名称、请求参数、返回数据格式。所唯一要注意的是：
 	1. 注释要在方法内
