@@ -16,7 +16,6 @@ exports.makeDoc = (bpath, toFile)->
 
 	# Get data tree
 	objList = dataHelper.getDataObj bpath
-	console.log objList
 
 	html = makeHtml { data: objList }, "" + tplCnt
 

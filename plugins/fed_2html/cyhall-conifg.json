@@ -1,0 +1,17 @@
+{
+	"engine": "ejs",
+	"basePath": "/",
+	"savePath": "../cyhallHtml",
+	"global": {
+		"basePath": "http://app.changyou.com"
+	},
+	"pages": [
+		{
+			"filename": "index.html",
+			"view": "index.ejs",
+			"data": {
+				""
+			}
+		}
+	]
+}
