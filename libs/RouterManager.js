@@ -3,7 +3,7 @@
  *
  * @author  ijse
  */
-
+var coffeescript = require('coffee-script');
 var path = require('path');
 var fs = require('fs');
 

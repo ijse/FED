@@ -28,6 +28,7 @@
 		"fed_ftl": {
 			"arg": "test"
 		},
+		"fed_doc": {},
 		"sample": {
 		}
 	}

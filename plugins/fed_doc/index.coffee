@@ -10,6 +10,18 @@ fs = require("fs")
 dataHelper = require("./lib/dataHelper")
 ejs = require("ejs")
 
+
+exports.init = (opts)->
+	this.on "commandinit", (cmd)->
+		cmd
+		.command('doc')
+		.option('-d, --destination <dest>", "where to save the doc')
+		.description('Show help')
+		.action (cmd)->
+			console.log cmd.destination
+			process.exit()
+
+
 exports.makeDoc = (bpath, toFile)->
 	tpl = "#{__dirname}/template/backbone-style.ejs"
 	tplCnt = fs.readFileSync(tpl);

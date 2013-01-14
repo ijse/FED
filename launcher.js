@@ -14,6 +14,7 @@
 var VERSION = require("./package.json").version;
 var commander = require("commander");
 var path = require("path");
+var fedUtil = require("./libs/fedUtil.js");
 
 var proxyServer = require("./proxyServer");
 var localServer = require("./localServer");
@@ -24,12 +25,11 @@ var gConfig = require("./configs/index.json");
 // Start plugin system
 plugin.init(gConfig.plugin);
 
-
 // Add commander support
 commander
 	.version(VERSION)
 	.option('-P, --port <n>', 'Local server listen port')
-	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./config.json" as default', "./config.json")
+	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./configs/index.json" as default', "./configs/index.json")
 	.option('--useProxy', 'Use reverse proxy server');
 
 // Help command
@@ -54,12 +54,11 @@ gConfig.proxy.enable = typeof commander.useProxy === "undefined" ? gConfig.proxy
 
 
 // Convert path
-gConfig.path = convPath(gConfig.path);
+gConfig.path = fedUtil.convPath(__dirname, gConfig.path);
 
 
 //!!PLUGIN EMIT
 plugin.emit("commandinit", commander);
-
 
 // Create and run proxy server
 if(gConfig.proxy.enable) {
@@ -75,17 +74,3 @@ var localServicePort = gConfig.port || process.env.PORT || 3000;
 localServer.create(gConfig).listen(localServicePort, function () {
     console.log("FED server listening on port " + gConfig.port);
 });
-
-// Convert Path Object
-// ===================
-// convert path to normal style.
-// @param pathObj ={ item: path, ...}
-// @return pathObj
-function convPath(pathObj) {
-	for(var i in pathObj) {
-		var p = pathObj[i];
-		p = p[0] == "." ? path.join(__dirname, p) : path.normalize(p);
-		pathObj[i] = p;
-	}
-	return pathObj;
-}
