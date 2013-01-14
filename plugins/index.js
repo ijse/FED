@@ -6,6 +6,7 @@
  */
 //TODO: Design Plugin System
 
+var coffeescript = require("coffee-script");
 var EventEmitter = require("events").EventEmitter;
 
 var PluginManager = Object.create(EventEmitter.prototype);

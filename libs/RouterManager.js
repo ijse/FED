@@ -22,8 +22,8 @@ function importLogic(root, app) {
         if ((fs.lstatSync(file)).isDirectory()) {
             importLogic(file, app);
         } else {
-            // Only .js file will be use
-            if (path.extname(file) !== '.js') {
+            // Only .js and .coffee file will be use
+            if (!path.extname(file).match(/(.js|.coffee)/)) {
                 continue;
             }
             obj = require(file);
