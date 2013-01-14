@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * FED Launcher
  *
@@ -16,8 +17,9 @@ var path = require("path");
 
 var proxyServer = require("./proxyServer");
 var localServer = require("./localServer");
+var plugin = require("./plugins");
 
-var gConfig = require("./configs");
+var gConfig = require("./configs/index.json");
 
 // Add commander support
 commander
@@ -37,6 +39,10 @@ commander
 
 commander.parse(process.argv);
 
+
+
+
+
 // Inherit config
 var gConfig = require(commander.configFile);
 gConfig.port = commander.port || gConfig.port;
@@ -46,7 +52,12 @@ gConfig.proxy.enable = typeof commander.useProxy === "undefined" ? gConfig.proxy
 // Convert path
 gConfig.path = convPath(gConfig.path);
 
+
+
 //TODO: Regist plugins, apply configuration, add hooks
+plugin.init(gConfig.plugin);
+
+
 
 // Create and run proxy server
 if(gConfig.proxy.enable) {

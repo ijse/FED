@@ -1,49 +1,59 @@
 /**
  * Plugins manager
+ * Life-Circle from begin to end
+ *
  * @author  ijse
  */
 //TODO: Design Plugin System
 
 var EventEmitter = require("events").EventEmitter;
-// var pluginList = require("./config.json");
-
-// hook in app
-var hooks = [];
-
-var hook = {
-	"local_server_init": {},
-	"local_server_before_route": {},
-	"local_server_after_route": {}
-};
 
 var PluginManager = Object.create(EventEmitter.prototype);
 
-PluginManager.init = function(opts) {
-	var pluginList = opts.enablePlugins;
+PluginManager.init = function(pluginList) {
+	if(global.plugins) {
+		return ;
+	} else {
+		global.plugins = {};
+	}
 	for(var name in pluginList) {
 		// plugin configs
-		var pluginObj = pluginList[name];
+		var pluginConfigs = pluginList[name];
 		// load plugin instance
-		var plugin;
+		// Every plugin only exports the interface that
+		// PluginManager saved
+		var plugin, pInterface;
 		try {
-			plugin = require(name);
+			// load plugin class
+			plugin = require("./" + name);
+
+			// Initalize plugin with configs, and get the instance
+			pInterface = plugin.init.call(PluginManager, pluginConfigs);
+
+			// Add to repo
+			global.plugins[name] = pInterface || plugin;
+
+			console.log("Plugin[" + name + "] load success!");
 		} catch(e) {
 			throw "错误：" + name + "插件载入异常！";
 		}
-		// initalize plugin with configs
-		var phook = plugin.config(pluginObj);
-		// add list
-		hooks.push(phook);
 	}
-	return hooks;
+};
+
+// Return the plugin
+PluginManager.require = function(pluginName, opts) {
+	return global.plugins[pluginName];
 };
 
 // Deprecated!!
 PluginManager.load = function(pluginName) {
+	console.error("load() Method has been deprecated! Use require() insead!");
 	return require("./" + pluginName);
 };
 
 // Read all plugins, config them
-// PluginManager.init();
+// if(!global.plugins) {
+//	PluginManager.init(pluginConfig);
+// }
 
 module.exports = PluginManager;

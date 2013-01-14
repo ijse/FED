@@ -1,21 +1,16 @@
 {
 	"host": "app.changyou.com",
-	// 程序启用端口，默认为3000，即http://localhost:3000
 	"port": "3000",
 	"path": {
-		// 页面模板地址
 		"views": "./views",
-		// 模拟后台数据文件
 		"backend": "./backend",
-		// 公共静态资源
 		"public": "./public"
 	},
-	// 模板全局变量
 	"globals": {
+		"baseUrl": "",
 		"basePath": "http://www.ijser.cn/"
 	},
 
-	// 代理设置
 	"proxy": {
 		"enable": false,
 		"port": 80,
@@ -26,6 +21,14 @@
 		"remote": {
 			"host": "123.126.70.39",
 			"port": 80
+		}
+	},
+
+	"plugin": {
+		"fed_ftl": {
+			"arg": "test"
+		},
+		"sample": {
 		}
 	}
 }

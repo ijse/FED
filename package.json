@@ -2,7 +2,7 @@
   "name": "FED",
   "version": "0.0.6",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
-  "main": "start.js",
+  "main": "launcher.js",
   "directories": {
     "test": "test"
   },

@@ -11,24 +11,38 @@
  */
 var express       = require('express');
 var http          = require('http');
-var path          = require("path");
-var fs            = require("fs");
-var util          = require("util");
+var path          = require('path');
 var httpProxy     = require('http-proxy');
-var plugin        = require("./plugins");
+var plugin        = require('./plugins');
+
+var RenderManager = require('./libs/RenderManager.js');
+var RouterManager = require('./libs/RouterManager.js');
+
 var app           = express();
 
 // For proxying request to remote server
 var ProxyInstance = null;
 
+//!!PLUGIN EMIT
+plugin.emit('load');
+
 exports.app = app;
 exports.create = function(gConfig) {
     app.set('proxy support', gConfig.proxy.enable);
     app.set('proxy setting', gConfig.proxy);
-    app.set('static resource', gConfig.path["public"]);
+    app.set('static resource', gConfig.path['public']);
     app.set('views', gConfig.path.views);
 	app.set('view engine', 'ejs');
-    app.engine("ftl", plugin.load("fed_ftl").__express);
+
+    // Define render for response
+    app.set('render manager', new RenderManager());
+
+    //!!PLUGIN EMIT
+    plugin.emit('appinit1', app);
+
+    // Depreacted: old style, use plugin instead
+    // app.engine('ftl', plugin.load('fed_ftl').__express);
+
     app.use(express.favicon());
 
     // Will print every request log
@@ -44,8 +58,14 @@ exports.create = function(gConfig) {
     app.use(express.cookieParser('ijse'));
     app.use(express.session());
 
+    //!!PLUGIN EMIT
+    plugin.emit('appinit2');
+
     // Now router
     app.use(app.router);
+
+    //!!PLUGIN EMIT
+    plugin.emit('appinit3');
 
     // Continue with proxy request
     if(gConfig.proxy.enable) {
@@ -54,8 +74,11 @@ exports.create = function(gConfig) {
         app.use(proxyServerMidleware);
     }
 
+    //!!PLUGIN EMIT
+    plugin.emit('appinit4');
+
     // Static resources
-    app.use(express["static"](app.get("static resource")));
+    app.use(express['static'](app.get('static resource')));
 
     // No router, proxy fail, no static resource, then throw error
     app.use(express.errorHandler());
@@ -64,7 +87,7 @@ exports.create = function(gConfig) {
     app.locals(gConfig.globals);
 
     // load routes
-    importLogic(gConfig.path.backend, app);
+    RouterManager.loadRoutes(gConfig.path.backend, app);
 
     // Start local-service host, notify address
     var httpServer = http.createServer(app);
@@ -73,108 +96,17 @@ exports.create = function(gConfig) {
 };
 
 
-// Import backend logic
-// ====================
-// @param root  - backend base path
-// @param app   - application object
-function importLogic(root, app) {
-    var list = fs.readdirSync(root);
-    var i = 0, file, obj;
-    for(;i < list.length; i++) {
-        file = path.join(root, list[i]);
-        // All sub directories
-        if ((fs.lstatSync(file)).isDirectory()) {
-            importLogic(file, app);
-        } else {
-            // Only .js file will be use
-            if (path.extname(file) !== ".js") {
-                continue;
-            }
-            obj = require(file);
-            // Call .watch() if exist, with app and renders
-            // >>with fed();
-            // if (obj.watch) {
-            //     //
-            //     obj.watch(fed(app));
-            // }
-            for(var cmd in obj) {
-                // Discard cmd start with ~
-                if(/^~/.test(cmd)) {
-                    continue;
-                }
-                if(obj.hasOwnProperty(cmd)) {
-                    applyRoutes(cmd, obj[cmd], app);
-                }
-            }
-        }
-    }
-}
-
-// Apply Routes
-// ============
-// @param _app app instance
-function applyRoutes(cmd, route, _app) {
-    cmd = cmd.split(" ");
-    var url = cmd[1] || cmd[0];
-    var method = cmd.length < 2 ? "get" : cmd[0];
-    _app[method](url, function(req, res, next) {
-        route.call({
-            app: _app, req: req, res: res, next: next,
-            render: {
-                ftl: ftlRender(res),
-                json: jsonRender(res),
-                text: textRender(res)
-            }
-        }, req, res, next);
-    });
-}
-
-// Route Entry(deprecated)
-// ===========
-// @param _app app instance
-// @return function(cmd, fn)
-function fed(_app) {
-    var foo = function(fn, req, res, next) {
-        fn.call({
-            app: _app, req: req, res: res, next: next,
-            render: {
-                ftl: ftlRender(res),
-                json: jsonRender(res),
-                text: textRender(res)
-            }
-        }, req, res, next);
-    };
-    //TODO: Support midleware
-    return function(cmd, fn) {
-        cmd = cmd.split(" ");
-        var url = cmd[1] || cmd[0];
-        var method = cmd.length < 2 ? "get" : cmd[0];
-        _app[method](url, function(req, res, next) {
-            //Test:
-            //  $>curl -d "name=ijse&_method=put" http://localhost:3000/testput
-            //  $>ijse, Hello World!!
-            if(_app.get("proxy support")) {
-                doBodyParser(_app, req, res, next, function() {
-                    foo(fn, req, res, next);
-                });
-            } else {
-                foo(fn, req, res, next);
-            }
-        });
-    };
-}
 
 // Support express.bodyParser()
 // ======================================
 // Parse request body to support POST request params so that
 // we can use `req.param()` and `req.body`
-function doBodyParser(_app, req, res, next, cb) {
-    express.bodyParser().call(_app, req, res, function(err) {
-        if(err) return next(err);
-        cb();
-    });
-}
-
+// function doBodyParser(_app, req, res, next, cb) {
+//     express.bodyParser().call(_app, req, res, function(err) {
+//         if(err) return next(err);
+//         cb();
+//     });
+// }
 
 // Proxy Server Midleware
 // ======================
@@ -182,7 +114,7 @@ function doBodyParser(_app, req, res, next, cb) {
 // proxy to remote server by configuration
 function proxyServerMidleware(req, res, next) {
     // Check if static resource exist
-    var sfile = path.join(app.get("static resource"), req.path);
+    var sfile = path.join(app.get('static resource'), req.path);
     if(path.existsSync(sfile)) {
         return next();
     }
@@ -191,7 +123,7 @@ function proxyServerMidleware(req, res, next) {
     // buffer so that it won't be lost,
     // !!This is confilced with `methodOverride()`
     var buffer = httpProxy.buffer(req);
-    var proxySetting = app.get("proxy setting");
+    var proxySetting = app.get('proxy setting');
     // Do process
     ProxyInstance.proxyRequest(req, res, {
         host: proxySetting.remote.host,
@@ -200,33 +132,3 @@ function proxyServerMidleware(req, res, next) {
     });
 }
 
-//TODO: Move render to plugin
-
-// Plain Text Render
-// =================
-// @param data  - text data
-function textRender(res) {
-    return function(data) {
-        res.end(data);
-    };
-}
-
-// Ftl Renderer
-// ===========
-// @param tpl    - freemarker template name, without .ftl
-// @param data   - data model
-function ftlRender(res) {
-    return function(tpl, data) {
-        res.set("Content-Type", "text/html");
-        res.render(tpl + ".ftl", data);
-    };
-}
-
-// Json Renderer
-// =============
-// @param data   - data model
-function jsonRender(res) {
-    return function(data) {
-        res.json(data);
-    };
-}
