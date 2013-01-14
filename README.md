@@ -20,23 +20,27 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 
 1. 创建文件夹:
 
-	$> mkdir fedProj
-
+```
+$> mkdir fedProj
+```
 2. 下载FED:
 
-	$> git clone https://github.com/ijse/FED
-
+```
+$> git clone https://github.com/ijse/FED
+```
 3. 修改配置文件 "fedProj/FED/configs/index.json"
 
 4. 安装依赖:
 
-	$> cd fedProj/FED
-	$> npm install
-
+```
+$> cd fedProj/FED
+$> npm install
+```
 5. 启动服务：
 
-	$> node-dev launcher.js
-
+```
+$> node-dev launcher.js
+```
 ## 页面模板说明
 
 目前支持freemarker和ejs两种模板引擎，可以同时使用。
