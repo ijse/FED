@@ -21,6 +21,10 @@ var plugin = require("./plugins");
 
 var gConfig = require("./configs/index.json");
 
+// Start plugin system
+plugin.init(gConfig.plugin);
+
+
 // Add commander support
 commander
 	.version(VERSION)
@@ -37,10 +41,10 @@ commander
 		commander.help();
 	});
 
+//!!PLUGIN EMIT
+plugin.emit("commandinit", commander);
+
 commander.parse(process.argv);
-
-
-
 
 
 // Inherit config
@@ -53,10 +57,8 @@ gConfig.proxy.enable = typeof commander.useProxy === "undefined" ? gConfig.proxy
 gConfig.path = convPath(gConfig.path);
 
 
-
-//TODO: Regist plugins, apply configuration, add hooks
-plugin.init(gConfig.plugin);
-
+//!!PLUGIN EMIT
+plugin.emit("commandinit", commander);
 
 
 // Create and run proxy server

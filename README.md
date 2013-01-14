@@ -151,11 +151,53 @@ module.exports = {
 
 FED的代理功能可实现与后端Tomcat对接，或调试线上代码。替代了使用Nginx的方式，可直接通过配置路由和相关参数实现请求的代理转发。
 
+(todo..)
 
 ## 插件编写规则
 
 FED的核心其实是WEB服务，其它如对FreeMarker模板的支持、生成文档都是以插件的形式添加的，因此扩展性很强，可以为其灵活地添加很多功能，扩展FED。
 
+FED的插件机制在JS灵活性下，约束很小，设计也很简单，但却很实用。在程序启动时，自动初始化插件，然后将插件实例保存供调用。
+
+插件编写起来也非常简单，主要遵循以下两个约定：
+
+1. 所有插件均放在/plugins目录下，插件文件夹名字即是插件名称
+2. 每个插件入口是`index.js`文件，且此文件中包含`init()`接口
+
+下面是一个插件示例：
+
+	exports.init = function(opts) {
+		this.on("appinit1", function(app) {
+			app.set("some variable", "hello world");
+		});
+	};
+
+	exports.doSth = function() {
+		return "Hello";
+	}
+
+上面插件在初始化第一阶段时，为`app`添加了变量，并暴露了`doSth()`接口。
+
+说明：
+
+* `exports.init()`方法无返回值时，默认返回`exports`对象。
+* `exports.init()`方法会有一个opts参数，这参数即插件配置参数，在程序启动配置文件中配置。
+* `this.on()`可以绑定插件执行事件，目前主要绑定事件见下文。
+
+附：
+  插件可绑定的事件如下：
+
+  1. appinit1
+  2. appinit2
+  3. appinit3
+  4. appinit4
+  5. midbefore
+  6. midafter
+  7. commandinit
+  8. localserverstart
+  9. proxyserverstart
+
+具体事件介绍，请大家看源码，搜索"//!!PLUGIN EMIT"。
 
 
 ## FED的其它集成工具(TODO)

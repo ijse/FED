@@ -23,9 +23,6 @@ var app           = express();
 // For proxying request to remote server
 var ProxyInstance = null;
 
-//!!PLUGIN EMIT
-plugin.emit('load');
-
 exports.app = app;
 exports.create = function(gConfig) {
     app.set('proxy support', gConfig.proxy.enable);
