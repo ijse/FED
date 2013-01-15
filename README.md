@@ -15,6 +15,7 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 * 内含http-proxy模块，支持调试线上代码
 * 真实URL地址访问，与线上访问保持一致
 * 支持基于代码注释标记的文档输出功能
+* 插件机制扩展，满足大部分扩展需求
 
 ## 使用步骤
 
@@ -23,11 +24,13 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 ```
 $> mkdir fedProj
 ```
+
 2. 下载FED:
 
 ```
 $> git clone https://github.com/ijse/FED
 ```
+
 3. 修改配置文件 "fedProj/FED/configs/index.json"
 
 4. 安装依赖:
@@ -36,16 +39,23 @@ $> git clone https://github.com/ijse/FED
 $> cd fedProj/FED
 $> npm install
 ```
+
 5. 启动服务：
 
 ```
-$> node-dev launcher.js
+$> fed -C ./configs/index.json -P 80
 ```
+
+另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;
+
 ## 页面模板说明
 
 目前支持freemarker和ejs两种模板引擎，可以同时使用。
+
 在配置文件中配置全局公共变量，可在任意模板文件里引用。
+
 freemarker模板已经内置对于模板继承的支持，可直接在模板中使用`<@override />`、`<@block />`和`<@extend />`命令；其它与在JAVA环境下写法一致。
+
 freemarker模板文件可直接放到JAVA环境中使用。
 
 ## 怎样写backend
@@ -150,6 +160,11 @@ module.exports = {
 
 如此这般，我们便可以使用fed_doc来直接生成文档了：
 
+```
+$> fed doc -f path/to/backend -d file/to/save.html
+```
+
+文档生成后只有一个HTML文件，可以直接用浏览器打开浏览。
 
 ## 代理功能说明
 
@@ -170,15 +185,17 @@ FED的插件机制在JS灵活性下，约束很小，设计也很简单，但却
 
 下面是一个插件示例：
 
-	exports.init = function(opts) {
-		this.on("appinit1", function(app) {
-			app.set("some variable", "hello world");
-		});
-	};
+```javascript
+exports.init = function(opts) {
+	this.on("appinit1", function(app) {
+		app.set("some variable", "hello world");
+	});
+};
 
-	exports.doSth = function() {
-		return "Hello";
-	}
+exports.doSth = function() {
+	return "Hello";
+}
+```
 
 上面插件在初始化第一阶段时，为`app`添加了变量，并暴露了`doSth()`接口。
 
@@ -202,7 +219,6 @@ FED的插件机制在JS灵活性下，约束很小，设计也很简单，但却
   9. proxyserverstart
 
 具体事件介绍，请大家看源码，搜索"//!!PLUGIN EMIT"。
-
 
 ## FED的其它集成工具(TODO)
 
