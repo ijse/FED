@@ -1,19 +1,25 @@
 module.exports = {
-	"get /test": function() {
-		/**
-		 * dfsdfsd
-		 * adfadfadf
-		 */
-		this.render.text("hello fed");
+	"get /testejs": function (req, res) {
+		res.render("testTree.ejs", {
+			"testEjs": "hello ejs",
+			"data": [{
+				title: "aaaa",
+				leaf: false,
+				files: [{
+					title: "bbbb",
+					leaf: false,
+					files: [{
+						title: "bbb",
+						leaf: true
+					}, {
+						title: "func",
+						leaf: true
+					}]
+				}]
+			}]
+		});
 	},
-	"post /post": function() {
-		this.render.text("hello fed");
-	},
-	"post /post-with-param": function(req, res, next) {
-		this.render.text("hello, " + req.param("name"));
-	},
-
-	"get /testOverride": function() {
-		this.render.ftl("child", {});
+	"get /t": function(req, res) {
+		this.render.ftl("folder/aa", {});
 	}
 };

@@ -10,19 +10,25 @@ fs = require("fs")
 dataHelper = require("./lib/dataHelper")
 ejs = require("ejs")
 
-
 exports.init = (opts)->
 	this.on "commandinit", (cmd)->
 		cmd
 		.command('doc')
-		.option('-d, --destination <dest>", "where to save the doc')
+		.option('-f, --backend <folder>', 'The backend folder')
+		.option('-d, --destination <dest>', 'Where to save the doc')
 		.description('Show help')
 		.action (cmd)->
-			console.log cmd.destination
+			bkPath = cmd.backend
+			bkPath = (path.join process.cwd(), bkPath) if bkPath[0] is "."
+
+			destPath = cmd.destination
+			destPath = (path.join process.cwd(), destPath) if destPath[0] is "."
+
+			makeDoc(bkPath, destPath);
 			process.exit()
 
 
-exports.makeDoc = (bpath, toFile)->
+exports.makeDoc = makeDoc = (bpath, toFile)->
 	tpl = "#{__dirname}/template/backbone-style.ejs"
 	tplCnt = fs.readFileSync(tpl);
 

@@ -8,7 +8,6 @@
 //TODO: Deploy to server by ftp/sftp
 //TODO: Html export
 //TODO: Some more utils: jsCompressor, file utils...
-//TODO: Plugins support
 //TODO: Test suits
 
 var VERSION = require("./package.json").version;
