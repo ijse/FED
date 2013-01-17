@@ -19,8 +19,6 @@ var proxyServer = require("./proxyServer");
 var localServer = require("./localServer");
 var plugin = require("./plugins");
 
-var gConfig = require("./configs/index.json");
-
 // Start plugin system
 plugin.init(gConfig.plugin);
 
@@ -61,7 +59,7 @@ plugin.emit("commandinit", commander);
 
 // Create and run proxy server
 if(gConfig.proxy.enable) {
-	var pSetting = gConfig.proxySetting;
+	var pSetting = gConfig.proxy;
 	proxyServer.create(pSetting).listen(pSetting.port, function() {
 		console.log("Proxy Server listening on " + pSetting.port);
 	});
