@@ -9,6 +9,6 @@ exports.init = function() {
 		console.log("work hard");
 	};
 
-	// Use exports as the interafce
-	return exports;
+	// Default to use exports as the interafce
+	// return exports;
 };

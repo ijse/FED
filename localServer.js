@@ -31,7 +31,8 @@ exports.create = function(gConfig) {
     app.set('views', gConfig.path.views);
 	app.set('view engine', 'ejs');
 
-    // Define render for response
+    // Define renders for response
+    // so that it will be used in router
     app.set('render manager', new RenderManager());
 
     //!!PLUGIN EMIT

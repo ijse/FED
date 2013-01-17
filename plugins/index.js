@@ -4,8 +4,6 @@
  *
  * @author  ijse
  */
-//TODO: Design Plugin System
-
 var coffeescript = require("coffee-script");
 var EventEmitter = require("events").EventEmitter;
 
@@ -34,7 +32,7 @@ PluginManager.init = function(pluginList) {
 			// Add to repo
 			global.plugins[name] = pInterface || plugin;
 
-			console.log("Plugin[" + name + "] load success!");
+			// console.log("Plugin[" + name + "] load success!");
 		} catch(e) {
 			throw "错误：" + name + "插件载入异常！";
 		}

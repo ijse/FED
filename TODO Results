@@ -1,19 +1,14 @@
 + ---------------------------------------------------------------------------- +
-| TODOS @ Thursday 10 January 2013 02:01                                       |
-| 62 files scanned                                                             |
+| TODOS @ Thursday 17 January 2013 02:49                                       |
+| 64 files scanned                                                             |
 + ---------------------------------------------------------------------------- +
 
-## TODO (13)
-1. index.coffee:27  Render template with datas
-2. index.coffee:32  Write to file
-3. index.js:5  Design Plugin System
-4. localServer.js:149  Support midleware
-5. localServer.js:205  Move render to plugin
-6. launcher.js:6  Auto reload when update codes
-7. launcher.js:7  Deploy to server by ftp/sftp
-8. launcher.js:8  Html export
-9. launcher.js:9  Some more utils: jsCompressor, file utils...
-10. launcher.js:10  Plugins support
-11. launcher.js:11  Test suits
-12. launcher.js:49  Regist plugins, apply configuration, add hooks
-13. index.js:11  Add hook when local server initialize
+## TODO (8)
+1. launcher.js:7  Auto reload when update codes
+2. launcher.js:8  Deploy to server by ftp/sftp
+3. launcher.js:9  Html export
+4. launcher.js:10  Some more utils: jsCompressor, file utils...
+5. launcher.js:11  Test suits
+6. index.coffee:45  Render template with datas
+7. index.coffee:50  Write to file
+8. index.js:34  Add hook when local server initialize
