@@ -1,0 +1,18 @@
+{
+	"engine": "ejs",
+	"encoding": "utf-8",
+	"basePath": "./test/res",
+	"savePath": "./test/htmls",
+	"global": {
+		"basePath": "http://app.changyou.com"
+	},
+	"pages": [
+		{
+			"fromView": "/test.ejs",
+			"toFile": "/test.html",
+			"data": {
+				"test": "hello world"
+			}
+		}
+	]
+}
