@@ -15,14 +15,15 @@ exports.init = (opts)->
 	this.on "commandinit", (cmd)->
 		cmd
 		.command('2html')
-		.option('-C, --config <config file>', "the config file")
-		.description('Show help')
+		.option('-C, --config <configFile>', "the config file")
+		.description('exports html')
 		.action (cmd)->
 
 			opts = resolveConfig cmd.config
 
 			# parse files
 			doParse opts
+			# process.exit()
 
 ###
 	Resolve views to file
@@ -46,10 +47,11 @@ doParse = (config, cb)->
 
 			# Render the file
 			tengine.renderFile page.fromView, viewData, (err, data)->
+				throw err if err
 				# Write to dest-file
 				util.writeToFile data, page.toFile, config.encoding
 	# done!
-	cb()
+	cb?()
 	return
 
 
@@ -57,6 +59,7 @@ doParse = (config, cb)->
 	@param {string} cfgFile the config filename
 ###
 resolveConfig = (cfgFile)->
+
 	# Require config file
 	configFile = util.realPath cfgFile
 	opts = require configFile

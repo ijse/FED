@@ -22,14 +22,5 @@
 			"host": "123.126.70.39",
 			"port": 80
 		}
-	},
-
-	"plugin": {
-		"fed_ftl": {
-			"arg": "test"
-		},
-		"fed_doc": {},
-		"sample": {
-		}
 	}
 }

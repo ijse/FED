@@ -43,7 +43,7 @@ $> npm install
 5. 启动服务：
 
 ```
-$> fed -C ./configs/index.json -P 80
+$> fed run -C ./configs/index.json -P 80
 ```
 
 另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;

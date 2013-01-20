@@ -9,7 +9,9 @@ var EventEmitter = require("events").EventEmitter;
 
 var PluginManager = Object.create(EventEmitter.prototype);
 
-PluginManager.init = function(pluginList) {
+PluginManager.init = function() {
+	var pluginList = require("./config.json");
+
 	if(global.plugins) {
 		return ;
 	} else {

@@ -17,23 +17,6 @@ exports.realPath = (filePath)->
 		return path.normalize filePath
 
 
-`
-fs.mkdirParent = function(dirPath, mode, callback) {
-  //Call the standard fs.mkdir
-  fs.mkdir(dirPath, mode, function(error) {
-    //When it fail in this way, do the custom steps
-    if (error && error.errno === 34) {
-      //Create all the parents recursively
-      fs.mkdirParent(path.dirname(dirPath), mode, callback);
-      //And then the directory
-      fs.mkdirParent(dirPath, mode, callback);
-    }
-    //Manually run the callback since we used our own callback to do all these
-    callback && callback(error);
-  });
-};
-`
-
 mkdirParent = (dirPath, mode, callback)->
 	# Call the standard fs.mkdir
 	fs.mkdir dirPath, mode, (error)->
@@ -56,7 +39,16 @@ mkdirs = (dirpath, callback)->
 			mkdirs path.dirname(dirpath), ->
 				fs.mkdir dirpath, callback
 
+
+mkdirsSync = (dirpath)->
+	if fs.existsSync dirpath
+		return
+	else
+		mkdirs path.dirname(dirpath)
+
+
 exports.mkdirs = mkdirs
+exports.mkdirsSync = mkdirsSync
 exports.mkdirParent = mkdirParent
 
 

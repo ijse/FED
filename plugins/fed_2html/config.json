@@ -1,7 +1,7 @@
 {
 	"engine": "ejs",
 	"encoding": "utf-8",
-	"basePath": "./test/res",
+	"basePath": "./plugins/fed_2html/test/res",
 	"savePath": "./test/htmls",
 	"global": {
 		"basePath": "http://app.changyou.com"
