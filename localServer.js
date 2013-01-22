@@ -12,7 +12,7 @@
 var express       = require('express');
 var http          = require('http');
 var path          = require('path');
-var httpProxy     = require('http-proxy');
+// var httpProxy     = require('http-proxy');
 var plugin        = require('./plugins');
 
 var RenderManager = require('./libs/RenderManager.js');
@@ -21,7 +21,7 @@ var RouterManager = require('./libs/RouterManager.js');
 var app           = express();
 
 // For proxying request to remote server
-var ProxyInstance = null;
+// var ProxyInstance = null;
 
 exports.app = app;
 exports.create = function(gConfig) {
@@ -47,33 +47,33 @@ exports.create = function(gConfig) {
     app.use(express.logger('dev'));
 
     // `methodOverride()` will only be available when there is no proxy
-    if(!gConfig.proxy.enable) {
-        app.use(express.bodyParser());
-        app.use(express.methodOverride());
-    }
+    // if(!gConfig.proxy.enable) {
+    //     app.use(express.bodyParser());
+    //     app.use(express.methodOverride());
+    // }
 
     // Support cookie and session
     app.use(express.cookieParser('ijse'));
     app.use(express.session());
 
     //!!PLUGIN EMIT
-    plugin.emit('appinit2');
+    plugin.emit('appinit2', app);
 
     // Now router
     app.use(app.router);
 
     //!!PLUGIN EMIT
-    plugin.emit('appinit3');
+    plugin.emit('appinit3', app);
 
     // Continue with proxy request
-    if(gConfig.proxy.enable) {
-        ProxyInstance = new httpProxy.RoutingProxy();
-        app.enable('trust proxy');
-        app.use(proxyServerMidleware);
-    }
+    // if(gConfig.proxy.enable) {
+    //     ProxyInstance = new httpProxy.RoutingProxy();
+    //     app.enable('trust proxy');
+    //     app.use(proxyServerMidleware);
+    // }
 
     //!!PLUGIN EMIT
-    plugin.emit('appinit4');
+    plugin.emit('appinit4', app);
 
     // Static resources
     app.use(express['static'](app.get('static resource')));
@@ -106,27 +106,4 @@ exports.create = function(gConfig) {
 //     });
 // }
 
-// Proxy Server Midleware
-// ======================
-// if local resource not exist,
-// proxy to remote server by configuration
-function proxyServerMidleware(req, res, next) {
-    // Check if static resource exist
-    var sfile = path.join(app.get('static resource'), req.path);
-    if(path.existsSync(sfile)) {
-        return next();
-    }
-    // Proxy request
-    // --------------
-    // buffer so that it won't be lost,
-    // !!This is confilced with `methodOverride()`
-    var buffer = httpProxy.buffer(req);
-    var proxySetting = app.get('proxy setting');
-    // Do process
-    ProxyInstance.proxyRequest(req, res, {
-        host: proxySetting.remote.host,
-        port: proxySetting.remote.port,
-        buffer: buffer
-    });
-}
 

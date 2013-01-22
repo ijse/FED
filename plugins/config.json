@@ -1,5 +1,6 @@
 
 {
+	"fed_proxy": {},
 	"fed_ftl": {
 		"arg": "test"
 	},

@@ -1,14 +1,14 @@
 + ---------------------------------------------------------------------------- +
-| TODOS @ Thursday 17 January 2013 02:49                                       |
-| 64 files scanned                                                             |
+| TODOS @ Tuesday 22 January 2013 11:39                                        |
+| 75 files scanned                                                             |
 + ---------------------------------------------------------------------------- +
 
 ## TODO (8)
-1. launcher.js:7  Auto reload when update codes
-2. launcher.js:8  Deploy to server by ftp/sftp
-3. launcher.js:9  Html export
-4. launcher.js:10  Some more utils: jsCompressor, file utils...
-5. launcher.js:11  Test suits
-6. index.coffee:45  Render template with datas
-7. index.coffee:50  Write to file
-8. index.js:34  Add hook when local server initialize
+1. index.coffee:45  Render template with datas
+2. index.coffee:50  Write to file
+3. index.js:34  Add hook when local server initialize
+4. launcher.js:7  Auto reload when update codes
+5. launcher.js:8  Deploy to server by ftp/sftp
+6. launcher.js:9  Some more utils: jsCompressor, file utils...
+7. launcher.js:10  Test suits
+8. index.coffee:8  AUTO RE-GENERATE HTML FILE
