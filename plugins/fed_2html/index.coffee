@@ -5,6 +5,8 @@
  * @author ijse
  */
 `
+#TODO: AUTO RE-GENERATE HTML FILE
+
 # load configs
 Config = require "./config.json"
 util = require "./lib/util"
@@ -34,26 +36,32 @@ doParse = (config, cb)->
 	tengine = require config.engine
 
 	config.pages.every (page)->
-		# Make dirs if not exist
-		util.mkdirParent path.dirname(page.toFile), null, ->
-			# Make view data
-			viewData = util.mergeData config.global, page.data
-			viewData = util.mergeData {
-				settings: {
-					encoding: config.encoding
-					views: config.basePath
-				}
-			}, viewData
+		parsePage
+		# Add watch to each file
 
-			# Render the file
-			tengine.renderFile page.fromView, viewData, (err, data)->
-				throw err if err
-				# Write to dest-file
-				util.writeToFile data, page.toFile, config.encoding
+
 	# done!
 	cb?()
 	return
 
+
+parsePage = (page)->
+	# Make dirs if not exist
+	util.mkdirParent path.dirname(page.toFile), null, ->
+		# Make view data
+		viewData = util.mergeData config.global, page.data
+		viewData = util.mergeData {
+			settings: {
+				encoding: config.encoding
+				views: config.basePath
+			}
+		}, viewData
+
+		# Render the file
+		tengine.renderFile page.fromView, viewData, (err, data)->
+			throw err if err
+			# Write to dest-file
+			util.writeToFile data, page.toFile, config.encoding
 
 ###
 	@param {string} cfgFile the config filename
