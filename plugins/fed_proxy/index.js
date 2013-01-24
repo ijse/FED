@@ -7,6 +7,8 @@
  */
 var httpProxy = require('http-proxy');
 
+var express = require('express');
+
 var ProxyInstance = null;
 
 exports.init = function() {
