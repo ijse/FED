@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fed by ijse</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Fed</h1>
+        <p>前端开发平台，支持Freemarker模板的Nodejs程序，及其它实用功能~~</p>
+
+        <p class="view"><a href="https://github.com/ijse/FED">View the Project on GitHub <small>ijse/FED</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ijse/FED/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ijse/FED/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ijse/FED">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>FED - feed front end</h1>
+
+<p>FED 是一个前端开发环境，供前端编写简单的后台接口，以调试开发页面; 前端可以在此环境下，使用真实的URL访问地址访问，并可嫁接于其它服务器调试页面（调试线上代码), 可以写页面模板代码并使用测试数据调试输出，最终可生成文档。</p>
+
+<h2>特性</h2>
+
+<ul>
+<li>支持FreeMarker模板渲染</li>
+<li>支持配置模板全局变量</li>
+<li>支持FreeMarker模板继承语法</li>
+<li>支持各种格式的返回数据</li>
+<li>支持GET、POST等所有HTTP请求，可修改HTTP头</li>
+<li>支持AJAX、JSONP请求</li>
+<li>内含http-proxy模块，支持调试线上代码</li>
+<li>真实URL地址访问，与线上访问保持一致</li>
+<li>支持基于代码注释标记的文档输出功能</li>
+<li>插件机制扩展，满足大部分扩展需求</li>
+</ul><h2>使用步骤</h2>
+
+<ol>
+<li>创建文件夹:</li>
+</ol><pre><code>$&gt; mkdir fedProj
+</code></pre>
+
+<ol>
+<li>下载FED:</li>
+</ol><pre><code>$&gt; git clone https://github.com/ijse/FED
+</code></pre>
+
+<ol>
+<li><p>修改配置文件 "fedProj/FED/configs/index.json"</p></li>
+<li><p>安装依赖:</p></li>
+</ol><pre><code>$&gt; cd fedProj/FED
+$&gt; npm install
+</code></pre>
+
+<ol>
+<li>启动服务：</li>
+</ol><pre><code>$&gt; fed run -C ./configs/index.json -P 80
+</code></pre>
+
+<p>另外，为了开发方便，需要本地装有<code>node-dev</code>, 可以通过npm直接安装：<code>npm install -g node-dev</code>;</p>
+
+<h2>页面模板说明</h2>
+
+<p>目前支持freemarker和ejs两种模板引擎，可以同时使用。</p>
+
+<p>在配置文件中配置全局公共变量，可在任意模板文件里引用。</p>
+
+<p>freemarker模板已经内置对于模板继承的支持，可直接在模板中使用<code>&lt;@override /&gt;</code>、<code>&lt;@block /&gt;</code>和<code>&lt;@extend /&gt;</code>命令；其它与在JAVA环境下写法一致。</p>
+
+<p>freemarker模板文件可直接放到JAVA环境中使用。</p>
+
+<h2>怎样写backend</h2>
+
+<p>backend是模拟后台数据代码，可使用JS以简单的JSON格式描述后端与前端的接口和数据定义，并用于测试，且可使用fed_doc插件直接生成描述文档。</p>
+
+<p>backend的主要作用是描述：</p>
+
+<ol>
+<li>HTTP请求方法和URL</li>
+<li>请求接收参数</li>
+<li>请求返回数据</li>
+</ol><p>前端页面（页面模板、JS）与以上三点是直接相关的，而作为前端，撰写backend也只需要写好以上三点即可，无需关心具体的业务实现逻辑及数据存取。（当然，也可以写简单的业务逻辑和数据存取，只是这些与前端页面展现无关）我们需要的仅仅是一个后端接口，关心的是请求方法和数据，测试中这样的东西叫“桩”。</p>
+
+<p>以下是一个最简单的例子， 浏览器中访问/test, 将会调用folder/test.ftl模板，并向内添加变量"articalName",其值是"Hello~!":</p>
+
+<div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"get /test"</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">.</span><span class="nx">ftl</span><span class="p">(</span><span class="s2">"folder/test"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">"articalName"</span><span class="o">:</span> <span class="s2">"Hello~!"</span>
+            <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>说明：</p>
+
+<ol>
+<li>每个backend文件都只是个js文件</li>
+<li>需要具有<code>module.exports = {}</code>, 且只能暴露这种格式接口</li>
+<li>
+<code>"get /test"</code>表示HTTP get请求，请求路径是/test</li>
+<li>
+<code>function(){...}</code>中定义了数据及返回方式，<code>this.render</code>对象中封装了一些常用的数据返回打包工具。</li>
+</ol><p>在backend中我们也可以获得标准的request和response对象，于是便可以做更多的操作：</p>
+
+<div class="highlight"><pre><span class="s2">"post /regist"</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="s2">"username"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">pass</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="s2">"password"</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">username</span> <span class="o">==</span> <span class="s2">"ijse"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">.</span><span class="nx">ftl</span><span class="p">(</span><span class="s2">"succ.ftl"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">success</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">user</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">name</span><span class="o">:</span> <span class="s2">"ijse"</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">.</span><span class="nx">ftl</span><span class="p">(</span><span class="s2">"fail.ftl"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">success</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nx">error</span><span class="o">:</span> <span class="s2">"Username wrong!!"</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>上面例子中，我们使用<code>req</code>来获得表单POST提交的参数，并作了简单的逻辑判断，然后根据判断结果分别返回了不同的视图和数据。</p>
+
+<p>因为FED是基于express做的，站在巨人的肩膀上，因此所能做的其实更多，同样也可以支持RESTful格式的URL：</p>
+
+<div class="highlight"><pre><span class="s2">"post /show/:id"</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="s2">"id"</span><span class="p">);</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>另外，返回的数据还可以是文件：</p>
+
+<div class="highlight"><pre><span class="s2">"post /download/:id"</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="s2">"id"</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">sendfile</span><span class="p">(</span><span class="s2">"path/to/file"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>或者其它更多, 完全可以满足我们需求，可以完全模拟一个后端实现。</p>
+
+<h2>有关注释的规范</h2>
+
+<p>一直认为注释不应该有太严格的格式，不应该写起来太繁琐。本着简单和实用的原则，在FED中写backend接口注释很简单, 以上面下载文件的例子：</p>
+
+<div class="highlight"><pre><span class="s2">"post /download/:id"</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 根据ID下载文件</span>
+<span class="cm">     *  直接返回文件实体，浏览器打开保存文件对话框</span>
+<span class="cm">     *</span>
+<span class="cm">     * @author ijse</span>
+<span class="cm">     * @param id 要下载的文件ID</span>
+<span class="cm">     * @return 对应文件</span>
+<span class="cm">     */</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="s2">"id"</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">sendfile</span><span class="p">(</span><span class="s2">"path/to/file"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>注释不是强制的，但最后在注释中写明接口名称、请求参数、返回数据格式。所唯一要注意的是：</p>
+
+<ol>
+<li>注释要在方法内</li>
+<li>注释要<code>/**... */</code>这种格式</li>
+</ol><p>如此这般，我们便可以使用fed_doc来直接生成文档了：</p>
+
+<pre><code>$&gt; fed doc -f path/to/backend -d file/to/save.html
+</code></pre>
+
+<p>文档生成后只有一个HTML文件，可以直接用浏览器打开浏览。</p>
+
+<h2>代理功能说明</h2>
+
+<p>FED的代理功能可实现与后端Tomcat对接，或调试线上代码。替代了使用Nginx的方式，可直接通过配置路由和相关参数实现请求的代理转发。</p>
+
+<p>(todo..)</p>
+
+<h2>插件编写规则</h2>
+
+<p>FED的核心其实是WEB服务，其它如对FreeMarker模板的支持、生成文档都是以插件的形式添加的，因此扩展性很强，可以为其灵活地添加很多功能，扩展FED。</p>
+
+<p>FED的插件机制在JS灵活性下，约束很小，设计也很简单，但却很实用。在程序启动时，自动初始化插件，然后将插件实例保存供调用。</p>
+
+<p>插件编写起来也非常简单，主要遵循以下两个约定：</p>
+
+<ol>
+<li>所有插件均放在/plugins目录下，插件文件夹名字即是插件名称</li>
+<li>每个插件入口是<code>index.js</code>文件，且此文件中包含<code>init()</code>接口</li>
+</ol><p>下面是一个插件示例：</p>
+
+<div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"appinit1"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"some variable"</span><span class="p">,</span> <span class="s2">"hello world"</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">doSth</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">"Hello"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>上面插件在初始化第一阶段时，为<code>app</code>添加了变量，并暴露了<code>doSth()</code>接口。</p>
+
+<p>说明：</p>
+
+<ul>
+<li>
+<code>exports.init()</code>方法无返回值时，默认返回<code>exports</code>对象。</li>
+<li>
+<code>exports.init()</code>方法会有一个opts参数，这参数即插件配置参数，在程序启动配置文件中配置。</li>
+<li>
+<code>this.on()</code>可以绑定插件执行事件，目前主要绑定事件见下文。</li>
+</ul><p>附：
+  插件可绑定的事件如下：</p>
+
+<ol>
+<li>appinit1</li>
+<li>appinit2</li>
+<li>appinit3</li>
+<li>appinit4</li>
+<li>midbefore</li>
+<li>midafter</li>
+<li>commandinit</li>
+<li>localserverstart</li>
+<li>proxyserverstart</li>
+</ol><p>具体事件介绍，请大家看源码，搜索"//!!PLUGIN EMIT"。</p>
+
+<h2>FED的其它集成工具(TODO)</h2>
+
+<h3>输出静态HTML文件</h3>
+
+<h3>压缩优化JS文件</h3>
+
+<h3>目录结构转换</h3>
+
+<h3>部署到服务器</h3>
+
+<h2>Test</h2>
+
+<pre><code>&gt; npm test
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ijse">ijse</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
