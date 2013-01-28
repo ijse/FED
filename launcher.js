@@ -21,15 +21,16 @@ plugin.init();
 
 // Add commander support
 commander.version(VERSION);
+		// .addImplicitHelpCommand();
 
 // Help command
-commander
-	.command('help')
-	.option("-c", "the help")
-	.description("Show help")
-	.action(function() {
-		commander.help();
-	});
+// commander
+// 	.command('help')
+// 	.option("-c", "the help")
+// 	.description("Show help")
+// 	.action(function() {
+// 		commander.help();
+// 	});
 
 //!!PLUGIN EMIT
 plugin.emit("commandinit", commander);
@@ -39,14 +40,24 @@ commander
 	.command('run')
 	.option('-P, --port <n>', 'Local server listen port')
 	.option("-p, --proxy", "With proxy support")
-	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./configs/index.json" as default', "./configs/index.json")
+	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./configs/index.json" as default')
 	.description("start local-server, or with proxy support")
 	.action(function(cmd) {
+
+		// Must provide config file
+		if(!cmd.configFile) {
+			console.error("You must provide the config file!!");
+			return ;
+		}
+
 		// var proxyServer = require("./proxyServer");
 		var localServer = require("./localServer");
 
+		// Format config file path
+		var realConfigFile = fedUtil.realPath(process.cwd(), cmd.configFile);
+
 		// Inherit config
-		var gConfig = require(cmd.configFile);
+		var gConfig = require(realConfigFile);
 		gConfig.port = cmd.port || gConfig.port;
 
 		gConfig.proxy = gConfig.proxy || {};
@@ -65,7 +76,6 @@ commander
 			console.log("FED server listening on port " + gConfig.port);
 		});
 	});
-
 
 commander.parse(process.argv);
 

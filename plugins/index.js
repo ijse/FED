@@ -36,7 +36,7 @@ PluginManager.init = function() {
 
 			// console.log("Plugin[" + name + "] load success!");
 		} catch(e) {
-			throw "错误：" + name + "插件载入异常！";
+			throw "Plugin " + name + " load fail!";
 		}
 	}
 };
