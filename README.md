@@ -46,6 +46,8 @@ $> npm install
 $> fed run -C ./configs/index.json -P 80
 ```
 
+注：`fed run`时必须指定配置文件参数~！
+
 另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;
 
 ## 页面模板说明
