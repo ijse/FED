@@ -18,3 +18,18 @@ exports.convPath = function(basePath, pathObj) {
 	}
 	return pathObj;
 };
+
+// Format the path
+// ===============
+// d:/aaa.txt ==> d:\\aaa.txt
+// ./bb.txt ==> {curPath}\\bb.txt
+// cc.txt ==> {curPath}\\cc.txt
+exports.realPath = function(base, p) {
+	var r = "";
+	if(p[1] === ":" || p[0] === "/") {
+		r = path.normalize(p);
+	} else {
+		r = path.join(base, p);
+	}
+	return r;
+};

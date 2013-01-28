@@ -20,9 +20,8 @@ var plugin = require("./plugins");
 plugin.init();
 
 // Add commander support
-commander
-		.version(VERSION)
-		.addImplicitHelpCommand();
+commander.version(VERSION);
+		// .addImplicitHelpCommand();
 
 // Help command
 // commander
@@ -54,8 +53,11 @@ commander
 		// var proxyServer = require("./proxyServer");
 		var localServer = require("./localServer");
 
+		// Format config file path
+		var realConfigFile = fedUtil.realPath(process.cwd(), cmd.configFile);
+
 		// Inherit config
-		var gConfig = require(cmd.configFile);
+		var gConfig = require(realConfigFile);
 		gConfig.port = cmd.port || gConfig.port;
 
 		gConfig.proxy = gConfig.proxy || {};
@@ -74,7 +76,6 @@ commander
 			console.log("FED server listening on port " + gConfig.port);
 		});
 	});
-
 
 commander.parse(process.argv);
 
