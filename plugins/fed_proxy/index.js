@@ -68,7 +68,7 @@ function proxyServerMidleware(req, res, next) {
     // buffer so that it won't be lost,
     // !!This is confilced with `methodOverride()`
     var buffer = httpProxy.buffer(req);
-    var proxySetting = app.get('proxy setting');
+    var proxySetting = req.app.get('proxy setting');
     // Do process
     ProxyInstance.proxyRequest(req, res, {
         host: proxySetting.remote.host,
