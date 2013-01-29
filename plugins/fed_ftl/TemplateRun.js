@@ -16,7 +16,7 @@ var jarFile = path.join(__dirname, "/FMtoll-0.5.jar");
 exports.processTemplate = function(args) {
 	var dataModel = JSON.stringify(args.data);
 	var settings = JSON.stringify(args.settings);
-	var resultData;
+	var resultData = "";
 
 	var cmd = spawn('java', ["-jar", jarFile,
 			settings,
