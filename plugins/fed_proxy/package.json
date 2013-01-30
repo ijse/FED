@@ -14,5 +14,6 @@
     "fed"
   ],
   "author": "ijse",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {}
 }

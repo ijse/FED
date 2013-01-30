@@ -26,7 +26,17 @@ exports.init = function() {
 	this.on("appinit3", function(app) {
 
 		// Connect re-emit event on request
-		require("connect-restreamer");
+		// require("connect-restreamer");
+
+		app.use(function (req, res, next) {
+			req.removeAllListeners('data');
+			req.removeAllListeners('end');
+			next();
+			process.nextTick(function () {
+				req.emit('data', JSON.stringify(req.body));
+				req.emit('end');
+			});
+		});
 
 		config = app.get("proxy setting");
 		ProxyInstance = new httpProxy.RoutingProxy();
