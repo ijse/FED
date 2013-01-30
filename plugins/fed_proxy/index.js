@@ -23,22 +23,15 @@ exports.init = function() {
 		}
 	});
 
-	this.on("appinit1", function(app) {
-		// console.log("hi, ", this);
-		config = app.get("proxy setting");
-		if(!config.enable) {
-			app.use(express.bodyParser());
-			app.use(express.methodOverride());
-		}
-	});
-
 	this.on("appinit3", function(app) {
+
+		// Connect re-emit event on request
+		require("connect-restreamer");
+
 		config = app.get("proxy setting");
-		if(config.enable) {
-			ProxyInstance = new httpProxy.RoutingProxy();
-			app.enable('trust proxy');
-			app.use(proxyServerMidleware);
-		}
+		ProxyInstance = new httpProxy.RoutingProxy();
+		app.enable('trust proxy');
+		app.use(proxyServerMidleware);
 	});
 
 };
