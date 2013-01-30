@@ -46,11 +46,8 @@ exports.create = function(gConfig) {
     // Will print every request log
     app.use(express.logger('dev'));
 
-    // `methodOverride()` will only be available when there is no proxy
-    // if(!gConfig.proxy.enable) {
-    //     app.use(express.bodyParser());
-    //     app.use(express.methodOverride());
-    // }
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
 
     // Support cookie and session
     app.use(express.cookieParser('ijse'));
