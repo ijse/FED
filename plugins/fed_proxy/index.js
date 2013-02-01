@@ -27,7 +27,11 @@ exports.init = function() {
 
 		// Connect re-emit event on request
 		// require("connect-restreamer");
+		// app.use();
 
+		config = app.get("proxy setting");
+		ProxyInstance = new httpProxy.RoutingProxy();
+		app.enable('trust proxy');
 		app.use(function (req, res, next) {
 			req.removeAllListeners('data');
 			req.removeAllListeners('end');
@@ -36,12 +40,7 @@ exports.init = function() {
 				req.emit('data', JSON.stringify(req.body));
 				req.emit('end');
 			});
-		});
-
-		config = app.get("proxy setting");
-		ProxyInstance = new httpProxy.RoutingProxy();
-		app.enable('trust proxy');
-		app.use(proxyServerMidleware);
+		}, proxyServerMidleware);
 	});
 
 };
