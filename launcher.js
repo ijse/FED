@@ -44,27 +44,11 @@ commander
 	.description("start local-server, or with proxy support")
 	.action(function(cmd) {
 
-		// Must provide config file
-		if(!cmd.configFile) {
-			console.error("You must provide the config file!!");
-			return ;
-		}
+		// Optimize config
+		var gConfig = optimizeConfig(cmd);
 
 		// var proxyServer = require("./proxyServer");
 		var localServer = require("./localServer");
-
-		// Format config file path
-		var realConfigFile = fedUtil.realPath(process.cwd(), cmd.configFile);
-
-		// Inherit config
-		var gConfig = require(realConfigFile);
-		gConfig.port = cmd.port || gConfig.port;
-
-		gConfig.proxy = gConfig.proxy || {};
-		gConfig.proxy.enable = typeof cmd.proxy === "undefined" ? gConfig.proxy.enable : cmd.proxy;
-
-		// Convert path
-		gConfig.path = fedUtil.convPath(__dirname, gConfig.path);
 
 		//!!PLUGIN EMIT
 		plugin.emit("runinit", gConfig);
@@ -80,4 +64,28 @@ commander
 commander.parse(process.argv);
 
 
+//=====
+function optimizeConfig(cmd) {
+	// Must provide config file
+	if(!cmd.configFile) {
+		console.error("You must provide the config file!!");
+		return ;
+	}
+
+	// Format config file path
+	var realConfigFile = fedUtil.realPath(process.cwd(), cmd.configFile);
+	var configFileFolder = path.dirname(realConfigFile);
+
+	// Inherit config
+	var gConfig = require(realConfigFile);
+	gConfig.port = cmd.port || gConfig.port;
+
+	gConfig.proxy = gConfig.proxy || {};
+	gConfig.proxy.enable = typeof cmd.proxy === "undefined" ? gConfig.proxy.enable : cmd.proxy;
+
+	// Convert path
+	gConfig.path = fedUtil.convPath(configFileFolder, gConfig.path);
+
+	return gConfig;
+}
 
