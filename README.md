@@ -5,8 +5,7 @@ FED 是一个前端开发环境，供前端编写简单的后台接口，以调�
 
 FED 重新划分了项目开发中前后端分工，明确了各开发范围，提高了项目并行开发效率，降低了前后端开发的耦合度；同时为前端开发提供了可测的工具平台，使之在无后端实现情况下也可模拟后端接口及数据，测试页面功能。
 
-[![Build Status](https://secure.travis-ci.org/ijse/FED.png?branch=master)](https://travis-ci.org/ijse/FED)
-
+[![Build Status](https://travis-ci.org/ijse/FED.png?branch=master)](https://travis-ci.org/ijse/FED)
 
 ## 特性
 
