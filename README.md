@@ -24,15 +24,16 @@ FED 重新划分了项目开发中前后端分工，明确了各开发范围，�
 
 ```
 $> mkdir fedProj
+$> cd fedProj
 ```
 
 2. 下载FED:
 
 ```
-$> git clone https://github.com/ijse/FED
+$> git clone https://github.com/ijse/FED .
 ```
 
-3. 修改配置文件 "fedProj/FED/configs/index.json"
+3. COPY一份配置文件 "fedProj/FED/configs/index.json", 修改
 
 4. 安装依赖:
 
