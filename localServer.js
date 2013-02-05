@@ -18,13 +18,9 @@ var plugin        = require('./plugins');
 var RenderManager = require('./libs/RenderManager.js');
 var RouterManager = require('./libs/RouterManager.js');
 
-var app           = express();
-
-// For proxying request to remote server
-// var ProxyInstance = null;
-
-exports.app = app;
 exports.create = function(gConfig) {
+    var app = exports.app = new express();
+
     app.set('proxy support', gConfig.proxy.enable);
     app.set('proxy setting', gConfig.proxy);
     app.set('static resource', gConfig.path['public']);

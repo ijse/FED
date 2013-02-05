@@ -19,7 +19,7 @@ module.exports = {
 			}]
 		});
 	},
-	"get /t": function(req, res) {
+	"get /tss": function(req, res) {
 		this.render.ftl("folder/aa", {});
 	},
 	"post /post": function(req, res) {

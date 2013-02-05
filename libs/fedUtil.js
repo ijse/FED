@@ -34,6 +34,33 @@ module.exports = {
 			r = path.join(base, p);
 		}
 		return r;
+	},
+
+	//=====
+	optimizeConfig: function(configFile, port, withProxy) {
+		// Must provide config file
+		if(!configFile) {
+			console.error("You must provide the config file!!");
+			return ;
+		}
+
+		// Format config file path
+		var realConfigFile = this.realPath(process.cwd(), configFile);
+		var configFileFolder = path.dirname(realConfigFile);
+
+		// Inherit config
+		var gConfig = require(realConfigFile);
+
+		// argument, config-file, environment-variable, default(3000)
+		gConfig.port = port || gConfig.port || process.env.PORT || 3000;
+
+		gConfig.proxy = gConfig.proxy || {};
+		gConfig.proxy.enable = typeof withProxy === "undefined" ? gConfig.proxy.enable : withProxy;
+
+		// Convert path
+		gConfig.path = this.convPath(configFileFolder, gConfig.path);
+
+		return gConfig;
 	}
-}
+};
 

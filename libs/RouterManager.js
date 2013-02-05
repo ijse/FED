@@ -15,6 +15,7 @@ exports.loadRoutes = importLogic;
 // @param app   - application object
 function importLogic(root, app) {
     var list = fs.readdirSync(root);
+
     var i = 0, file, obj;
     for(;i < list.length; i++) {
         file = path.join(root, list[i]);
@@ -26,7 +27,11 @@ function importLogic(root, app) {
             if (!path.extname(file).match(/(.js|.coffee)/)) {
                 continue;
             }
+
+            // Disable require cache
+            // delete require.cache[require.resolve(file)];
             obj = require(file);
+
             // Call .watch() if exist, with app and renders
             // >>with fed();
             // if (obj.watch) {
