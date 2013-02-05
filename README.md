@@ -39,18 +39,19 @@ $> git clone https://github.com/ijse/FED .
 
 ```
 $> cd fedProj/FED
-$> npm install
+$> npm install --save
 ```
 
 5. 启动服务：
 
 ```
-$> fed run -C ./configs/index.json -P 80
+$> fedmon run ./configs/index.json -P 8910
 ```
 
-注：`fed run`时必须指定配置文件参数~！
+注：`fed run`时必须指定配置文件~！
 
-另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;
+~~另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;~~
+当修改backend文件时，FED会自动重启应用更新。
 
 ## 页面模板说明
 
@@ -210,7 +211,9 @@ FED的代理功能可实现与后端Tomcat对接，或调试线上代码。替�
 * router: 路由设置，将某URL请求路由到另一地址
 * remote: 远程服务地址设置，当本地路由表无匹配时，请求将被转发到remote
 
-FED启动时，会监听两个端口：80和3000，分别是代理服务端口及本地Nodejs服务端口，访问80端口地址即可。
+另外，也可以通过启动时指定参数`--proxy`来开启代理。
+
+如上配置，FED启动时，会监听两个端口：80和3000，分别是代理服务端口及本地Nodejs服务端口，访问80端口地址即可。
 
 ## 插件编写规则
 
