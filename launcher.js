@@ -11,6 +11,7 @@
 
 var VERSION = require("./package.json").version;
 var commander = require("commander");
+var watch = require("node-watch");
 var path = require("path");
 var fedUtil = require("./libs/fedUtil.js");
 
@@ -28,8 +29,12 @@ commander.version(VERSION);
 // 	.command('help')
 // 	.option("-c", "the help")
 // 	.description("Show help")
-// 	.action(function() {
-// 		commander.help();
+// 	.action(function(cmd) {
+// 		if(cmd) {
+// 			commander[cmd].help();
+// 		} else {
+// 			commander.help();
+// 		}
 // 	});
 
 //!!PLUGIN EMIT
@@ -40,44 +45,26 @@ commander
 	.command('run')
 	.option('-P, --port <n>', 'Local server listen port')
 	.option("-p, --proxy", "With proxy support")
-	.option('-C, --config-file <ConfigFilePath>', 'The config file, "./configs/index.json" as default')
 	.description("start local-server, or with proxy support")
-	.action(function(cmd) {
+	.action(function(configFile) {
 
-		// Must provide config file
-		if(!cmd.configFile) {
-			console.error("You must provide the config file!!");
-			return ;
-		}
+		// Subcommand handler
+		var cmd = arguments[arguments.length - 1];
 
-		// var proxyServer = require("./proxyServer");
+		// Optimize config
+		var gConfig = fedUtil.optimizeConfig(configFile, cmd.port, cmd.proxy);
 		var localServer = require("./localServer");
-
-		// Format config file path
-		var realConfigFile = fedUtil.realPath(process.cwd(), cmd.configFile);
-
-		// Inherit config
-		var gConfig = require(realConfigFile);
-		gConfig.port = cmd.port || gConfig.port;
-
-		gConfig.proxy = gConfig.proxy || {};
-		gConfig.proxy.enable = typeof cmd.proxy === "undefined" ? gConfig.proxy.enable : cmd.proxy;
-
-		// Convert path
-		gConfig.path = fedUtil.convPath(__dirname, gConfig.path);
 
 		//!!PLUGIN EMIT
 		plugin.emit("runinit", gConfig);
 
 		// Create and run local server
 		// config > environment > default(3000)
-		var localServicePort = gConfig.port || process.env.PORT || 3000;
-		localServer.create(gConfig).listen(localServicePort, function () {
+		var serverIns = localServer.create(gConfig);
+		serverIns.listen(gConfig.port, function () {
 			console.log("FED server listening on port " + gConfig.port);
 		});
+
 	});
 
 commander.parse(process.argv);
-
-
-

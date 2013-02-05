@@ -2,13 +2,12 @@
 	"host": "app.changyou.com",
 	"port": "3000",
 	"path": {
-		"views": "../test/res/views",
-		"backend": "../test/res/backend",
-		"public": "../test/res/public"
+		"views": "./views",
+		"backend": "./backend",
+		"public": "./public"
 	},
 	"globals": {
-		"baseUrl": "",
-		"basePath": "http://www.ijser.cn/"
+		"baseUrl": "http://www.ijser.cn/"
 	},
 
 	"proxy": {
