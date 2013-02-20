@@ -35,9 +35,13 @@ if(child_argv[0] === "run") {
 	// Watch backend path, if file change,
 	// restart child process to apply the changes
 	watch(backendPath, function(filename) {
-		console.log(filename, ' changed, restarting...');
-		child_process.on("exit", xxoo);
-		child_process.kill("SIGTERM");
+		console.log('[%s] changed, restarting...', filename);
+		if(child_process.dead) {
+			xxoo();
+		} else {
+			child_process.on("exit", xxoo);
+			child_process.kill("SIGTERM");
+		}
 	});
 
 } else {
@@ -55,5 +59,20 @@ if(child_argv[0] === "run") {
 function xxoo() {
 	child_process = createChild(
 		path.join(__dirname, "launcher.js"),
-		child_argv);
+		child_argv, {
+			silent: true,
+			stdio: [process.stdin, process.stdout]
+		});
+
+	// Print child_process's output when got error
+	child_process.stdout.on("data", function(data) {
+		// console.log("" + data);
+		process.stdout.write(data);
+	});
+
+	child_process.stderr.on("data", function(data) {
+		child_process.dead = true;
+		// console.log("" + data);
+		process.stderr.write(data);
+	});
 }
