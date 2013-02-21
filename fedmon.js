@@ -32,17 +32,10 @@ if(child_argv[0] === "run") {
 	var gConfig = fedUtil.optimizeConfig(child_argv[1]);
 	var backendPath = gConfig.path.backend;
 
-	// Watch backend path, if file change,
+	// Watch backend and views, if file change,
 	// restart child process to apply the changes
-	watch(backendPath, function(filename) {
-		console.log('[%s] changed, restarting...', filename);
-		if(child_process.dead) {
-			xxoo();
-		} else {
-			child_process.on("exit", xxoo);
-			child_process.kill("SIGTERM");
-		}
-	});
+	watch(backendPath, doRestart);
+	watch(gConfig.path.views, doRestart);
 
 } else {
 	// for other subcommand, just exit after finishing
@@ -55,6 +48,16 @@ if(child_argv[0] === "run") {
 	});
 }
 
+// Restart the process
+function doRestart(filename) {
+	console.log('[%s] changed, restarting...', filename);
+	if(child_process.dead) {
+		xxoo();
+	} else {
+		child_process.on("exit", xxoo);
+		child_process.kill("SIGTERM");
+	}
+}
 // Create a child process
 function xxoo() {
 	child_process = createChild(
