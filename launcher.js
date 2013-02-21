@@ -4,10 +4,6 @@
  *
  * @author ijse
  */
-//TODO: Auto reload when update codes
-//TODO: Deploy to server by ftp/sftp
-//TODO: Some more utils: jsCompressor, file utils...
-//TODO: Test suits
 
 var VERSION = require("./package.json").version;
 var commander = require("commander");
@@ -25,17 +21,18 @@ commander.version(VERSION);
 		// .addImplicitHelpCommand();
 
 // Help command
-// commander
-// 	.command('help')
-// 	.option("-c", "the help")
-// 	.description("Show help")
-// 	.action(function(cmd) {
-// 		if(cmd) {
-// 			commander[cmd].help();
-// 		} else {
-// 			commander.help();
-// 		}
-// 	});
+commander
+	.command('help')
+	.option("-c", "the help")
+	.description("Show help")
+	.action(function(cmd) {
+		if(cmd) {
+			commander.executeSubCommand([null, ""], ["help", cmd], []);
+			// commander[cmd].help();
+		} else {
+			commander.help();
+		}
+	});
 
 //!!PLUGIN EMIT
 plugin.emit("commandinit", commander);
@@ -59,12 +56,9 @@ commander
 		plugin.emit("runinit", gConfig);
 
 		// Create and run local server
-		// config > environment > default(3000)
-		var serverIns = localServer.create(gConfig);
-		serverIns.listen(gConfig.port, function () {
+		localServer.create(gConfig).listen(gConfig.port, function () {
 			console.log("FED server listening on port " + gConfig.port);
 		});
-
 	});
 
 commander.parse(process.argv);

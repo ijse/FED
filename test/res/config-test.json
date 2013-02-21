@@ -11,15 +11,14 @@
 	},
 
 	"proxy": {
-		"enable": false,
+		"enable": true,
 		"port": 80,
 		"router": {
-			"cy4749.cyou-inc.com": "localhost:81",
-			"app.changyou.com": "localhost:3000"
+			"localtest": "localhost:3000"
 		},
 		"remote": {
-			"host": "123.126.70.39",
-			"port": 80
+			"host": "localhost",
+			"port": 3001
 		}
 	}
 }

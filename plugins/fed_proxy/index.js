@@ -9,6 +9,7 @@ var httpProxy = require('http-proxy');
 
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var ProxyInstance = null;
 
 exports.init = function() {
@@ -62,7 +63,7 @@ createServer = function(pSetting) {
 function proxyServerMidleware(req, res, next) {
     // Check if static resource exist
     var sfile = path.join(req.app.get('static resource'), req.path);
-    if(path.existsSync(sfile)) {
+    if(fs.existsSync(sfile)) {
         return next();
     }
     // Proxy request
