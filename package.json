@@ -1,6 +1,6 @@
 {
   "name": "fed",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "launcher.js",
   "directories": {
@@ -17,6 +17,7 @@
     "commander": "~1.1.1",
     "node-watch": "~0.2.6",
     "coffee-script": "~1.4.0",
+    "less-middleware": ">=0.1.9",
     "ejs": "~0.8.3"
   },
   "devDependencies": {
@@ -29,12 +30,20 @@
     "type": "git",
     "url": "git://github.com/ijse/FED.git"
   },
-  "author": "ijse",
+  "author": {
+    "name": "ijse"
+  },
   "license": "BSD",
   "readmeFilename": "README.md",
   "keywords": [
     "feed",
     "front",
     "end"
-  ]
+  ],
+  "readme": "FED - feed front end\r\n====================\r\n\r\nFED 是一个前端开发环境，供前端编写简单的后台接口，以调试开发页面; 前端可以在此环境下，使用真实的URL访问地址访问，并可嫁接于其它服务器调试页面（调试线上代码), 可以写页面模板代码并使用测试数据调试输出，最终可生成文档。\r\n\r\nFED 重新划分了项目开发中前后端分工，明确了各开发范围，提高了项目并行开发效率，降低了前后端开发的耦合度；同时为前端开发提供了可测的工具平台，使之在无后端实现情况下也可模拟后端接口及数据，测试页面功能。\r\n\r\n## 特性\r\n\r\n* 支持FreeMarker模板渲染\r\n* 支持配置模板全局变量\r\n* 支持FreeMarker模板继承语法\r\n* 支持各种格式的返回数据\r\n* 支持GET、POST等所有HTTP请求，可修改HTTP头\r\n* 支持AJAX、JSONP请求\r\n* 内含http-proxy模块，支持调试线上代码\r\n* 真实URL地址访问，与线上访问保持一致\r\n* 支持基于代码注释标记的文档输出功能\r\n* 插件机制扩展，满足大部分扩展需求\r\n\r\n## 使用步骤\r\n\r\n1. 创建文件夹:\r\n\r\n```\r\n$> mkdir fedProj\r\n$> cd fedProj\r\n```\r\n\r\n2. 下载FED:\r\n\r\n```\r\n$> git clone https://github.com/ijse/FED .\r\n```\r\n\r\n3. COPY一份配置文件 \"fedProj/FED/configs/index.json\", 修改\r\n\r\n4. 安装依赖:\r\n\r\n```\r\n$> cd fedProj/FED\r\n$> npm install --save\r\n```\r\n\r\n5. 启动服务：\r\n\r\n```\r\n$> fedmon run ./configs/index.json -P 8910\r\n```\r\n\r\n注：`fed run`时必须指定配置文件~！\r\n\r\n~~另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;~~\r\n当修改backend文件时，FED会自动重启应用更新。\r\n\r\n## 页面模板说明\r\n\r\n目前支持freemarker和ejs两种模板引擎，可以同时使用。\r\n\r\n在配置文件中配置全局公共变量，可在任意模板文件里引用。\r\n\r\nfreemarker模板已经内置对于模板继承的支持，可直接在模板中使用`<@override />`、`<@block />`和`<@extend />`命令；其它与在JAVA环境下写法一致。\r\n\r\nfreemarker模板文件可直接放到JAVA环境中使用。\r\n\r\n## 怎样写backend\r\n\r\nbackend是模拟后台数据代码，可使用JS以简单的JSON格式描述后端与前端的接口和数据定义，并用于测试，且可使用fed_doc插件直接生成描述文档。\r\n\r\nbackend的主要作用是描述：\r\n\r\n1. HTTP请求方法和URL\r\n2. 请求接收参数\r\n3. 请求返回数据\r\n\r\n前端页面（页面模板、JS）与以上三点是直接相关的，而作为前端，撰写backend也只需要写好以上三点即可，无需关心具体的业务实现逻辑及数据存取。（当然，也可以写简单的业务逻辑和数据存取，只是这些与前端页面展现无关）我们需要的仅仅是一个后端接口，关心的是请求方法和数据，测试中这样的东西叫“桩”。\r\n\r\n以下是一个最简单的例子， 浏览器中访问/test, 将会调用folder/test.ftl模板，并向内添加变量\"articalName\",其值是\"Hello~!\":\r\n\r\n```javascript\r\nmodule.exports = {\r\n\t\"get /test\": function() {\r\n\t\tthis.render.ftl(\"folder/test\", {\r\n\t\t\t\"articalName\": \"Hello~!\"\r\n\t\t\t});\r\n\t}\r\n};\r\n```\r\n\r\n说明：\r\n\r\n1. 每个backend文件都只是个js文件\r\n2. 需要具有`module.exports = {}`, 且只能暴露这种格式接口\r\n3. `\"get /test\"`表示HTTP get请求，请求路径是/test\r\n4. `function(){...}`中定义了数据及返回方式，`this.render`对象中封装了一些常用的数据返回打包工具。\r\n\r\n在backend中我们也可以获得标准的request和response对象，于是便可以做更多的操作：\r\n\r\n```javascript\r\n\"post /regist\": function(req, res) {\r\n\tvar name = req.param(\"username\");\r\n\tvar pass = req.param(\"password\");\r\n\r\n\tif(username == \"ijse\") {\r\n\t\tthis.render.ftl(\"succ.ftl\", {\r\n\t\t\tsuccess: true,\r\n\t\t\tuser: {\r\n\t\t\t\tname: \"ijse\",\r\n\t\t\t}\r\n\t\t});\r\n\t} else {\r\n\t\tthis.render.ftl(\"fail.ftl\", {\r\n\t\t\tsuccess: false,\r\n\t\t\terror: \"Username wrong!!\"\r\n\t\t});\r\n\t}\r\n}\r\n```\r\n\r\n上面例子中，我们使用`req`来获得表单POST提交的参数，并作了简单的逻辑判断，然后根据判断结果分别返回了不同的视图和数据。\r\n\r\n因为FED是基于express做的，站在巨人的肩膀上，因此所能做的其实更多，同样也可以支持RESTful格式的URL：\r\n\r\n```javascript\r\n\"post /show/:id\": function(req, res) {\r\n\tvar id = req.param(\"id\");\r\n\t...\r\n}\r\n```\r\n\r\n另外，返回的数据还可以是文件：\r\n\r\n```javascript\r\n\"post /download/:id\": function(req, res) {\r\n\tvar id = req.param(\"id\");\r\n\tres.sendfile(\"path/to/file\");\r\n}\r\n```\r\n\r\n或者其它更多, 完全可以满足我们需求，可以完全模拟一个后端实现。\r\n\r\n## 有关注释的规范\r\n\r\n一直认为注释不应该有太严格的格式，不应该写起来太繁琐。本着简单和实用的原则，在FED中写backend接口注释很简单, 以上面下载文件的例子：\r\n\r\n```javascript\r\n\"post /download/:id\": function(req, res) {\r\n\t/**\r\n\t * 根据ID下载文件\r\n\t *\t直接返回文件实体，浏览器打开保存文件对话框\r\n\t *\r\n\t * @author ijse\r\n\t * @param id 要下载的文件ID\r\n\t * @return 对应文件\r\n\t */\r\n\tvar id = req.param(\"id\");\r\n\tres.sendfile(\"path/to/file\");\r\n}\r\n```\r\n\r\n注释不是强制的，但最后在注释中写明接口名称、请求参数、返回数据格式。所唯一要注意的是：\r\n\r\n1. 注释要在方法内\r\n2. 注释要`/**... */`这种格式\r\n\r\n如此这般，我们便可以使用fed_doc来直接生成文档了：\r\n\r\n```\r\n$> fed doc -f path/to/backend -d file/to/save.html\r\n```\r\n\r\n文档生成后只有一个HTML文件，可以直接用浏览器打开浏览。\r\n\r\n## 代理功能说明\r\n\r\nFED的代理功能可实现与后端Tomcat对接，或调试线上代码。替代了使用Nginx的方式，可直接通过配置路由和相关参数实现请求的代理转发。\r\n\r\n类似Nginx的`proxy_pass`, FED的代理功能可以实现“线上调试”，同时开发中也可以使用此方法来使开发时环境与发布上线后访问环境一致，从而避免一些部署问题。\r\n\r\n此功能对于前端的价值在于：可以在使用线上其它请求和资源的同时，替换某些请求或资源为本地可修改的。\r\n\r\n例如：\r\n\r\n1. 项目已经上线（跑在某服务器上），前端需要修改页面。传统方式需要搭建本地环境，准备数据；但使用FED代理，通过配置可以单独修改调试某请求内容。\r\n2. 线上项目出现页面BUG（显示，或JS业务逻辑），需要紧急修复，使用FED代理可以使用线上真实环境（数据）进行调试。\r\n3. 开发时，前端本地可以不启动Tomcat等容器，而使用其它服务器上的现成的服务，使某些请求使用其它服务器提供的内容，某些请求使用本地提供的内容。\r\n\r\n### 配置代理\r\n\r\n修改以下内容，并将它放在FED启动配置文件中即可：\r\n\r\n```\r\n\"proxy\": {\r\n\t\"enable\": true,\r\n\t\"port\": 80,\r\n\t\"router\": {\r\n\t\t\"cy4749.cyou-inc.com\": \"localhost:81\",\r\n\t\t\"app.changyou.com\": \"localhost:3000\"\r\n\t},\r\n\t\"remote\": {\r\n\t\t\"host\": \"123.126.70.39\",\r\n\t\t\"port\": 80\r\n\t}\r\n}\r\n```\r\n\r\n说明：\r\n\r\n* enable: 是否启用代理功能\r\n* port:\t代理端口，即URL访问端口、项目上线后的服务端口\r\n* router: 路由设置，将某URL请求路由到另一地址\r\n* remote: 远程服务地址设置，当本地路由表无匹配时，请求将被转发到remote\r\n\r\n另外，也可以通过启动时指定参数`--proxy`来开启代理。\r\n\r\n如上配置，FED启动时，会监听两个端口：80和3000，分别是代理服务端口及本地Nodejs服务端口，访问80端口地址即可。\r\n\r\n## 插件编写规则\r\n\r\nFED的核心其实是WEB服务，其它如对FreeMarker模板的支持、生成文档都是以插件的形式添加的，因此扩展性很强，可以为其灵活地添加很多功能，扩展FED。\r\n\r\nFED的插件机制在JS灵活性下，约束很小，设计也很简单，但却很实用。在程序启动时，自动初始化插件，然后将插件实例保存供调用。\r\n\r\n插件编写起来也非常简单，主要遵循以下两个约定：\r\n\r\n1. 所有插件均放在/plugins目录下，插件文件夹名字即是插件名称\r\n2. 每个插件入口是`index.js`文件，且此文件中包含`init()`接口\r\n3. 整个插件的所有资源文件都在插件目录下，不要放在其它文件夹中\r\n\r\n\r\n下面是一个插件示例：\r\n\r\n```javascript\r\nexports.init = function(opts) {\r\n\tthis.on(\"appinit1\", function(app) {\r\n\t\tapp.set(\"some variable\", \"hello world\");\r\n\t});\r\n};\r\n\r\nexports.doSth = function() {\r\n\treturn \"Hello\";\r\n}\r\n```\r\n\r\n上面插件在初始化第一阶段时，为`app`添加了变量，并暴露了`doSth()`接口。\r\n\r\n说明：\r\n\r\n* `exports.init()`方法无返回值时，默认返回`exports`对象。\r\n* `exports.init()`方法会有一个opts参数，这参数即插件配置参数，在程序启动配置文件中配置。\r\n* `this.on()`可以绑定插件执行事件，目前主要绑定事件见下文。\r\n\r\n附：\r\n  插件可绑定的事件如下：\r\n\r\n  1. appinit1\r\n  2. appinit2\r\n  3. appinit3\r\n  4. appinit4\r\n  5. midbefore\r\n  6. midafter\r\n  7. commandinit\r\n  8. localserverstart\r\n  9. proxyserverstart\r\n\r\n具体事件介绍，请大家看源码，搜索\"//!!PLUGIN EMIT\"。\r\n\r\n## FED的其它集成工具(TODO)\r\n\r\nFED的其它工具都是以插件形式装载进来的，通过命令方式启动。\r\n\r\n### 输出静态HTML文件\r\n\r\n### 压缩优化JS文件\r\n### 目录结构转换\r\n### 部署到服务器\r\n\r\n## Test\r\n\r\n\t> npm test\r\n\r\n",
+  "_id": "FED@0.0.6",
+  "dist": {
+    "shasum": "e81d1200fa5dcdeb171445679fb69d5e528c8224"
+  },
+  "_from": "."
 }
