@@ -3,9 +3,8 @@
  * ========
  * 1. load configurations and modules
  * 2. configure app
- * 3. Set up proxy if useProxy
- * 4. import backend logic
- * 5. create server
+ * 3. import backend logic
+ * 4. create server
  *
  * @author ijse
  */
@@ -34,9 +33,6 @@ exports.create = function(gConfig) {
     //!!PLUGIN EMIT
     plugin.emit('appinit1', app);
 
-    // Depreacted: old style, use plugin instead
-    // app.engine('ftl', plugin.load('fed_ftl').__express);
-
     app.use(express.favicon());
 
     // Will print every request log
@@ -57,16 +53,6 @@ exports.create = function(gConfig) {
 
     //!!PLUGIN EMIT
     plugin.emit('appinit3', app);
-
-    // Continue with proxy request
-    // if(gConfig.proxy.enable) {
-    //     ProxyInstance = new httpProxy.RoutingProxy();
-    //     app.enable('trust proxy');
-    //     app.use(proxyServerMidleware);
-    // }
-
-    //!!PLUGIN EMIT
-    plugin.emit('appinit4', app);
 
     // Static resources
     app.use(express['static'](app.get('static resource')));

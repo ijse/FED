@@ -15,24 +15,26 @@ function RenderManager() {
         "json": jsonRender
     };
 
-    // Plain Text Render
-    // =================
-    // @param data  - text data
-    function textRender(res) {
-        return function(data) {
-            res.end(data);
-        };
-    }
-
-    // Json Renderer
-    // =============
-    // @param data   - data model
-    function jsonRender(res) {
-        return function(data) {
-            res.json(data);
-        };
-    }
 }
+
+// Plain Text Render
+// =================
+// @param data  - text data
+function textRender(res) {
+    return function(data) {
+        res.end(data);
+    };
+}
+
+// Json Renderer
+// =============
+// @param data   - data model
+function jsonRender(res) {
+    return function(data) {
+        res.json(data);
+    };
+}
+
 RenderManager.prototype.add = function(name, render) {
     if(this.map[name]) {
         throw "Render " + name + " has been exist!";

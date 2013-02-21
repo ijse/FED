@@ -32,12 +32,6 @@ function importLogic(root, app) {
             // delete require.cache[require.resolve(file)];
             obj = require(file);
 
-            // Call .watch() if exist, with app and renders
-            // >>with fed();
-            // if (obj.watch) {
-            //     //
-            //     obj.watch(fed(app));
-            // }
             for(var cmd in obj) {
                 // Discard cmd start with ~
                 if(/^~/.test(cmd)) {
@@ -64,12 +58,6 @@ function applyRoutes(cmd, route, _app) {
             app: _app, req: req, res: res, next: next,
             //TODO:
             render: _app.get('render manager').list(res)
-            // Deprecated!
-            // render: {
-            //     ftl: ftlRender(res),
-            //     json: jsonRender(res),
-            //     text: textRender(res)
-            // }
         }, req, res, next);
     });
 }
