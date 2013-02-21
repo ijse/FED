@@ -6,6 +6,7 @@ exports.init = function(config) {
 	var lessCfg = {
 		dest: config.dest,
 		force: config.force || {},
+		useTmpDir: config.useTmpDir || false,
 		// paths: "",
 		// prefix: "",
 		optimization: config.optimization || 1,
