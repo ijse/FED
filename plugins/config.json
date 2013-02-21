@@ -2,6 +2,7 @@
 {
 	"fed_proxy": {},
 	"fed_less": {
+		"useTmpDir": false,
 		"force": true,
 		"optimization": 1,
 		"debug": true,
