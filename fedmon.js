@@ -53,10 +53,12 @@ function doRestart(filename) {
 	console.log('[%s] changed, restarting...', filename);
 	if(child_process.dead) {
 		child_process.kill("SIGTERM");
+		child_process = null;
 		xxoo();
 	} else {
 		child_process.on("exit", xxoo);
 		child_process.kill("SIGTERM");
+		child_process = null;
 	}
 }
 // Create a child process
