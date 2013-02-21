@@ -52,6 +52,7 @@ if(child_argv[0] === "run") {
 function doRestart(filename) {
 	console.log('[%s] changed, restarting...', filename);
 	if(child_process.dead) {
+		child_process.kill("SIGTERM");
 		xxoo();
 	} else {
 		child_process.on("exit", xxoo);
