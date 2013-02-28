@@ -1,6 +1,6 @@
 {
   "name": "fed",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "launcher.js",
   "directories": {
