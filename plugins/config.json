@@ -9,6 +9,13 @@
 		"compress": true,
 		"dumpLineNumbers": "mediaquery"
 	},
+	"fed_coffee": {
+		"force": true,
+		"once": false,
+		"debug": true,
+		"prefix": "",
+		"useTmpDir": true
+	},
 	"fed_ftl": {},
 	"fed_2html": {},
 	"fed_doc": {},
