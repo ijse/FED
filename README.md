@@ -9,15 +9,11 @@ FED 重新划分了项目开发中前后端分工，明确了各开发范围，�
 
 ## 特性
 
-* 支持FreeMarker模板渲染
-* 支持配置模板全局变量
-* 支持FreeMarker模板继承语法
-* 支持各种格式的返回数据
-* 支持GET、POST等所有HTTP请求，可修改HTTP头
-* 支持AJAX、JSONP请求
+* 支持FreeMarker模板引擎
+* 支持标准的HTTP请求方法及返回数据格式
 * 内含http-proxy模块，支持调试线上代码
-* 真实URL地址访问，与线上访问保持一致
-* 支持基于代码注释标记的文档输出功能
+* 支持less、coffee文件的实时编译
+* 可自动重启应用最新代码
 * 插件机制扩展，满足大部分扩展需求
 
 ## 使用步骤
@@ -29,31 +25,24 @@ $> mkdir fedProj
 $> cd fedProj
 ```
 
-2. 下载FED:
+2. 下载安装FED:
 
 ```
-$> git clone https://github.com/ijse/FED .
+$> npm install -g fed
 ```
 
 3. COPY一份配置文件 "fedProj/FED/configs/index.json", 修改
 
-4. 安装依赖:
-
-```
-$> cd fedProj/FED
-$> npm install --save
-```
-
-5. 启动服务：
+4. 启动服务：
 
 ```
 $> fedmon run ./configs/index.json -P 8910
 ```
 
-注：`fed run`时必须指定配置文件~！
+注：`fedmon run`时必须指定配置文件~！
 
-~~另外，为了开发方便，需要本地装有`node-dev`, 可以通过npm直接安装：`npm install -g node-dev`;~~
 当修改backend文件时，FED会自动重启应用更新。
+
 
 ## 页面模板说明
 
@@ -64,6 +53,7 @@ $> fedmon run ./configs/index.json -P 8910
 freemarker模板已经内置对于模板继承的支持，可直接在模板中使用`<@override />`、`<@block />`和`<@extend />`命令；其它与在JAVA环境下写法一致。
 
 freemarker模板文件可直接放到JAVA环境中使用。
+
 
 ## 怎样写backend
 
