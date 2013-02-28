@@ -4,13 +4,13 @@ os = require "os"
 
 exports.init = (config)->
 	coffeeCfg = {
-		force: true
-		once: false
-		debug: true
+		force: config.force
+		once: config.once
+		debug: config.debug
 		src: ""
 		dest: ""
-		prefix: ""
-		useTmpDir: true
+		prefix: config.prefix || ""
+		useTmpDir: config.useTmpDir
 	}
 
 	this.on "appinit2", (app)->
