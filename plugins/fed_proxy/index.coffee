@@ -6,6 +6,7 @@
 
 httpProxy = require "http-proxy"
 path = require "path"
+ProxyInstance = null
 
 # Proxy Server Midleware
 # ======================
@@ -26,6 +27,11 @@ proxyServerMidleware = (req, res, next) ->
 		buffer: buffer
 	}
 
+# Create proxy server
+# ===================
+createServer = (pSetting)->
+	httpProxy.createServer { router: pSetting.router }
+
 # Entry of plugin
 # ================
 # Initialize the plugin with config, add hooks
@@ -34,6 +40,8 @@ exports.init = (config) ->
 	this.on "appinit3", (app)->
 
 		app.enable 'trust proxy'
+		config = app.get "proxy setting"
+		ProxyInstance = new httpProxy.RoutingProxy()
 
 		# Re-emit events on request for proxy
 		app.use (req, res, next)->

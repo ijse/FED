@@ -33,6 +33,8 @@ exports.init = function() {
 		config = app.get("proxy setting");
 		ProxyInstance = new httpProxy.RoutingProxy();
 		app.enable('trust proxy');
+
+		//!! Here still has some problems.
 		app.use(function (req, res, next) {
 			req.removeAllListeners('data');
 			req.removeAllListeners('end');
@@ -41,7 +43,8 @@ exports.init = function() {
 				req.emit('data', JSON.stringify(req.body));
 				req.emit('end');
 			});
-		}, proxyServerMidleware);
+		});
+		app.use(proxyServerMidleware);
 	});
 
 };
