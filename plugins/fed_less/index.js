@@ -1,6 +1,7 @@
 var lessMiddleware = require("less-middleware");
 var os = require("os");
 var express = require("express");
+var path = require("path");
 
 exports.init = function(config) {
 	var lessCfg = {
@@ -21,13 +22,13 @@ exports.init = function(config) {
 		// console.log("-----run less middleware-----");
 		lessCfg.src = app.get("static resource");
 		if(config.useTmpDir) {
-			lessCfg.dest = os.tmpDir();
+			lessCfg.dest = path.join(os.tmpDir(), "tmp_fed_less");
 		} else if(!lessCfg.dest) {
 			lessCfg.dest = lessCfg.src;
 		}
 		app.use(lessMiddleware(lessCfg));
 		if(lessCfg.useTmpDir) {
-			app.use(express["static"](os.tmpDir()));
+			app.use(express["static"](lessCfg.dest));
 		}
 	});
 };
