@@ -53,6 +53,12 @@ function applyRoutes(cmd, route, _app) {
     var url = cmd[1] || cmd[0];
     var method = cmd.length < 2 ? 'get' : cmd[0];
 
+    // Support regex expression
+    var matches = /\((.*)\)/.exec(url);
+    if(matches !== null && matches[1]) {
+        url = new RegExp(matches[1]);
+    }
+
     _app[method](url, function(req, res, next) {
         route.call({
             app: _app, req: req, res: res, next: next,

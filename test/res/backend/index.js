@@ -27,5 +27,8 @@ module.exports = {
 	},
 	"post /post-with-param": function(req, res) {
 		this.render.text("hello, " + req.body.name);
+	},
+	"get (/.*\\.do$)": function(req, res) {
+		this.render.text("ok");
 	}
 };

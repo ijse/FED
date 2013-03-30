@@ -50,3 +50,19 @@ describe "基本功能测试", ->
 				.post("/post-with-param")
 				.send({name: "ijse"})
 				.expect(200, "hello, ijse", done)
+	describe "测试正则URL匹配", ->
+		it "正确匹配 -> get (/.*\\.do$) ", (done)->
+			request
+				.get("/testReg.do")
+				.expect(200, "ok")
+				.end(done)
+		it "不会匹配 -> get (/.*\\.do$) ", (done)->
+			request
+				.get("/testReg")
+				.expect(404)
+				.end(done)
+		it "不会匹配 -> get (/.*\\.do$) ", (done)->
+			request
+				.get("/testReg.done")
+				.expect(404)
+				.end(done)
