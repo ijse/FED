@@ -31,4 +31,5 @@ module.exports = {
 	"get (/.*\\.do$)": function(req, res) {
 		this.render.text("ok");
 	}
+
 };

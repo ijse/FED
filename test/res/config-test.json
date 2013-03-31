@@ -1,6 +1,5 @@
 {
-	"host": "app.changyou.com",
-	"port": "3000",
+	"port": "3011",
 	"path": {
 		"views": "./views",
 		"backend": "./backend",
@@ -11,7 +10,7 @@
 	},
 
 	"proxy": {
-		"enable": true,
+		"enable": false,
 		"port": 80,
 		"router": {
 			"localtest": "localhost:3000"

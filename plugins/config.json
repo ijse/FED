@@ -16,6 +16,12 @@
 		"prefix": "",
 		"useTmpDir": true
 	},
+	"fed_imgen": {
+		"cacheTimeout": 5000,
+		"url": "/_",
+		"defaultColor": [255, 0, 0, 0.7],
+		"destPath": false
+	},
 	"fed_ftl": {},
 	"fed_2html": {},
 	"fed_doc": {},
