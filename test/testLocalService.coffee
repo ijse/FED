@@ -24,7 +24,7 @@ request = Request(localServer.create {
 	}
 })
 
-xdescribe "基本功能测试", ->
+describe "基本功能测试", ->
 	describe "测试GET请求", ->
 		it "请求静态文本内容", (done)->
 			request
@@ -67,10 +67,3 @@ xdescribe "基本功能测试", ->
 				.expect(404)
 				.end(done)
 
-describe "功能细节测试", ->
-	describe "URL传参测试", ->
-		it "获得正确的width和height", (done)->
-			request
-				.get("/_/200x100")
-				.expect(200, "200,100")
-				.end(done)
