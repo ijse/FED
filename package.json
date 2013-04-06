@@ -32,7 +32,7 @@
     "url": "git://github.com/ijse/FED.git"
   },
   "author": "ijse",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "keywords": [
     "feed",
