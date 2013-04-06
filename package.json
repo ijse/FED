@@ -1,6 +1,6 @@
 {
   "name": "fed",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "launcher.js",
   "directories": {
@@ -15,7 +15,7 @@
     "iconv-lite": "~0.2.7",
     "http-proxy": "~0.8.5",
     "commander": "~1.1.1",
-    "node-watch": "~0.2.6",
+    "nodewatch": "~0.3.1",
     "coffee-script": "~1.4.0",
     "less-middleware": ">=0.1.9",
     "coffee-middleware": ">=0.0.2",

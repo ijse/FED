@@ -6,7 +6,7 @@
  * @author ijse
  */
 var path = require("path");
-var watch = require("node-watch");
+var watch = require("nodewatch");
 var commander = require("commander");
 var fedUtil = require("./libs/fedUtil.js");
 var createChild = require("child_process").fork;
@@ -34,8 +34,10 @@ if(child_argv[0] === "run") {
 
 	// Watch backend and views, if file change,
 	// restart child process to apply the changes
-	watch(backendPath, doRestart);
-	watch(gConfig.path.views, doRestart);
+	watch
+		.add(backendPath, true)
+		.add(gConfig.path.views, true)
+		.onChange(doRestart);
 
 } else {
 	// for other subcommand, just exit after finishing
@@ -49,8 +51,8 @@ if(child_argv[0] === "run") {
 }
 
 // Restart the process
-function doRestart(filename) {
-	console.log('[%s] changed, restarting...', filename);
+function doRestart(file,prev,curr,action) {
+	console.log('[%s] [%s], restarting...', file, action);
 	if(child_process.dead) {
 		child_process.kill("SIGTERM");
 		child_process = null;
