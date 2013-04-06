@@ -46,9 +46,9 @@ $> fedmon run ./configs/index.json -P 8910
 
 ## Documentation
 
-更多的使用说明请移步 [WIKI](https://github.com/h5bp/html5-boilerplate/wiki), 文档会不定时更新。
+更多的使用说明请移步 [WIKI](https://github.com/ijse/FED/wiki), 文档会不定时更新。
 
-同时，如果有任何问题请到[这儿](https://github.com/h5bp/html5-boilerplate/issues)给我提issue，我会尽快处理并答复的。
+同时，如果有任何问题请到[这儿](https://github.com/ijse/FED/issues)给我提issue，我会尽快处理并答复的。
 
 
 ## Contributing
