@@ -30,7 +30,8 @@ exports.processTemplate = function(args) {
 			resultData += iconv.decode(data, 'gbk');
 		});
 		cmd.stderr.on("data", function(data) {
-			args.callback(iconv.decode(data, 'gbk'));
+			// Print error message
+			console.log(iconv.decode(data, 'gbk'));
 		});
 		cmd.stdout.on("end", function() {
 			args.callback(null, resultData);
