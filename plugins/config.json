@@ -1,6 +1,5 @@
 
 {
-	"fed_proxy": {},
 	"fed_less": {
 		"useTmpDir": false,
 		"force": true,
