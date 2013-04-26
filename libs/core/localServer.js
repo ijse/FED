@@ -12,10 +12,10 @@ var express       = require('express');
 var http          = require('http');
 var path          = require('path');
 // var httpProxy     = require('http-proxy');
-var plugin        = require('./plugins');
+var plugin        = require('../../plugins');
 
-var RenderManager = require('./libs/RenderManager.js');
-var RouterManager = require('./libs/RouterManager.js');
+var RenderManager = require('../../libs/RenderManager.js');
+var RouterManager = require('../../libs/RouterManager.js');
 
 var createServer = function(gConfig) {
     var app = exports.app = new express();
@@ -23,7 +23,7 @@ var createServer = function(gConfig) {
     app.set('proxy support', gConfig.proxy.enable);
     app.set('proxy setting', gConfig.proxy);
     app.set('static resource', gConfig.path['public']);
-    app.set('views', gConfig.path.views);
+    app.set('views', gConfig.path.view);
 	app.set('view engine', 'ejs');
 
     // Define renders for response
@@ -64,7 +64,7 @@ var createServer = function(gConfig) {
     app.locals(gConfig.globals);
 
     // load routes
-    RouterManager.loadRoutes(gConfig.path.backend, app);
+    RouterManager.loadRoutes(gConfig.path.mock, app);
 
     // Start local-service host, notify address
     var httpServer = http.createServer(app);
@@ -72,13 +72,16 @@ var createServer = function(gConfig) {
     return httpServer;
 };
 
-
 // When receive the signal comes from parent
 process.on("message", function(msg) {
+    var localServerInstance = null;
+    // console.log("Got the message", msg);
     if(msg.signal === "SIG_START_SERVER") {
-        createServer(msg.config).listen(msg.config.port, function() {
+        localServerInstance = createServer(msg.config).listen(msg.config.port, function() {
             console.log("FED server listening on port " + msg.config.port);
         });
+        // Send to parent process
+        // process.send(localServerInstance);
     }
 });
 
