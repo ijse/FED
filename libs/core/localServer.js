@@ -14,8 +14,8 @@ var path          = require('path');
 // var httpProxy     = require('http-proxy');
 var plugin        = require('../../plugins');
 
-var RenderManager = require('../../libs/RenderManager.js');
-var RouterManager = require('../../libs/RouterManager.js');
+var RenderManager = require('./RenderManager');
+var RouterManager = require('./RouterManager');
 
 var createServer = function(gConfig) {
     var app = exports.app = new express();

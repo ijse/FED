@@ -3,7 +3,7 @@
 path        = require("path");
 watch       = require("nodewatch");
 commander   = require("commander");
-fedUtil     = require("./libs/fedUtil.js");
+fedUtil     = require("./libs/utils/fedUtil.js");
 childProcess = require("child_process");
 
 # localServer process handler
