@@ -20,7 +20,7 @@ var SIGNALLIST = {
 	}
 };
 
-process.on("message", function(msg) {
+var msgHandler = function(msg) {
 	if(SIGNALLIST[msg.signal]) {
 
 		// Load modules
@@ -32,4 +32,8 @@ process.on("message", function(msg) {
 	} else {
 		// Signal not found
 	}
-});
+};
+
+process.on("message", msgHandler);
+
+exports.send = msgHandler;

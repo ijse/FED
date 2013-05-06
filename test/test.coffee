@@ -1,11 +1,16 @@
 
-###
-	author: ijse
 
-###
-
-# 测试模板引擎 jar包功能
-require("../plugins/fed_ftl/test")
+# test libs/core
+#====================
 
 # 测试本地服务
-require("./testLocalService.coffee")
+require("./testLocalServer.coffee")
+
+# test libs/modules
+#====================
+
+# 测试模板引擎 jar包
+require("./testFreemarkerModule.coffee")
+
+# 测试即时编译LESS和coffee文件
+require("./testJITModule.coffee")

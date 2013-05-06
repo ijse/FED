@@ -8,7 +8,7 @@ module.exports = {
 		useTmpDir: true
 		force: true
 		optimization: 1
-		debug: true
+		debug: false
 		compress: true
 		dumpLineNumbers: "mediaquery"
 	},
@@ -17,7 +17,7 @@ module.exports = {
 		useTmpDir: true
 		force: true
 		once: false
-		debug: true
+		debug: false
 		prefix: ""
 	}
 }

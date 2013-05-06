@@ -1,10 +1,13 @@
 
+path_normalize = require("path").normalize
+ftlEngine = require "./TemplateRun.js"
+
 ftlRender =(res)->
     return (tpl, data)->
         res.set('Content-Type', 'text/html')
         res.render(tpl + '.ftl', data)
 
-renderFile = exports.__express = exports.renderFile = (path, options, fn)->
+renderFile = (path, options, fn)->
 	templateName = ""
 	viewsDir = path_normalize(options.settings.views)
 	templateName = path.replace(viewsDir, "")
@@ -24,7 +27,7 @@ renderFile = exports.__express = exports.renderFile = (path, options, fn)->
 		fn err
 		throw err
 
-module.exports = (config)->
+module.exports = ()->
 
 	# Regist render engine to app
 	Hub.on "localServer.renderEngine.regist", (param)->
@@ -34,3 +37,7 @@ module.exports = (config)->
 		# Add render hook
 		app.get("render manager").add("ftl", ftlRender)
 		return
+
+	return {
+		renderFile: renderFile
+	}

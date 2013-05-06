@@ -4,16 +4,7 @@ express = require "express"
 os = require "os"
 path = require "path"
 
-module.exports = (config)->
-	coffeeCfg = {
-		force: config.force
-		once: config.once
-		debug: config.debug
-		src: ""
-		dest: ""
-		prefix: config.prefix || ""
-		useTmpDir: config.useTmpDir
-	}
+module.exports = (coffeeCfg)->
 
 	Hub.on "localServer.loadRoute.before", (param)->
 		app = param.app

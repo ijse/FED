@@ -23,7 +23,9 @@
 		}
 	},
 
-	"plugins": [
-
-	]
+	"plugins": {
+		"coffeescript": {
+			"debug": true
+		}
+	}
 }

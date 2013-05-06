@@ -11,6 +11,7 @@ TEST_PORT = 3210
 assert = require "assert"
 Request = require "supertest"
 localServer = require "../libs/core/localServer"
+global.Hub = require("hubjs")()
 
 # Set up local service
 request = Request(localServer.create {
@@ -66,4 +67,3 @@ describe "基本功能测试", ->
 				.get("/testReg.done")
 				.expect(404)
 				.end(done)
-

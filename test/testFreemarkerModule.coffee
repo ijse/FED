@@ -8,17 +8,18 @@
 	@author: ijse
 ###
 
-ftlEngine = require "../index.js"
+ftlEngine = require("../libs/modules/freemarker/index.coffee")()
+
 assert = require "assert"
 path = require "path"
 
 # Test views folder
 thisPath = __dirname + "/res"
-viewPath = path.join(thisPath, "views")
+viewPath = path.join(thisPath, "ftls")
 
 spawn = require('child_process').spawn;
 
-describe "ftl.jar 模板处理功能测试：", ->
+describe "Freemarker模板解析测试", ->
 	# helpers
 	ftlRender = (tpl, data, fn) ->
 		data["settings"] = {
