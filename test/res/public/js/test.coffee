@@ -1,0 +1,3 @@
+
+test = (str)->
+	return str

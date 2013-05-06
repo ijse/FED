@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
-path        = require("path");
-watch       = require("nodewatch");
-commander   = require("commander");
-fedUtil     = require("./libs/utils/fedUtil.js");
-childProcess = require("child_process");
+# Define Global Message Center
+
+path         = require("path")
+watch        = require("nodewatch")
+fedUtil      = require("./libs/utils")
+childProcess = require("child_process")
 
 # localServer process handler
 pChild = null
 
-commander = require("optimist")
-		.usage('Usage: $0 [options] [CONFIG_FILE]')
+CLI = require("optimist")
+		.usage('\nUsage: $0 [options] [CONFIG_FILE]')
 		.boolean(["server", "watch"])
 		.string("port")
 		.alias({
@@ -25,11 +26,11 @@ commander = require("optimist")
 		})
 		# .default({})
 
-argv = commander.argv
+argv = CLI.argv
 
-#TODO: show help message
+# Show help message
 if argv.help
-	commander.showHelp()
+	CLI.showHelp()
 	process.exit(0)
 
 
@@ -41,14 +42,15 @@ if cfgFile
 	gConfig.port = argv.port or gConfig.port or 3000
 else
 	# not specify config file
-
+	console.error "Need config file!" if argv.server or argv.watch
+	process.exit(0)
 
 # Start http server
 #	w
 launchServer = ()->
 	# Fork process to create and start localServer
 	pChild = childProcess.fork(
-		path.join(__dirname, "./libs/core/localServer.js"),
+		path.join(__dirname, "./libs/core/dispatcher.js"),
 		null, {
 			silent: true,
 			stdio: [process.stdin, process.stdout]
@@ -69,12 +71,13 @@ launchServer = ()->
 	# Create and run local server
 	# Send SIG_START_SERVER signal to child process
 	pChild.send({
-		signal: "SIG_START_SERVER"
+		signal: "SIG_START_SERVER",
 		config: gConfig
 	})
 
 	# Receive the local server instance from child process that created
 	pChild.on("message", (localServerInstance)->
+		#!! Cant pass object between processes
 		# pChild.localServerInstance = localServerInstance
 		return
 	)
@@ -83,7 +86,6 @@ launchServer = ()->
 
 # Watch file changes, and restart pChild
 launchWatcher = ->
-	console.log(gConfig.path);
 	# watch mock
 	watch
 		.add(gConfig.path.mock, true)

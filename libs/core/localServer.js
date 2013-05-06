@@ -11,8 +11,6 @@
 var express       = require('express');
 var http          = require('http');
 var path          = require('path');
-// var httpProxy     = require('http-proxy');
-var plugin        = require('../../plugins');
 
 var RenderManager = require('./RenderManager');
 var RouterManager = require('./RouterManager');
@@ -30,8 +28,8 @@ var createServer = function(gConfig) {
     // so that it will be used in router
     app.set('render manager', new RenderManager());
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit1', app);
+    //!! EMIT
+    Hub.emit("localServer.renderEngine.regist", { app: app });
 
     app.use(express.favicon());
 
@@ -45,14 +43,14 @@ var createServer = function(gConfig) {
     app.use(express.cookieParser('ijse'));
     app.use(express.session());
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit2', app);
+    //!! EMIT
+    Hub.emit("localServer.loadRoute.before", { app: app });
 
     // Now router
     app.use(app.router);
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit3', app);
+    //!! EMIT
+    Hub.emit("localServer.loadRoute.after", { app: app });
 
     // Static resources
     app.use(express['static'](app.get('static resource')));
@@ -71,19 +69,6 @@ var createServer = function(gConfig) {
 
     return httpServer;
 };
-
-// When receive the signal comes from parent
-process.on("message", function(msg) {
-    var localServerInstance = null;
-    // console.log("Got the message", msg);
-    if(msg.signal === "SIG_START_SERVER") {
-        localServerInstance = createServer(msg.config).listen(msg.config.port, function() {
-            console.log("FED server listening on port " + msg.config.port);
-        });
-        // Send to parent process
-        // process.send(localServerInstance);
-    }
-});
 
 exports.create = createServer;
 
