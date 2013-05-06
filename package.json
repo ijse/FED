@@ -14,11 +14,12 @@
     "express": "~3.0.0beta7",
     "iconv-lite": "~0.2.7",
     "http-proxy": "~0.8.5",
-    "commander": "~1.1.1",
     "nodewatch": "~0.3.1",
     "coffee-script": "~1.4.0",
     "less-middleware": ">=0.1.9",
     "coffee-middleware": ">=0.0.2",
+    "optimist": "~0.4.0",
+    "hubjs": "~0.11.0",
     "ejs": "~0.8.3"
   },
   "devDependencies": {
