@@ -27,8 +27,7 @@ renderFile = (path, options, fn)->
 		fn err
 		throw err
 
-module.exports = ()->
-
+exports.init = ()->
 	# Regist render engine to app
 	Hub.on "localServer.renderEngine.regist", (param)->
 		app = param.app

@@ -4,7 +4,7 @@ express = require "express"
 os = require "os"
 path = require "path"
 
-module.exports = (coffeeCfg)->
+exports.init = (coffeeCfg)->
 
 	Hub.on "localServer.loadRoute.before", (param)->
 		app = param.app

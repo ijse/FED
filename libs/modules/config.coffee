@@ -1,5 +1,26 @@
 
 module.exports = {
+	generate: {
+		enable: true
+		command: {
+			name: "gen"
+			options: {
+				"silent": {
+					alias: "S"
+					boolean: true
+					default: undefined
+					describe: "Generate without interaction"
+				}
+			}
+		}
+	},
+	fedDoc: {
+		enable: true
+		command: {
+			name: "doc"
+			options: {}
+		}
+	},
 	freemarker: {
 		enable: true
 	},

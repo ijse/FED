@@ -21,10 +21,11 @@ var SIGNALLIST = {
 };
 
 var msgHandler = function(msg) {
+
 	if(SIGNALLIST[msg.signal]) {
 
 		// Load modules
-		Module(msg.config["plugins"]);
+		Module.init(msg.config["plugins"]);
 
 		Hub.emit("modules.load");
 

@@ -3,7 +3,7 @@ express = require("express")
 os = require("os")
 path = require("path")
 
-module.exports = (lessCfg)->
+exports.init = (lessCfg)->
 
 	Hub.on "localServer.loadRoute.before", (param)->
 		app = param.app
