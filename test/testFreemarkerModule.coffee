@@ -8,7 +8,7 @@
 	@author: ijse
 ###
 
-ftlEngine = require("../libs/modules/freemarker/index.coffee")()
+ftlEngine = require("../libs/modules/freemarker/index.coffee").init()
 
 assert = require "assert"
 path = require "path"

@@ -8,8 +8,8 @@ app = new express()
 app.set('static resource', __dirname + "/res/public");
 
 configs = require("../libs/modules/config.coffee")
-require("../libs/modules/coffeescript")(configs.coffeescript)
-require("../libs/modules/lesscss")(configs.lesscss)
+require("../libs/modules/coffeescript").init(configs.coffeescript)
+require("../libs/modules/lesscss").init(configs.lesscss)
 
 Hub.emit "localServer.loadRoute.before", { app: app }
 

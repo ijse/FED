@@ -6,7 +6,7 @@
  *  3. process command
  */
 require("coffee-script");
-var Module = require("../modules");
+var Module = require("../index");
 
 global.Hub = require("hubjs")();
 
@@ -25,7 +25,7 @@ var msgHandler = function(msg) {
 	if(SIGNALLIST[msg.signal]) {
 
 		// Load modules
-		Module.init(msg.config["plugins"]);
+		Module.init(msg.config);
 
 		Hub.emit("modules.load");
 

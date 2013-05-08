@@ -16,12 +16,13 @@ var RenderManager = require('./RenderManager');
 var RouterManager = require('./RouterManager');
 
 var createServer = function(gConfig) {
+    var serverConfigs = gConfig.server;
     var app = exports.app = new express();
 
-    app.set('proxy support', gConfig.proxy.enable);
-    app.set('proxy setting', gConfig.proxy);
-    app.set('static resource', gConfig.path['public']);
-    app.set('views', gConfig.path.view);
+    // app.set('proxy support', gConfig.proxy.enable);
+    // app.set('proxy setting', gConfig.proxy);
+    app.set('static resource', serverConfigs.path['public']);
+    app.set('views', serverConfigs.path.view);
 	app.set('view engine', 'ejs');
 
     // Define renders for response
@@ -59,10 +60,10 @@ var createServer = function(gConfig) {
     app.use(express.errorHandler());
 
     // apply global variables
-    app.locals(gConfig.globals);
+    app.locals(serverConfigs.globals);
 
     // load routes
-    RouterManager.loadRoutes(gConfig.path.mock, app);
+    RouterManager.loadRoutes(serverConfigs.path.mock, app);
 
     // Start local-service host, notify address
     var httpServer = http.createServer(app);

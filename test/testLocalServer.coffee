@@ -10,18 +10,20 @@ TEST_PORT = 3210
 
 assert = require "assert"
 Request = require "supertest"
-localServer = require "../libs/core/localServer"
+localServer = require "../libs/modules/server/localServer"
 global.Hub = require("hubjs")()
 
 # Set up local service
 request = Request(localServer.create {
-	path: {
-		view: __dirname + "/res/views",
-		public: __dirname + "/res/public",
-		mock: __dirname + "/res/backend",
-	},
-	proxy: {
-		enable: false
+	server: {
+		path: {
+			view: __dirname + "/res/views",
+			public: __dirname + "/res/public",
+			mock: __dirname + "/res/backend",
+		},
+		proxy: {
+			enable: false
+		}
 	}
 })
 

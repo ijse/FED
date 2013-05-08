@@ -1,5 +1,22 @@
 
 module.exports = {
+	server: {
+		enable: true
+		command: {
+			name: "server"
+			options: {
+				"watch": {
+					alias: "w"
+					boolean: true
+					describe: "Restart server when file changes"
+				},
+				"port": {
+					alias: "p"
+					describe: "Set service port"
+				}
+			}
+		}
+	},
 	generate: {
 		enable: true
 		command: {
@@ -29,7 +46,7 @@ module.exports = {
 		useTmpDir: true
 		force: true
 		optimization: 1
-		debug: false
+		debug: true
 		compress: true
 		dumpLineNumbers: "mediaquery"
 	},
@@ -38,7 +55,7 @@ module.exports = {
 		useTmpDir: true
 		force: true
 		once: false
-		debug: false
+		debug: true
 		prefix: ""
 	}
 }

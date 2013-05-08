@@ -16,7 +16,7 @@ defaultConfig = require("./config.coffee")
 # Initialize all modules with config
 exports.init = (gConfig)->
 
-	console.log("Load default module config ok!");
+	# console.log("Load default module config ok!");
 
 	for mod of defaultConfig
 		continue unless defaultConfig[mod].enable
@@ -24,7 +24,7 @@ exports.init = (gConfig)->
 			# Merge defaultConfig with user-defined config
 			modConfig = fedUtil.extend(defaultConfig[mod], gConfig[mod])
 			require("./" + mod).init?(modConfig)
-			console.log "Load module [#{mod}] ok!"
+			# console.log "Load module [#{mod}] ok!"
 		catch e
 			console.error("Load module [#{mod}] failed! \n #{e}")
 

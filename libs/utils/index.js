@@ -24,8 +24,8 @@ module.exports = {
 	// Format the path
 	// ===============
 	// d:/aaa.txt ==> d:\\aaa.txt
-	// ./bb.txt ==> {curPath}\\bb.txt
-	// cc.txt ==> {curPath}\\cc.txt
+	// ./bb.txt ==> {base}\\bb.txt
+	// cc.txt ==> {base}\\cc.txt
 	realPath: function (base, p) {
 		var r = "";
 		if (p[1] === ":" || p[0] === "/") {
@@ -53,9 +53,6 @@ module.exports = {
 
 		// argument, config-file, environment-variable, default(3000)
 		gConfig.port = port || gConfig.port || process.env.PORT || 3000;
-
-		gConfig.proxy = gConfig.proxy || {};
-		gConfig.proxy.enable = typeof withProxy === "undefined" ? gConfig.proxy.enable : withProxy;
 
 		// Convert path
 		gConfig.path = this.convPath(configFileFolder, gConfig.path);
