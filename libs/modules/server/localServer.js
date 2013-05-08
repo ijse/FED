@@ -11,27 +11,26 @@
 var express       = require('express');
 var http          = require('http');
 var path          = require('path');
-// var httpProxy     = require('http-proxy');
-var plugin        = require('./plugins');
 
-var RenderManager = require('./libs/RenderManager.js');
-var RouterManager = require('./libs/RouterManager.js');
+var RenderManager = require('./RenderManager');
+var RouterManager = require('./RouterManager');
 
-exports.create = function(gConfig) {
+var createServer = function(gConfig) {
+    var serverConfigs = gConfig.server;
     var app = exports.app = new express();
 
-    app.set('proxy support', gConfig.proxy.enable);
-    app.set('proxy setting', gConfig.proxy);
-    app.set('static resource', gConfig.path['public']);
-    app.set('views', gConfig.path.views);
+    // app.set('proxy support', gConfig.proxy.enable);
+    // app.set('proxy setting', gConfig.proxy);
+    app.set('static resource', serverConfigs.path['public']);
+    app.set('views', serverConfigs.path.view);
 	app.set('view engine', 'ejs');
 
     // Define renders for response
     // so that it will be used in router
     app.set('render manager', new RenderManager());
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit1', app);
+    //!! EMIT
+    Hub.emit("localServer.renderEngine.regist", { app: app });
 
     app.use(express.favicon());
 
@@ -45,14 +44,14 @@ exports.create = function(gConfig) {
     app.use(express.cookieParser('ijse'));
     app.use(express.session());
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit2', app);
+    //!! EMIT
+    Hub.emit("localServer.loadRoute.before", { app: app });
 
     // Now router
     app.use(app.router);
 
-    //!!PLUGIN EMIT
-    plugin.emit('appinit3', app);
+    //!! EMIT
+    Hub.emit("localServer.loadRoute.after", { app: app });
 
     // Static resources
     app.use(express['static'](app.get('static resource')));
@@ -61,10 +60,10 @@ exports.create = function(gConfig) {
     app.use(express.errorHandler());
 
     // apply global variables
-    app.locals(gConfig.globals);
+    app.locals(serverConfigs.globals);
 
     // load routes
-    RouterManager.loadRoutes(gConfig.path.backend, app);
+    RouterManager.loadRoutes(serverConfigs.path.mock, app);
 
     // Start local-service host, notify address
     var httpServer = http.createServer(app);
@@ -72,7 +71,7 @@ exports.create = function(gConfig) {
     return httpServer;
 };
 
-
+exports.create = createServer;
 
 // Support express.bodyParser()
 // ======================================
