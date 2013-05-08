@@ -4,8 +4,11 @@
  * @author  ijse
  */
 var path = require("path");
+var directory = require("./directory.js");
 
 module.exports = {
+	mkdirSync: directory.mkdirSync,
+	mkdir: directory.mkdir,
 	// Convert Path Object
 	// ===================
 	// convert path to normal style.
@@ -34,30 +37,6 @@ module.exports = {
 			r = path.join(base, p);
 		}
 		return r;
-	},
-
-	//=====
-	optimizeConfig: function (configFile, port, withProxy) {
-		// Must provide config file
-		if (!configFile) {
-			console.error("You must provide the config file!!");
-			return;
-		}
-
-		// Format config file path
-		var realConfigFile = this.realPath(process.cwd(), configFile);
-		var configFileFolder = path.dirname(realConfigFile);
-
-		// Inherit config
-		var gConfig = require(realConfigFile);
-
-		// argument, config-file, environment-variable, default(3000)
-		gConfig.port = port || gConfig.port || process.env.PORT || 3000;
-
-		// Convert path
-		gConfig.path = this.convPath(configFileFolder, gConfig.path);
-
-		return gConfig;
 	},
 
 	//Object extend comes from jQuery
