@@ -11,7 +11,6 @@ FED 试图重新划分项目开发中前后端分工，明确各开发范围，�
 
 * 支持FreeMarker模板引擎
 * 支持标准的HTTP请求方法及返回数据格式
-* 内含http-proxy模块，支持调试线上代码
 * 支持less、coffee文件的实时编译
 * 可自动重启应用最新代码
 * 插件机制扩展，满足大部分扩展需求
@@ -36,12 +35,12 @@ $> npm install -g fed
 4. 启动服务：
 
 ```
-$> fedmon run ./configs/index.json -P 8910
+$> fed -sw -p 8910 ./configs/index.json
 ```
 
-注：`fedmon run`时必须指定配置文件~！
+注：`fed -s`时必须指定配置文件~！
 
-当修改backend文件时，FED会自动重启应用更新。
+当修改mock文件时，FED会自动重启应用更新。
 
 
 ## Documentation

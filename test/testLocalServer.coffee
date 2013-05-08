@@ -10,17 +10,20 @@ TEST_PORT = 3210
 
 assert = require "assert"
 Request = require "supertest"
-localServer = require "../localServer"
+localServer = require "../libs/modules/server/localServer"
+global.Hub = require("hubjs")()
 
 # Set up local service
 request = Request(localServer.create {
-	path: {
-		views: __dirname + "/res/views",
-		public: __dirname + "/res/public",
-		backend: __dirname + "/res/backend",
-	},
-	proxy: {
-		enable: false
+	server: {
+		path: {
+			view: __dirname + "/res/views",
+			public: __dirname + "/res/public",
+			mock: __dirname + "/res/backend",
+		},
+		proxy: {
+			enable: false
+		}
 	}
 })
 
@@ -66,4 +69,3 @@ describe "基本功能测试", ->
 				.get("/testReg.done")
 				.expect(404)
 				.end(done)
-

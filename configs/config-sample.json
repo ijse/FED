@@ -1,26 +1,17 @@
 {
-	"host": "app.changyou.com",
-	"port": "3000",
-	"path": {
-		"views": "../test/res/views",
-		"backend": "../test/res/backend",
-		"public": "../test/res/public"
-	},
-	"globals": {
-		"baseUrl": "",
-		"basePath": "http://www.ijser.cn/"
-	},
-
-	"proxy": {
-		"enable": false,
-		"port": 80,
-		"router": {
-			"cy4749.cyou-inc.com": "localhost:81",
-			"app.changyou.com": "localhost:3000"
+	"server": {
+		"port": "3000",
+		"path": {
+			"view": "../test/res/views",
+			"mock": "../test/res/backend",
+			"public": "../test/res/public"
 		},
-		"remote": {
-			"host": "123.126.70.39",
-			"port": 80
+		"globals": {
+			"baseUrl": "",
+			"basePath": "http://www.ijser.cn/"
 		}
+	},
+	"coffeescript": {
+		"debug": true
 	}
 }

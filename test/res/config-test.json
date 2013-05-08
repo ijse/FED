@@ -1,8 +1,8 @@
 {
 	"port": "3011",
 	"path": {
-		"views": "./views",
-		"backend": "./backend",
+		"view": "./views",
+		"mock": "./backend",
 		"public": "./public"
 	},
 	"globals": {
