@@ -8,7 +8,7 @@ fed_2html
 
 1. 修改配置文件
 
-'''json
+```
 	{
 		// 模板引擎
 		"engine": "ejs",
@@ -36,11 +36,13 @@ fed_2html
 			}
 		]
 	}
-'''
+```
 
 2. 执行命令：
 
+```
 	fed 2html -C path/to/config/file
+```
 
 之后，便会在"savePath"所指定的目录中生成相应静态文件
 
