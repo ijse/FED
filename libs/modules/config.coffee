@@ -31,6 +31,19 @@ module.exports = {
 			}
 		}
 	},
+	fedhtml: {
+		enable: true
+		command: {
+			name: "parse"
+			options: {
+				"configFile": {
+					alias: "c"
+					demand: true
+					describe: "The config file"
+				}
+			}
+		}
+	},
 	fedDoc: {
 		enable: true
 		command: {

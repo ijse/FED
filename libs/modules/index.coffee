@@ -9,6 +9,7 @@
 
 fedUtil = require("../utils")
 
+# TODO: 启动时从每个目录下寻找配置文件加载，
 defaultConfig = require("./config.coffee")
 
 # module.exports = (gConfig)->

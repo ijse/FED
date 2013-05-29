@@ -38,6 +38,14 @@ schema = {
 }
 
 
+# Initialize Prompt
+initPrompt = ->
+	prompt.message   = "?> ".green
+	prompt.delimiter = ""
+	prompt.override  = args
+	return prompt
+
+
 exports.exec = (args, cmdConfig)->
 
 	prompt.message   = "?> ".green
