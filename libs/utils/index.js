@@ -3,10 +3,11 @@
  *
  * @author  ijse
  */
+var fs = require("fs");
 var path = require("path");
 var directory = require("./directory.js");
 
-module.exports = {
+utils = {
 	mkdirSync: directory.mkdirSync,
 	mkdir: directory.mkdir,
 	// Convert Path Object
@@ -37,6 +38,26 @@ module.exports = {
 			r = path.join(base, p);
 		}
 		return r;
+	},
+
+	// Traverse the folder
+	// ===================
+	// @param file {string}
+	// @param cb {function} (err, file)
+	traverseFolderSync: function(file, cb) {
+		if(!file || !fs.existsSync(file)) {
+			cb(true);
+			return ;
+		}
+		if(fs.lstatSync(file).isFile()) {
+			cb(false, file);
+			return ;
+		} else if(fs.lstatSync(file).isDirectory()) {
+			// is directory
+			(fs.readdirSync(file)).forEach(function(item) {
+				utils.traverseFolderSync(path.join(file, item), cb);
+			});
+		}
 	},
 
 	//Object extend comes from jQuery
@@ -131,3 +152,5 @@ module.exports = {
 		return target;
 	}
 };
+
+module.exports = utils

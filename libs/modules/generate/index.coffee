@@ -7,10 +7,8 @@ path    = require "path"
 schema = {
 	properties: {
 		fileName : {
-			description: 'Config file name:'
-			default: "config.json"
-			pattern: /^[a-zA-Z\s\-_\\\\\/:\.]+$/
-			message: 'Name must be only letters, spaces, or dashes'
+			description: "Config file name:"
+			default: "./config.json"
 			required: true
 		},
 		port: {
