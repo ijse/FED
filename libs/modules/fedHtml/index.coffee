@@ -20,6 +20,7 @@ exports.exec = (args, cmdConfig)->
 		return
 
 	# Convert configFile path to real path
+	console.log "\nRead and parse config file"
 	configFile = fedUtil.realPath process.cwd(), args.configFile
 
 	# Load configFile
@@ -33,14 +34,19 @@ exports.exec = (args, cmdConfig)->
 	# Prepare..
 	tplEngine = require config.engine
 
+	console.log "Start parsing...\n==========================\n"
+	startTime = Date.now()
+
 	# Traverse mocks, export
 	fedUtil.traverseFolderSync config.mockPath, (err, file)->
 		# handle the mock(s)
 		mocks = require file
 
+		console.log "Load mock: #{file}"
 		mocks = [mocks] if not mocks instanceof Array
 
-		for mock in mocks
+		# for mock in mocks
+		mocks.forEach (mock, n)->
 			template = path.join config.viewPath, mock.template
 			toFile = path.join config.destPath, mock.toFile
 			viewData = fedUtil.extend config.globals, mock.data, {
@@ -59,8 +65,8 @@ exports.exec = (args, cmdConfig)->
 			tplEngine.renderFile template, viewData, (err, data)->
 				throw err if err
 				fs.writeFileSync toFile, data, config.encoding
-
+				console.log "- done #{n+1} of #{mocks.length}"
 		return
-
-	console.log "fedHtml: All done!"
+	endTime = Date.now()
+	console.log "\n=======================\nfedHtml: All done within #{(endTime-startTime)/1000}s!"
 
