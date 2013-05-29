@@ -21,7 +21,7 @@ fedHtml
 		// Mocks 数据文件
 		"mockPath": "./mocks",
 		// 模板中所用的全局变量
-		"global": {
+		"globals": {
 			"basePath": "http://app.changyou.com"
 		}
 	}

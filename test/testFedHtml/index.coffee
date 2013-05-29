@@ -1,5 +1,5 @@
 
-fedhtml = require "../../libs/modules/fedhtml"
+fedhtml = require "../../libs/modules/fedHtml"
 
 describe "libs/modules/fedHtml", ->
 	it "Parse ejs to htmls by config.json", ()->
