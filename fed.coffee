@@ -18,18 +18,12 @@ CLI = Optimist
 			\nSubCommand:
 			  #{Object.keys(cmdMap)}
 		""")
-		.boolean(["version", "watch", "server"])
+		.boolean(["version"])
 		.alias({
-			"server" : "s"
-			"port" : "p"
-			"watch" : "w"
 			"version" : "v"
 			"help": "h"
 		})
 		.describe({
-			"server": "Start http server"
-			"port": "Specify http server port"
-			"watch": "Restart http server when files changes"
 			"help": "Show this message"
 			"version": "Show current version info"
 		})
