@@ -1,6 +1,6 @@
 {
     "name": "fed",
-    "version": "v0.0.15",
+    "version": "v0.0.16",
     "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
     "main": "fed.coffee",
     "directories": {
