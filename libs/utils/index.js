@@ -43,19 +43,28 @@ utils = {
 	// Traverse the folder
 	// ===================
 	// @param file {string}
+	// @param regFilter {RegExp} exclude files
 	// @param cb {function} (err, file)
-	traverseFolderSync: function(file, cb) {
+	traverseFolderSync: function(file, regFilter, cb) {
+
 		if(!file || !fs.existsSync(file)) {
 			cb(true);
 			return ;
 		}
+
+		// Apply filter
+		var fileName = path.basename(file);
+		if(regFilter && regFilter.test(fileName)) {
+			return ;
+		}
+
 		if(fs.lstatSync(file).isFile()) {
 			cb(false, file);
 			return ;
 		} else if(fs.lstatSync(file).isDirectory()) {
 			// is directory
 			(fs.readdirSync(file)).forEach(function(item) {
-				utils.traverseFolderSync(path.join(file, item), cb);
+				utils.traverseFolderSync(path.join(file, item), regFilter, cb);
 			});
 		}
 	},

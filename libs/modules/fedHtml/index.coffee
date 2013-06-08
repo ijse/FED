@@ -38,7 +38,9 @@ exports.exec = (args, cmdConfig)->
 	startTime = Date.now()
 
 	# Traverse mocks, export
-	fedUtil.traverseFolderSync config.mockPath, (err, file)->
+	excludeFile = /^(\.|_)/; # exclude files name begin of "."
+	fedUtil.traverseFolderSync config.mockPath, excludeFile, (err, file)->
+
 		# handle the mock(s)
 		mocks = require file
 

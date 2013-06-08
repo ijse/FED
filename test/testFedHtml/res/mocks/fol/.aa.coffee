@@ -1,12 +1,13 @@
 
 module.exports = [{
 	template: "/index.ejs"
-	toFile: "/index.html"
+	toFile: "/index2.html"
 	data: {
-		greedy: "hello world"
+		greedy: "hello world333333"
 	}
 }, {
 	template: "/aa.ejs"
-	toFile: "/aa.html"
+	toFile: "/aa2.html"
 	data: {}
 }]
+
