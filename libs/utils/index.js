@@ -47,14 +47,16 @@ utils = {
 	// @param cb {function} (err, file)
 	traverseFolderSync: function(file, regFilter, cb) {
 
+		cb = arguments[arguments.length-1];
 		if(!file || !fs.existsSync(file)) {
 			cb(true);
 			return ;
 		}
 
+
 		// Apply filter
 		var fileName = path.basename(file);
-		if(regFilter && regFilter.test(fileName)) {
+		if(regFilter && regFilter.test && regFilter.test(fileName)) {
 			return ;
 		}
 

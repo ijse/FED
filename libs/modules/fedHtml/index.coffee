@@ -11,6 +11,7 @@
 fedUtil = require "../../utils"
 path   = require "path"
 fs = require "fs"
+jsYaml = require "js-yaml"
 
 #
 exports.exec = (args, cmdConfig)->
@@ -41,10 +42,16 @@ exports.exec = (args, cmdConfig)->
 	excludeFile = /^(\.|_)/; # exclude files name begin of "."
 	fedUtil.traverseFolderSync config.mockPath, excludeFile, (err, file)->
 
+		return if err
+
 		# handle the mock(s)
 		mocks = require file
 
 		console.log "Load mock: #{file}"
+		
+		# Check if bach news
+		mocks = generateMocks(mocks, config) if mocks.batch
+
 		mocks = [mocks] if not mocks instanceof Array
 
 		# for mock in mocks
@@ -71,4 +78,52 @@ exports.exec = (args, cmdConfig)->
 		return
 	endTime = Date.now()
 	console.log "\n=======================\nfedHtml: All done within #{(endTime-startTime)/1000}s!"
+
+generateMocks = (obj, config)->
+	mockList = []
+	sharedData = obj.shared or {}
+
+	traPath = path.join config.mockPath, obj.from
+	# Traverse folder, read each file
+	fedUtil.traverseFolderSync traPath, (err, file)->
+
+		return if err
+
+		# Read file as text
+		data = fs.readFileSync file, "utf-8"
+
+		# Split content to yaml info and article content
+		reg = /(?:---[\s\S]([\s\S]*)---)?([\s\S]*)/
+		r = reg.exec(data)
+		if r isnt null
+			yamlData = r[1]
+			ctnData = r[2]
+
+		console.log "yaml data before: ", yamlData
+		# parse yaml
+		preConfig = jsYaml.load(yamlData)
+
+		# Merge yaml info, article content with mocks
+		mock = {
+			template: obj.template
+			toFile: path.join(obj.toFolder, path.basename(file))
+		}
+
+		mock.data = fedUtil.extend obj.shared, preConfig, {
+			content: ctnData
+		}
+
+		console.log "mock: ", mock
+		# Append mockList
+		mockList.push mock
+
+	console.log mockList
+
+	return mockList
+
+
+
+
+
+
 
