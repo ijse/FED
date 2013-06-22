@@ -52,7 +52,7 @@ $> fed -sw -p 8910 ./configs/index.json
 
 ## Contributing
 
-欢迎大家参与完善此工具，点右上角fork一份我的代码，然后便可以向我提交你的代码~
+点右上角fork按钮
 
 ## Test
 
