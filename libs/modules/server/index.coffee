@@ -13,7 +13,8 @@ exports.exec = (argv, config)->
 	if cfgFile
 		# Convert all paths to be relative to the config file
 		gConfig = loadConfig(cfgFile)
-		gConfig.port = argv.port or gConfig.port or 3000
+		console.log argv
+		gConfig.port = argv.port or gConfig.server.port or 3000
 	else
 		# not specify config file
 		console.error "Need config file!"
