@@ -35,10 +35,10 @@ $> npm install -g fed
 4. 启动服务：
 
 ```
-$> fed -sw -p 8910 ./configs/index.json
+$> fed server -w -p 8910 ./configs/index.json
 ```
 
-注：`fed -s`时必须指定配置文件~！
+注：`fed server`时必须指定配置文件~！
 
 当修改mock文件时，FED会自动重启应用更新。
 
