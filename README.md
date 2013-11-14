@@ -58,3 +58,7 @@ $> fed server -w -p 8910 ./configs/index.json
 
 	> npm test
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ijse/fed/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
