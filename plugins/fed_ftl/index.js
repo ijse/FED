@@ -50,7 +50,6 @@ var renderFile = exports.__express = exports.renderFile = function (path, option
 		});
 	} catch(err) {
 		fn(err);
-		throw err;
 	}
 
 };
