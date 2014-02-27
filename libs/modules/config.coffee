@@ -54,6 +54,9 @@ module.exports = {
 	freemarker: {
 		enable: true
 	},
+	velocity: {
+		enable: true
+	},
 	lesscss: {
 		enable: true
 		useTmpDir: true
