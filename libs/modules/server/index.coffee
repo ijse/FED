@@ -48,7 +48,7 @@ launchServer = (gConfig)->
 	# Fork process to create and start localServer
 	pChild = childProcess.fork(
 		path.join(__dirname, "./dispatcher.js"),
-		[], {
+		null, {
 			silent: true,
 			stdio: [process.stdin, process.stdout]
 		})
