@@ -1,7 +1,7 @@
 {
   "name": "fed",
   "version": "0.1.0",
-  "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
+  "description": "Development tool for web, support http server and freemarker.js and http proxy.",
   "main": "./lib/index.js",
   "bin": {
     "fed": "./bin/fed.js"
