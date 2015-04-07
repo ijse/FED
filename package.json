@@ -1,6 +1,6 @@
 {
   "name": "fed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Development tool for web, support http server and freemarker.js and http proxy.",
   "main": "./lib/index.js",
   "bin": {
