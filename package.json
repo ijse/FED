@@ -30,7 +30,7 @@
   "dependencies": {
     "commander": "^2.7.1",
     "freemarker.js": "^1.2.0",
-    "serve2": "^1.1.0"
+    "serve2": "~1.1.0"
   },
   "devDependencies": {
     "should": "^5.2.0",
