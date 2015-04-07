@@ -28,7 +28,7 @@ describe('Test fed showing help message', function() {
 
   it('show sub command help message', function(done) {
     exec(fed + 'help server', function(err, so, se) {
-      so.should.match(/Usage: fed server \[options\] \[dir\]/);
+      so.should.match(/Usage: fed-server \[options\] \[dir\]/);
       done(err);
     });
   });
@@ -55,7 +55,7 @@ describe('Test fed showing versions', function() {
   });
 
   it('show fed and serve2 versions', function(done) {
-    exec(fed + '-V', function(e, so, se) {
+    exec(fed + 'versions', function(e, so, se) {
       so.should.match(new RegExp(fedVer));
       so.should.match(new RegExp(serVer));
       done(e);
@@ -66,10 +66,6 @@ describe('Test fed showing versions', function() {
 
 
 describe('Test fed starting server', function() {
-
-  after(function() {
-    process.exit(0);
-  });
 
   it('start static server default current workdir', function(done) {
     var p = exec(fed + 'server -p 3000 .', function(e) {

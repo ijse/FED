@@ -4,7 +4,8 @@
   "description": "Development tool for web, support http server and freemarker.js and http proxy.",
   "main": "./lib/index.js",
   "bin": {
-    "fed": "./bin/fed.js"
+    "fed": "./bin/fed.js",
+    "fed-server": "./bin/fed-server.js"
   },
   "preferGlobal": true,
   "scripts": {
