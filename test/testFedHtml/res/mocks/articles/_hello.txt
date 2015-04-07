@@ -1,7 +1,0 @@
----
-title: xxx
-date: 2012-10-18
----
-
-<h1> hello world </h1>
-

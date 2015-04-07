@@ -1,3 +1,0 @@
-
-test = (str)->
-	return str
