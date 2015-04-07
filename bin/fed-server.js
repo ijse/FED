@@ -1,14 +1,4 @@
-
-// // fed server
-// program
-//   .command('server')
-//   .description('Launch local http service with serve2')
-//   .allowUnknownOption()
-//   .option('-h, --help', 'show help', serve2.showHelp)
-//   .option('    --view-root <viewRoot>', 'freemarker templates root folder')
-//   .action(serve2.start.bind(null, function() {
-//     console.log('Server start at port %s in dir %s. ', this.port, this.path)
-//   }));
+#!/usr/bin/env node
 
 var Serve2 = require('serve2');
 var program = Serve2.cli;
