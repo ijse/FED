@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+var join = require('path').join;
 var Serve2 = require('serve2');
 var program = Serve2.cli;
 var Freemarker = require('freemarker.js');
@@ -18,9 +18,9 @@ var server = new Serve2(program, function(notify) {
 
   notify.on('beforeMock', function(app, opts) {
 
-    if(!argObj.viewRoot) return ;
+    if(!program.viewRoot) return ;
 
-    var viewRoot = join(serv.path, argObj.viewRoot);
+    var viewRoot = join(serv.path, program.viewRoot);
 
     var freemarker = new Freemarker({
       viewRoot: viewRoot
