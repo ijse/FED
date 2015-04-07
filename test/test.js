@@ -7,6 +7,7 @@ var fed = resolve('./bin/fed.js');
 var exec = function(cmd, cb) {
   require('child_process').exec(cmd, {timeout: 50000}, cb);
 }
+var spawn = require('child_process').spawn;
 
 fed = [ 'node', fed, ' '].join(' ');
 
@@ -68,13 +69,9 @@ describe('Test fed showing versions', function() {
 describe('Test fed starting server', function() {
   this.timeout(5000);
 
-  afterEach(function(done) {
-    exec('pkill node', function() {
-      done();
-    });
-  })
   it('start static server default current workdir', function(done) {
-    var p = exec(fed + 'server -p 3000 .');
+    //var p = exec(fed + 'server -p 3000 .');
+    var p = spawn('node', [fed, 'server', '-p', '3000', '.']);
     var request = Request('http://localhost:3000');
     setTimeout(function() {
       request
@@ -82,12 +79,16 @@ describe('Test fed starting server', function() {
         .expect(200)
         .expect(/fed/)
         .expect(/version/)
-        .end(done);
+        .end(function() {
+          p.kill();
+          done();
+        });
     }, 1500);
   });
 
   it('start server with freemarker suport', function(done) {
-    var p = exec(fed + 'server -p 3000 -M mock --view-root view ./test/res');
+    //var p = exec(fed + 'server -p 3000 -M mock --view-root view ./test/res');
+    var p = spawn('node', [fed, 'server', '-p', '3000', '-M', 'mock', '--view-root', 'view', './test/res']);
     var request = Request('http://localhost:3000');
     setTimeout(function() {
       request
@@ -95,7 +96,10 @@ describe('Test fed starting server', function() {
         .expect(200)
         .expect(/hello/)
         .expect(/inner/)
-        .end(done);
+        .end(function() {
+          p.kill();
+          done();
+        });
     }, 1800);
   });
 
