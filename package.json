@@ -1,14 +1,12 @@
 {
   "name": "fed",
-  "version": "v0.1.0",
+  "version": "0.1.0",
   "description": "FED - feed front end\r ===\r * freemarker template support\r * html export\r * auto generate doc\r * proxy reverse server\r * deploy to server by ftp/sftp\r * some more utils",
   "main": "./lib/index.js",
-  "directories": {
-    "test": "test"
-  },
   "bin": {
-    "fed": "./bin/cli.js"
+    "fed": "./bin/fed.js"
   },
+  "preferGlobal": true,
   "scripts": {
     "test": "mocha --reporter spec ./test/test.js -t 2000 -s 500"
   },
@@ -20,15 +18,21 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "keywords": [
-    "feed",
-    "front",
-    "end"
+    "fed",
+    "frontend",
+    "tool",
+    "development"
   ],
   "engines": {
     "node": ">=0.8"
   },
   "dependencies": {
+    "commander": "^2.7.1",
     "freemarker.js": "^1.2.0",
     "serve2": "^1.1.0"
+  },
+  "devDependencies": {
+    "should": "^5.2.0",
+    "supertest": "^0.15.0"
   }
 }

@@ -1,0 +1,4 @@
+
+${greeting}, :)
+
+<#include "./inner.ftl" />
