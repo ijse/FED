@@ -69,9 +69,13 @@ describe('Test fed showing versions', function() {
 describe('Test fed starting server', function() {
   this.timeout(5000);
 
+  var p = null;
+  afterEach(function() {
+    p.kill();
+  });
   it('start static server default current workdir', function(done) {
     //var p = exec(fed + 'server -p 3000 .');
-    var p = spawn('node', [fed, 'server', '-p', '3000', '.']);
+    p = spawn('node', [fed, 'server', '-p', '3000', '.']);
     var request = Request('http://localhost:3000');
     setTimeout(function() {
       request
@@ -80,7 +84,6 @@ describe('Test fed starting server', function() {
         .expect(/fed/)
         .expect(/version/)
         .end(function() {
-          p.kill();
           done();
         });
     }, 1500);
@@ -88,7 +91,7 @@ describe('Test fed starting server', function() {
 
   it('start server with freemarker suport', function(done) {
     //var p = exec(fed + 'server -p 3000 -M mock --view-root view ./test/res');
-    var p = spawn('node', [fed, 'server', '-p', '3000', '-M', 'mock', '--view-root', 'view', './test/res']);
+    p = spawn('node', [fed, 'server', '-p', '3000', '-M', 'mock', '--view-root', 'view', './test/res']);
     var request = Request('http://localhost:3000');
     setTimeout(function() {
       request
@@ -97,7 +100,6 @@ describe('Test fed starting server', function() {
         .expect(/hello/)
         .expect(/inner/)
         .end(function() {
-          p.kill();
           done();
         });
     }, 1800);
