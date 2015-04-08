@@ -74,7 +74,7 @@ describe('Test fed showing versions', function() {
 });
 
 
-describe('Test fed starting server', function() {
+describe.only('Test fed starting server', function() {
   this.timeout(5000);
 
   var p = null;
@@ -84,9 +84,7 @@ describe('Test fed starting server', function() {
       console.log('error', ''+e);
       done(e);
     });
-    var flag = false;
-    p.stdout.on('data', function(d) {
-      if(flag) return ;
+    p.stdout.once('data', function(d) {
       var request = Request('http://localhost:3001');
       request
         .get('/package.json')
@@ -96,7 +94,6 @@ describe('Test fed starting server', function() {
         .end(function() {
           kill(p.pid);
         });
-      flag = true;
     });
 
     p.on('exit', function() {
@@ -111,9 +108,7 @@ describe('Test fed starting server', function() {
       console.log('error', ''+e);
       done(e);
     });
-    var flag = false;
-    p.stdout.on('data', function() {
-      if(flag) return ;
+    p.stdout.once('data', function() {
       var request = Request('http://localhost:3002');
       request
         .get('/test.js')
@@ -123,7 +118,6 @@ describe('Test fed starting server', function() {
         .end(function() {
           kill(p.pid);
         });
-      flag = true;
     });
 
     p.on('exit', function() {
