@@ -15,7 +15,7 @@ var kill = function(pid) {
   if(process.platform === 'win32') {
     exec('taskkill /f /t /pid ' + pid);
   } else {
-    exec('kill /f ' + pid);
+    exec('kill ' + pid);
   }
 };
 
