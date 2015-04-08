@@ -3,7 +3,7 @@ var should = require('should');
 
 var Request = require('supertest');
 var resolve = require('path').resolve;
-var fed = resolve('./bin/fed.js');
+var fed = resolve('./bin/fed');
 var exec = function(cmd, cb) {
   require('child_process').exec(cmd, {timeout: 50000}, cb);
 }
