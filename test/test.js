@@ -74,13 +74,13 @@ describe('Test fed showing versions', function() {
 });
 
 
-describe.only('Test fed starting server', function() {
+describe('Test fed starting server', function() {
   this.timeout(5000);
 
   var p = null;
   it('start static server default current workdir', function(done) {
     p = spawn('node', [fed, 'server', '-p', '3001', '.'], {timeout: 5000});
-    p.stderr.on('data', function(e) {
+    p.stderr.once('data', function(e) {
       console.log('error', ''+e);
       done(e);
     });
@@ -96,7 +96,7 @@ describe.only('Test fed starting server', function() {
         });
     });
 
-    p.on('exit', function() {
+    p.once('exit', function() {
       done();
     });
 
@@ -104,7 +104,7 @@ describe.only('Test fed starting server', function() {
 
   it('start server with freemarker suport', function(done) {
     p = spawn('node', [fed, 'server', '-p', '3002', '-M', 'mock', '--view-root', 'view', './test/res'], {timeout: 5000});
-    p.stderr.on('data', function(e) {
+    p.stderr.once('data', function(e) {
       console.log('error', ''+e);
       done(e);
     });
@@ -120,7 +120,7 @@ describe.only('Test fed starting server', function() {
         });
     });
 
-    p.on('exit', function() {
+    p.once('exit', function() {
       done();
     });
 
