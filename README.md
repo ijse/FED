@@ -1,6 +1,8 @@
 FED - The Front-End Develop Kitchen
 ====================
 
+[![Join the chat at https://gitter.im/ijse/FED](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ijse/FED?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 FED 是一个前端开发环境，供前端编写简单的后台接口，以调试开发页面; 前端可以在此环境下，使用真实的URL访问地址访问，并可嫁接于其它服务器调试页面（调试线上代码), 可以写页面模板代码并使用测试数据调试输出，最终可生成文档。
 
 FED 试图重新划分项目开发中前后端分工，明确各开发范围，提高项目并行开发效率，降低前后端开发的耦合度；同时为前端开发提供了可测的工具平台，使之在无后端实现情况下也可模拟后端接口及数据，测试页面功能。
