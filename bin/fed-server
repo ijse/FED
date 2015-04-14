@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+var fs = require('fs');
 var join = require('path').join;
 var Serve2 = require('serve2');
+var merge = require('util')._extend;
 var program = Serve2.cli;
 var Freemarker = require('freemarker.js');
 
@@ -22,6 +24,18 @@ var server = new Serve2(program, function(notify) {
 
     var viewRoot = join(serv.path, program.viewRoot);
 
+    this.globals = {};
+    var globalsFile = join(serv.path, program.mocks||'', '_globals.json');
+    var readGlobals = function readGlobals() {
+      delete require.cache[require.resolve(globalsFile)];
+      this.globals = require(globalsFile);
+    }
+
+    if(fs.existsSync(globalsFile)) {
+      readGlobals();
+      fs.watch(globalsFile, readGlobals);
+    }
+
     var freemarker = new Freemarker({
       viewRoot: viewRoot
     });
@@ -29,7 +43,8 @@ var server = new Serve2(program, function(notify) {
     app.use(function(req, res, next) {
       res.render = (function(view, data, done) {
         var _this = this;
-        freemarker.render(view, data, function(err, data, out) {
+        var dataModel = merge(globals, data);
+        freemarker.render(view, dataModel, function(err, data, out) {
           _this.end(data||out);
           done && done(err, data||out);
         });

@@ -126,4 +126,28 @@ describe('Test fed starting server', function() {
 
   });
 
+  it.only('render freemarker template with global vars appName "fed" ', function(done) {
+    p = spawn('node', [fed, 'server', '-p', '3003', '-M', 'mock', '--view-root', 'view', './test/res'], {timeout: 5000});
+    p.stderr.on('data', function(e) {
+      console.log('error', ''+e);
+      done(e);
+    });
+    p.stdout.once('data', function() {
+      var request = Request('http://localhost:3003');
+      request
+        .get('/useGlobals.js')
+        .expect(200)
+        .expect(/Hello/)
+        .expect(/fed/)
+        .end(function(e) {
+          kill(p.pid);
+          done(e);
+        });
+    });
+    // p.once('exit', function() {
+    //   done();
+    // });
+
+  });
+
 });
