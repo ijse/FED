@@ -1,43 +1,28 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Fed by ijse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Fed</h1>
+      <h2 class="project-tagline">The Front-End Develop Kitchen</h2>
+      <a href="https://github.com/ijse/FED" class="btn">View on GitHub</a>
+      <a href="https://github.com/ijse/FED/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ijse/FED/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <section class="main-content">
+      <h1>
+<a id="fed---the-front-end-develop-kitchen" class="anchor" href="#fed---the-front-end-develop-kitchen" aria-hidden="true"><span class="octicon octicon-link"></span></a>FED - The Front-End Develop Kitchen</h1>
 
-  <title>Fed</title>
-  <meta name="description" content="The Front-End Develop Kitchen">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Fed</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">The Front-End Develop Kitchen</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/ijse/FED/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/ijse/FED/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/ijse/FED" class="code">View Fed on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h1>
-<a name="fed---the-front-end-develop-kitchen" class="anchor" href="#fed---the-front-end-develop-kitchen"><span class="octicon octicon-link"></span></a>FED - The Front-End Develop Kitchen</h1>
+<p><a href="https://gitter.im/ijse/FED?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/ijse/FED"></a></p>
 
 <p>FED 是一个前端开发环境，供前端编写简单的后台接口，以调试开发页面; 前端可以在此环境下，使用真实的URL访问地址访问，并可嫁接于其它服务器调试页面（调试线上代码), 可以写页面模板代码并使用测试数据调试输出，最终可生成文档。</p>
 
@@ -46,74 +31,195 @@
 <p><a href="https://travis-ci.org/ijse/FED"><img src="https://travis-ci.org/ijse/FED.png?branch=master" alt="Build Status"></a></p>
 
 <h2>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>支持FreeMarker模板引擎</li>
 <li>支持标准的HTTP请求方法及返回数据格式</li>
 <li>支持less、coffee文件的实时编译</li>
 <li>可自动重启应用最新代码</li>
-<li>插件机制扩展，满足大部分扩展需求</li>
-</ul><h2>
-<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+<li>*插件机制扩展，满足大部分扩展需求</li>
+</ul>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <ol>
-<li>创建文件夹:</li>
-</ol><pre><code>$&gt; mkdir fedProj
-$&gt; cd fedProj
+<li>创建项目文件夹:</li>
+</ol>
+
+<pre><code>$&gt; mkdir fedProj
 </code></pre>
 
 <ol>
 <li>下载安装FED:</li>
-</ol><pre><code>$&gt; npm install -g fed
+</ol>
+
+<pre><code>$&gt; npm install -g fed
 </code></pre>
 
 <ol>
-<li><p>COPY一份配置文件 "fedProj/FED/configs/index.json", 修改</p></li>
-<li><p>启动服务：</p></li>
-</ol><pre><code>$&gt; fed -sw -p 8910 ./configs/index.json
+<li>创建如下目录：</li>
+</ol>
+
+<pre><code>- /fedProj
+  - mock
+  - view
 </code></pre>
 
-<p>注：<code>fed -s</code>时必须指定配置文件~！</p>
+<ol>
+<li>启动服务：</li>
+</ol>
 
-<p>当修改mock文件时，FED会自动重启应用更新。</p>
+<pre><code>$&gt; fed server -p 3000 -M mock --view-root view ./fedProj
+</code></pre>
+
+<ul>
+<li>
+<code>-p 3000</code> http监听端口号, 默认为3000</li>
+<li>
+<code>-M mock</code> mock folder, 每个文件是一个connect的middleware, <code>mock</code>相对于<code>./test/res</code>
+</li>
+<li>
+<code>--view-root view</code> freemarker 的模板文件夹</li>
+<li>
+<code>./test/res</code> 项目web根目录</li>
+</ul>
 
 <h2>
-<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+<a id="useful-tips" class="anchor" href="#useful-tips" aria-hidden="true"><span class="octicon octicon-link"></span></a>Useful Tips</h2>
 
-<p>更多的使用说明请移步 <a href="https://github.com/ijse/FED/wiki">【WIKI】</a>, 文档会不定时更新。</p>
+<ul>
+<li>Mock Mapping file</li>
+</ul>
 
-<p>同时，如果有任何问题请到<a href="https://github.com/ijse/FED/issues">【issues】</a>给我提issue，我会尽快处理并答复的。</p>
+<p>在<code>mock</code>文件夹下创建一个文件名为<code>_map</code>的文件，内容如下：</p>
+
+<pre><code>/a testA.js
+/b testB.js
+</code></pre>
+
+<p>则请求<code>http://localhost:3000/a</code>会使用<code>testA.js</code> mock文件。</p>
+
+<ul>
+<li>Global Variables File</li>
+</ul>
+
+<p>在<code>mock</code>文件夹下创建一个文件名为<code>_globals.json</code>的文件，内容为json：</p>
+
+<pre><code>{
+  "appName": "FED"
+}
+</code></pre>
+
+<p>则在所有<code>view</code>中都可以获取到以上变量。</p>
+
+<ul>
+<li>Proxy Redirect</li>
+</ul>
+
+<p>在<code>/fedProj</code>根下创建名为<code>proxylist.json</code>的文件，内容如：</p>
+
+<pre><code>{
+  "/search": "http://www.aaa.com"
+}
+</code></pre>
+
+<p>则在请求<code>http://localhost:3000/search</code>时，会代理请求<code>http://www.aaa.com/search</code></p>
 
 <h2>
-<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+<a id="help-manual" class="anchor" href="#help-manual" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Manual</h2>
 
-<p>欢迎大家参与完善此工具，点右上角fork一份我的代码，然后便可以向我提交你的代码~</p>
+<pre><code>
+$&gt; fed help
+
+  Usage: fed [options] [command]
+
+
+  Commands:
+
+    server      Launch local http service with serve2
+    help [cmd]  display help for [cmd]
+
+  Options:
+
+    -h, --help      output usage information
+    -V, --version   output the version number
+    -v, --versions  output current fed version
+
+$&gt; fed server -h
+
+  Usage: fed server [options] [dir]
+
+  Options:
+
+    -h, --help                output usage information
+    -V, --version             output the version number
+    -a, --auth &lt;user&gt;:&lt;pass&gt;  specify basic auth credentials
+    -F, --format &lt;fmt&gt;        specify the log format string
+    -p, --port &lt;port&gt;         specify the port [3000]
+    -H, --hidden              enable hidden file serving
+    -S, --no-stylus           disable stylus rendering
+    -J, --no-jade             disable jade rendering
+        --no-less             disable less css rendering
+    -I, --no-icons            disable icons
+    -L, --no-logs             disable request logging
+    -D, --no-dirs             disable directory serving
+    -f, --favicon &lt;path&gt;      serve the given favicon
+    -M, --mocks &lt;path&gt;        mock files directory
+        --cookies             add cookies parse support
+    -C, --cors                allows cross origin access serving
+        --compress            gzip or deflate the response
+        --exec &lt;cmd&gt;          execute command on each request
+
+</code></pre>
+
+<p>如果有任何问题请到<a href="https://github.com/ijse/FED/issues">【issues】</a>给我提issue，我会尽快处理并答复的。</p>
 
 <h2>
-<a name="test" class="anchor" href="#test"><span class="octicon octicon-link"></span></a>Test</h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>点右上角fork按钮</p>
+
+<h2>
+<a id="test" class="anchor" href="#test" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test</h2>
 
 <pre><code>&gt; npm test
 </code></pre>
-        </article>
-      </div>
-    </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/ijse" class="avatar"><img src="https://secure.gravatar.com/avatar/b4deefbe844c0b4085a893e5dce2f69d?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/ijse">ijse</a> maintains <a href="https://github.com/ijse/FED">Fed</a></p>
 
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/ijse/FED/tarball/master" class="tar">tar</a><a href="https://github.com/ijse/FED/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2011 ijse;</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ijse/FED">Fed</a> is maintained by <a href="https://github.com/ijse">ijse</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
 
             <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -126,5 +232,6 @@ $&gt; cd fedProj
             } catch(err) {}
           </script>
 
-</body>
+  </body>
 </html>
+
