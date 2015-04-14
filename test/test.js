@@ -91,13 +91,10 @@ describe('Test fed starting server', function() {
         .expect(200)
         .expect(/fed/)
         .expect(/version/)
-        .end(function() {
+        .end(function(e) {
           kill(p.pid);
+          done(e);
         });
-    });
-
-    p.once('exit', function() {
-      done();
     });
 
   });
@@ -115,18 +112,15 @@ describe('Test fed starting server', function() {
         .expect(200)
         .expect(/hello/)
         .expect(/inner/)
-        .end(function() {
+        .end(function(e) {
           kill(p.pid);
+          done(e);
         });
-    });
-
-    p.once('exit', function() {
-      done();
     });
 
   });
 
-  it.only('render freemarker template with global vars appName "fed" ', function(done) {
+  it('render freemarker template with global vars appName "fed" ', function(done) {
     p = spawn('node', [fed, 'server', '-p', '3003', '-M', 'mock', '--view-root', 'view', './test/res'], {timeout: 5000});
     p.stderr.on('data', function(e) {
       console.log('error', ''+e);
@@ -144,9 +138,6 @@ describe('Test fed starting server', function() {
           done(e);
         });
     });
-    // p.once('exit', function() {
-    //   done();
-    // });
 
   });
 
