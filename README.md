@@ -50,8 +50,39 @@ $> fed server -p 3000 -M mock --view-root view ./fedProj
 - `--view-root view` freemarker 的模板文件夹
 - `./test/res` 项目web根目录
 
+## Useful Tips
 
-## Documentation
+- Mock Mapping file
+
+在`mock`文件夹下创建一个文件名为`_map`的文件，内容如下：
+```
+/a testA.js
+/b testB.js
+```
+则请求`http://localhost:3000/a`会使用`testA.js` mock文件。
+
+- Global Variables File
+
+在`mock`文件夹下创建一个文件名为`_globals.json`的文件，内容为json：
+```
+{
+  "appName": "FED"
+}
+```
+则在所有`view`中都可以获取到以上变量。
+
+- Proxy Redirect
+
+在`/fedProj`根下创建名为`proxylist.json`的文件，内容如：
+```
+{
+  "/search": "http://www.aaa.com"
+}
+```
+则在请求`http://localhost:3000/search`时，会代理请求`http://www.aaa.com/search`
+
+
+## Help Manual
 
 ```
 
