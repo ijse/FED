@@ -93,16 +93,14 @@ $> fed help
 
   Commands:
 
-    server [options]   Launch local http service with serve2
-    version            show current fed version
-    help [cmd]         output usage information
-    help [cmd]         display help for [cmd]
-    help [cmd]         display help for [cmd]
+    server      Launch local http service with serve2
+    help [cmd]  display help for [cmd]
 
   Options:
 
-    -h, --help     output usage information
-    -V, --version  output the version number
+    -h, --help      output usage information
+    -V, --version   output the version number
+    -v, --versions  output current fed version
 
 $> fed server -h
 
